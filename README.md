@@ -10,7 +10,7 @@ An advanced, highly flexible scheduling blueprint engine that generates up to 10
 
 Click the direct text link below to import this blueprint engine directly into your local Home Assistant instance:
 
-👉 [Click Here to Import this Blueprint to Home Assistant]([https://home-assistant.io](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fraw.githubusercontent.com%2Fufans123%2Fhome-assistant-blueprints%2Frefs%2Fheads%2Fmain%2Fscheduled_task_notifications_manager.yaml)
+👉 [Click Here to Import this Blueprint to Home Assistant]([https://home-assistant.io](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fraw.githubusercontent.com%2Fufans123%2Fhome-assistant-blueprints%2Frefs%2Fheads%2Fmain%2Fscheduled_task_notifications_manager.yaml))
 
 ---
 
