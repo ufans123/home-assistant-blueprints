@@ -1,4 +1,4 @@
-# Home Assistant Blueprints 🏠
+# Home Assistant Blueprints (README IS DRAFT ONLY) 🏠
 
 Welcome to my personal Home Assistant blueprints repository! This project contains advanced, highly customized configuration engines designed to streamline smart home automation orchestration.
 
