@@ -24,7 +24,7 @@ Unlike standard Home Assistant templates, this blueprint functions as a comprehe
 
 Because Home Assistant isolates raw file links, copy the configuration path below to import this engine directly into your system manually:
 
-1. Copy this exact file path to your clipboard:
+1. Copy this exact file path to your clipboard: (still need to update URL!!! not done this before and AI has an issue with providing the updated URL)
    ```text
    https://githubusercontent.com
    ```
