@@ -8,6 +8,7 @@ An advanced, highly flexible scheduling blueprint engine that generates up to 10
 
 [![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://home-assistant.io)](https://home-assistant.io)
 
+
 ---
 
 ## ✨ Key Architectural Features
