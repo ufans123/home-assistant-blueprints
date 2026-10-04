@@ -2,6 +2,8 @@ blueprint:
   name: "Scheduled Task Notifications Manager"
   description: "Creates standalone task lists bound to an optional specific calendar day, featuring an advanced bulleted message body digest with clean line breaks."
   domain: automation
+  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/scheduled_task_notifications_manager.yaml
+  author: Ufans123
   input:
     # --- CALENDAR & TRIGGER CONFIG ---
     enable_schedule:
@@ -21,6 +23,7 @@ blueprint:
           mode: box
     master_trigger_time:
       name: "Scheduled Execution Time"
+      description: "What time each day should this specific automation run? (Only applies if time schedule is enabled above)."
       default: "09:00:00"
       selector:
         time: {}
@@ -41,6 +44,7 @@ blueprint:
         boolean: {}
     overview_title:
       name: "Overview Card Title"
+      description: "Title for the Digest Card (Only applies if Summary Digest Card is enabled above)"
       default: "📋 Active Tasks Overview"
       selector:
         text: {}
@@ -48,6 +52,7 @@ blueprint:
     # --- TASK SLOTS (1 to 10) ---
     task_1_title:
       name: "Task 1: Title"
+      description: "(Required to display message)"
       default: ""
       selector:
         text: {}
@@ -58,6 +63,7 @@ blueprint:
         text: {}
     task_2_title:
       name: "Task 2: Title"
+      description: "(Optional - message will be ignored if empty)"
       default: ""
       selector:
         text: {}
@@ -68,6 +74,7 @@ blueprint:
         text: {}
     task_3_title:
       name: "Task 3: Title"
+      description: "(Optional - message will be ignored if empty)"
       default: ""
       selector:
         text: {}
@@ -78,6 +85,7 @@ blueprint:
         text: {}
     task_4_title:
       name: "Task 4: Title"
+      description: "(Optional - message will be ignored if empty)"
       default: ""
       selector:
         text: {}
@@ -88,6 +96,7 @@ blueprint:
         text: {}
     task_5_title:
       name: "Task 5: Title"
+      description: "(Optional - message will be ignored if empty)"
       default: ""
       selector:
         text: {}
@@ -98,6 +107,7 @@ blueprint:
         text: {}
     task_6_title:
       name: "Task 6: Title"
+      description: "(Optional - message will be ignored if empty)"
       default: ""
       selector:
         text: {}
@@ -108,6 +118,7 @@ blueprint:
         text: {}
     task_7_title:
       name: "Task 7: Title"
+      description: "(Optional - message will be ignored if empty)"
       default: ""
       selector:
         text: {}
@@ -118,6 +129,7 @@ blueprint:
         text: {}
     task_8_title:
       name: "Task 8: Title"
+      description: "(Optional - message will be ignored if empty)"
       default: ""
       selector:
         text: {}
@@ -128,6 +140,7 @@ blueprint:
         text: {}
     task_9_title:
       name: "Task 9: Title"
+      description: "(Optional - message will be ignored if empty)"
       default: ""
       selector:
         text: {}
@@ -138,6 +151,7 @@ blueprint:
         text: {}
     task_10_title:
       name: "Task 10: Title"
+      description: "(Optional - message will be ignored if empty)"
       default: ""
       selector:
         text: {}
