@@ -12,6 +12,7 @@ Click the direct text link below to import this blueprint engine directly into y
 
 👉 [Click Here to Import this Blueprint to Home Assistant]([https://home-assistant.io](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fraw.githubusercontent.com%2Fufans123%2Fhome-assistant-blueprints%2Frefs%2Fheads%2Fmain%2Fscheduled_task_notifications_manager.yaml)
 
+[![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fraw.githubusercontent.com%2Fufans123%2Fhome-assistant-blueprints%2Frefs%2Fheads%2Fmain%2Fscheduled_task_notifications_manager.yaml)
 ---
 
 ## ✨ Key Architectural Features
