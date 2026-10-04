@@ -31,7 +31,7 @@ If you prefer to copy the configuration path manually to import this engine dire
 
 1. Copy this exact file path to your clipboard:
    ```text
-   https://githubusercontent.com
+   https://github.com
    ```
 2. Open your local **Home Assistant** web dashboard interface.
 3. Navigate to **Settings** > **Automations & Scenes** > **Blueprints** tab.
