@@ -6,11 +6,10 @@ Welcome to my personal Home Assistant blueprints repository! This project contai
 
 An advanced, highly flexible scheduling blueprint engine that generates up to 10 sequential persistent notification cards bound to an optional day of the month, an input helper switch, or custom system events.
 
-[![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://home-assistant.io)](https://home-assistant.io)
+### 🚀 1-Click Blueprint Installation
+To import this blueprint directly into your local Home Assistant instance, click the direct link below:
 
-<a href="https://home-assistant.io" target="_blank">
-  <img src="https://shields.io" alt="Import Blueprint to Home Assistant">
-</a>
+👉 [Click Here to Import this Blueprint to Home Assistant](https://home-assistant.io)
 
 
 ---
