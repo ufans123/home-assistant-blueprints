@@ -8,8 +8,6 @@ An advanced, highly flexible scheduling blueprint engine that generates up to 10
 
 [![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://home-assistant.io)](https://home-assistant.io)
 
-*(⚠️ **Note:** Make sure to replace `YOUR_GITHUB_USERNAME` and `YOUR_REPOSITORY_NAME` in the badge URL link above with your actual GitHub details so the 1-click import works seamlessly!)*
-
 ---
 
 ## ✨ Key Architectural Features
