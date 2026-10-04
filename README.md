@@ -8,6 +8,11 @@ An advanced, highly flexible scheduling blueprint engine that generates up to 10
 
 [![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://home-assistant.io)](https://home-assistant.io)
 
+<a href="https://home-assistant.io" target="_blank">
+  <img src="https://shields.io" alt="Import Blueprint to Home Assistant">
+</a>
+
+
 ---
 
 ## ✨ Key Architectural Features
