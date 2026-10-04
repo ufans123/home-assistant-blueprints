@@ -9,7 +9,7 @@ An advanced, highly flexible scheduling blueprint engine that generates up to 10
 ### 🚀 1-Click Blueprint Installation
 To import this blueprint directly into your local Home Assistant instance, click the direct link below:
 
-👉 [Click Here to Import this Blueprint to Home Assistant](https://home-assistant.io)
+👉 [Click Here to Import this Blueprint to Home Assistant](https://home-assistant.io?blueprint_url=https://githubusercontent.com)
 
 
 ---
