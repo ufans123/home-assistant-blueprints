@@ -1,10 +1,16 @@
-# Home Assistant Blueprints (README IS DRAFT ONLY) 🏠
+# Home Assistant Blueprints 🏠
 
 Welcome to my personal Home Assistant blueprints repository! This project contains advanced, highly customized configuration engines designed to streamline smart home automation orchestration.
 
 ## 📋 Scheduled Task Notifications Manager
 
 An advanced, highly flexible scheduling blueprint engine that generates up to 10 sequential persistent notification cards bound to an optional day of the month, an input helper switch, or custom system events.
+
+### 🚀 1-Click Blueprint Installation
+
+Click the direct text link below to import this blueprint engine directly into your local Home Assistant instance:
+
+👉 [Click Here to Import this Blueprint to Home Assistant]([https://home-assistant.io](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fraw.githubusercontent.com%2Fufans123%2Fhome-assistant-blueprints%2Frefs%2Fheads%2Fmain%2Fscheduled_task_notifications_manager.yaml)
 
 ---
 
@@ -20,11 +26,11 @@ Unlike standard Home Assistant templates, this blueprint functions as a comprehe
 
 ---
 
-## 🚀 How to Install This Blueprint
+## 🚀 How to Install Dynamically or Manually
 
-Because Home Assistant isolates raw file links, copy the configuration path below to import this engine directly into your system manually:
+If you prefer to copy the configuration path manually to import this engine directly into your system config directory tree, use the text below:
 
-1. Copy this exact file path to your clipboard: (still need to update URL!!! not done this before and AI has an issue with providing the updated URL)
+1. Copy this exact file path to your clipboard:
    ```text
    https://githubusercontent.com
    ```
@@ -32,6 +38,11 @@ Because Home Assistant isolates raw file links, copy the configuration path belo
 3. Navigate to **Settings** > **Automations & Scenes** > **Blueprints** tab.
 4. Click the blue **Import Blueprint** button in the bottom-right corner.
 5. Paste the copied URL path directly into the window text bar box and click **Preview / Save**.
+
+Alternatively, drop the file directly into your local directory tree at:
+```text
+config/blueprints/automation/ufans123/scheduled_task_notifications_manager.yaml
+```
 
 ---
 
@@ -45,13 +56,3 @@ Because Home Assistant isolates raw file links, copy the configuration path belo
 | **Manual Force Helper** | Entity (`input_boolean`) | *Optional.* An input helper switch that immediately triggers your tasks, automatically resetting itself to `OFF` within 1 second. |
 | **Enable Summary Digest Card** | Toggle | When checked, it generates a master summary card listing all your active custom body messages as an itemized bulleted checklist. |
 | **Task Slots (1 - 10)** | Text String Pairs | 10 independent input lanes allowing you to type distinct titles and body descriptions for your reminders. Empty slots are cleanly ignored. |
-
----
-
-## 📂 Manual Directory Path
-
-Alternatively, you can clone or download `scheduled_task_notifications_manager.yaml` and drop it directly into your local directory tree at:
-
-```text
-config/blueprints/automation/ufans123/scheduled_task_notifications_manager.yaml
-```
