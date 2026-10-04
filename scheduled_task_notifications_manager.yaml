@@ -4,6 +4,8 @@ blueprint:
   domain: automation
   source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/scheduled_task_notifications_manager.yaml
   author: Ufans123
+  homeassistant:
+    min_version: "2024.8.0"
   input:
     # --- CALENDAR & TRIGGER CONFIG ---
     enable_schedule:
