@@ -25,23 +25,16 @@ Unlike standard Home Assistant templates, this blueprint functions as a comprehe
 
 ---
 
-## 🚀 How to Install Dynamically or Manually
+## 🚀 How to Install Manually
 
-If you prefer to copy the configuration path manually to import this engine directly into your system config directory tree, use the text below:
+If you prefer to install this file directly via your local file system, use the directory configuration layout tree path below:
 
-1. Copy this exact file path to your clipboard:
+1. Download or clone the raw `scheduled_task_notifications_manager.yaml` file from this repository.
+2. Drop the file directly into your local Home Assistant directory tree at:
    ```text
-   https://github.com
+   config/blueprints/automation/ufans123/scheduled_task_notifications_manager.yaml
    ```
-2. Open your local **Home Assistant** web dashboard interface.
-3. Navigate to **Settings** > **Automations & Scenes** > **Blueprints** tab.
-4. Click the blue **Import Blueprint** button in the bottom-right corner.
-5. Paste the copied URL path directly into the window text bar box and click **Preview / Save**.
-
-Alternatively, drop the file directly into your local directory tree at:
-```text
-config/blueprints/automation/ufans123/scheduled_task_notifications_manager.yaml
-```
+3. Navigate to **Developer Tools** > **YAML** tab and click **Automations** to reload the library engine.
 
 ---
 
