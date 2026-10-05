@@ -15,7 +15,7 @@ Click the direct text link below to import this blueprint engine directly into y
 
 ## ✨ Key Architectural Features
 
-Unlike standard Home Assistant templates, this blueprint functions as a comprehensive software application model utilizing several advanced design patterns:
+This blueprint functions as a comprehensive software application model utilizing several advanced design patterns:
 
 * **Decoupled Flag Routing Engine:** Solves traditional top-level calendar block conflicts by evaluating triggers upfront inside a localized Jinja block. It sets a strict boolean flag (`should_run`), allowing manual helper forces to effortlessly bypass calendar day locks while keeping automatic time schedules strictly day-bound.
 * **Variable Scope Protection:** Maps blueprint input definitions down into local runtime script variables at the exact millisecond of execution. This prevents the `blueprint_inputs` scope-loss bug common to long automation scripts.
