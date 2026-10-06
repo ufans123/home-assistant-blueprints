@@ -1,0 +1,96 @@
+blueprint:
+  name: Sync Device and Timer
+  description: >
+    Syncs a target device (light, switch, fan) with a timer helper. 
+    Turning the device on starts the timer. Turning it off stops the timer, 
+    and when the timer expires, the device turns off.
+  domain: automation
+  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/blueprints/automation/ufans123/device_timer_sync.yaml
+  author: Ufans123
+  input:
+    controlled_device:
+      name: Target Device
+      description: The switch, light, or fan to sync with the timer.
+      selector:
+        entity:
+          domain:
+            - light
+            - switch
+            - fan
+    target_timer:
+      name: Timer Helper
+      description: The timer helper used to track duration.
+      selector:
+        entity:
+          domain: timer
+    default_duration:
+      name: Default Timer Duration
+      description: Duration to start the timer with when the device turns on.
+      default: "02:00:00"
+      selector:
+        duration: {}
+
+mode: single
+
+max_exceeded: silent
+
+trigger:
+  - platform: state
+    entity_id: !input controlled_device
+    to: "on"
+    id: device_on
+  - platform: state
+    entity_id: !input controlled_device
+    to: "off"
+    id: device_off
+  - platform: state
+    entity_id: !input target_timer
+    from: active
+    to: idle
+    id: timer_finished
+
+action:
+  - choose:
+      # 1. Device turned ON -> Start Timer if idle
+      - conditions:
+          - condition: trigger
+            id: device_on
+        sequence:
+          - if:
+              - condition: state
+                entity_id: !input target_timer
+                state: idle
+            then:
+              - action: timer.start
+                target:
+                  entity_id: !input target_timer
+                data:
+                  duration: !input default_duration
+
+      # 2. Device turned OFF -> Cancel Timer if active
+      - conditions:
+          - condition: trigger
+            id: device_off
+        sequence:
+          - if:
+              - condition: state
+                entity_id: !input target_timer
+                state: active
+            then:
+              - action: timer.cancel
+                target:
+                  entity_id: !input target_timer
+
+      # 3. Timer Finished -> Turn OFF the device
+      - conditions:
+          - condition: trigger
+            id: timer_finished
+        sequence:
+          - if:
+              - condition: state
+                entity_id: !input controlled_device
+                state: "on"
+            then:
+              - action: homeassistant.turn_off
+                target:
+                  entity_id: !input controlled_device
