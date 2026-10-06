@@ -1,0 +1,74 @@
+blueprint:
+  name: "Battery-Controlled Charging Switch"
+  description: "Turns a smart switch on when a battery drops below a low threshold, and turns it off when it exceeds a high threshold."
+  domain: automation
+  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/battery_charging_control.yaml
+  author: Ufans123
+  input:
+    battery_sensor:
+      name: Battery Sensor
+      description: The percentage sensor monitoring the battery level.
+      selector:
+        entity:
+          domain: sensor
+
+    power_switch:
+      name: Power Switch / Plug
+      description: The smart switch or light controlling the charger.
+      selector:
+        entity:
+          domain:
+            - switch
+            - light
+
+    low_threshold:
+      name: Low Battery Threshold
+      description: Turn on the switch when the battery falls below this percentage.
+      default: 22
+      selector:
+        number:
+          min: 0.0
+          max: 100.0
+          unit_of_measurement: "%"
+          mode: slider
+
+    high_threshold:
+      name: High Battery Threshold
+      description: Turn off the switch when the battery rises above this percentage.
+      default: 79
+      selector:
+        number:
+          min: 0.0
+          max: 100.0
+          unit_of_measurement: "%"
+          mode: slider
+
+triggers:
+  - trigger: numeric_state
+    entity_id: !input battery_sensor
+    below: !input low_threshold
+    id: turn_on
+  - trigger: numeric_state
+    entity_id: !input battery_sensor
+    above: !input high_threshold
+    id: turn_off
+
+actions:
+  - choose:
+      - conditions:
+          - condition: trigger
+            id: turn_on
+        sequence:
+          - action: homeassistant.turn_on
+            target:
+              entity_id: !input power_switch
+
+      - conditions:
+          - condition: trigger
+            id: turn_off
+        sequence:
+          - action: homeassistant.turn_off
+            target:
+              entity_id: !input power_switch
+
+mode: single
