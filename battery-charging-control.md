@@ -12,7 +12,7 @@ Turns a smart switch or plug on when a battery drops below a low threshold, and 
 2. **High Battery Trigger:** When the battery sensor value rises above your configured **High Battery Threshold**, the smart switch or light turns `off` to stop charging.
 
 
-## 🚀 How to Install
+## Installation
 
 ### Method 1: Click to Import (Easiest)
 Click the badge below to import this blueprint directly into your Home Assistant instance:
