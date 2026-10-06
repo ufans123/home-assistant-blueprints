@@ -5,4 +5,4 @@ Welcome to my personal Home Assistant blueprints repository! This project contai
 ## 📋 Available Blueprints
 
 * **[Scheduled Task Notifications Manager](scheduled-task-notifications-manager.md)** - An advanced scheduling blueprint engine that generates up to 10 sequential persistent notification cards bound to calendar days, helper switches, or custom events.
-* **[Sync Device and Timer](device-timer-sync.md)** - Keep lights, switches, or fans synchronized with a Home Assistant timer helper.
+* **[Sync Device and Timer](device_timer_sync.md)** - Keep lights, switches, or fans synchronized with a Home Assistant timer helper.
