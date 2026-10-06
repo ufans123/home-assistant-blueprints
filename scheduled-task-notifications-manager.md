@@ -2,7 +2,7 @@
 
 [![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fufans123%2Fhome-assistant-blueprints%2Fblob%2Fmain%2Fscheduled_task_notifications_manager.yaml)
 
-[← Back to Main Blueprints Repository](../main)
+[← Back to Main Blueprints Repository](README.md)
 
 An advanced, highly flexible scheduling blueprint engine that generates up to 10 sequential persistent notification cards bound to an optional day of the month, an input helper switch, or custom system events.
 
