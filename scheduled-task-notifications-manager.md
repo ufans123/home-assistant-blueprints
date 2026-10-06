@@ -6,7 +6,7 @@
 
 An advanced, highly flexible scheduling blueprint engine that generates up to 10 sequential persistent notification cards bound to an optional day of the month, an input helper switch, or custom system events.
 
-## ✨ Key Architectural Features
+## Key Architectural Features
 
 This blueprint functions as a comprehensive software application model utilizing several advanced design patterns:
 
@@ -16,7 +16,7 @@ This blueprint functions as a comprehensive software application model utilizing
 * **Dynamic Carriage-Return Message Digest:** Sweeps populated inputs on the fly, hiding empty text rows, and using embedded Markdown block trailing trim overrides (`{"\n"}`) to automatically compile a clean, single-line bulleted text summary.
 * **Isolated Multi-Instance Capacity:** Anchors notification tracking handles to `{{ this.entity_id }}`. You can spin up 31 separate automations from this single file (one for every day of the month) without any duplicate entity keys or visual card clashing.
 
-* ## ⚙️ Configuration Properties
+* ## Configuration Properties
 
 | Field Name | Type | Description |
 | :--- | :--- | :--- |
@@ -27,7 +27,7 @@ This blueprint functions as a comprehensive software application model utilizing
 | **Enable Summary Digest Card** | Toggle | When checked, it generates a master summary card listing all your active custom body messages as an itemized bulleted checklist. |
 | **Task Slots (1 - 10)** | Text String Pairs | 10 independent input lanes allowing you to type distinct titles and body descriptions for your reminders. Empty slots are cleanly ignored. |
 
-## 🚀 How to Install
+## How to Install
 
 ### Method 1: Click to Import (Easiest)
 Click the badge below to import this blueprint directly into your Home Assistant instance:
@@ -35,9 +35,7 @@ Click the badge below to import this blueprint directly into your Home Assistant
 [![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fufans123%2Fhome-assistant-blueprints%2Fblob%2Fmain%2Fscheduled_task_notifications_manager.yaml)
 
 ### Method 2: Manual Installation
-1. Download or clone the raw `scheduled_task_notifications_manager.yaml` file from this repository.
-2. Drop the file directly into your local Home Assistant directory tree at:
-   ```text
-   config/blueprints/automation/ufans123/scheduled_task_notifications_manager.yaml
-
-   
+1. Copy the raw contents of [scheduled_task_notifications_manager.yaml](scheduled_task_notifications_manager.yaml).
+2. In your Home Assistant configuration directory, navigate to your blueprints folder (e.g., `config/blueprints/automation/ufans123/`).
+3. Paste the code into a file named `scheduled_task_notifications_manager.yaml`.
+4. Reload your automations or restart Home Assistant. 
