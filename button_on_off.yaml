@@ -1,0 +1,82 @@
+blueprint:
+  name: "Button On/Off Control with Optional Actions"
+  description: "Controls a target switch/light with an On button and an Off button, with optional additional actions for each."
+  domain: automation
+  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/button_on_off.yaml
+  author: Ufans123
+  input:
+    on_button:
+      name: On Button
+      description: The event entity for turning on.
+      selector:
+        entity:
+          domain: event
+    off_button:
+      name: Off Button
+      description: The event entity for turning off.
+      selector:
+        entity:
+          domain: event
+    target_entity:
+      name: Target Entity
+      description: The switch, light, or device to turn on and off.
+      selector:
+        target:
+          entity:
+            domain:
+              - switch
+              - light
+              - input_boolean
+    on_action:
+      name: Optional On Action
+      description: Additional action, script, or automation to run when the On button is pressed.
+      default: []
+      selector:
+        action:
+    off_action:
+      name: Optional Off Action
+      description: Additional action, script, or automation to run when the Off button is pressed.
+      default: []
+      selector:
+        action:
+
+mode: queued
+
+triggers:
+  - trigger: event.received
+    target:
+      entity_id: !input on_button
+    options:
+      event_type:
+        - initial_press
+    id: turn_on
+  - trigger: event.received
+    target:
+      entity_id: !input off_button
+    options:
+      event_type:
+        - initial_press
+    id: turn_off
+
+conditions: []
+
+actions:
+  - choose:
+      - conditions:
+          - condition: trigger
+            id: turn_on
+        sequence:
+          - action: homeassistant.turn_on
+            target: !input target_entity
+          - choose:
+              - conditions: []
+                sequence: !input on_action
+      - conditions:
+          - condition: trigger
+            id: turn_off
+        sequence:
+          - action: homeassistant.turn_off
+            target: !input target_entity
+          - choose:
+              - conditions: []
+                sequence: !input off_action
