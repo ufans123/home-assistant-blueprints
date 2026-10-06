@@ -2,7 +2,7 @@
 
 [![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fufans123%2Fhome-assistant-blueprints%2Fblob%2Fmain%2Fdevice_timer_sync.yaml)
 
-[← Back to Main Blueprints Repository](../main)
+[← Back to Main Blueprints Repository](README.md)
 
 This Home Assistant blueprint synchronizes a target device (**light**, **switch**, or **fan**) with a **Timer helper**. It links the state of the device and the timer together so they stay in sync automatically.
 
