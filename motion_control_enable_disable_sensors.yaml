@@ -1,0 +1,69 @@
+blueprint:
+  name: Motion Control Enable or Disable
+  description: Enables or disables motion sensors via switch buttons or when a monitored light turns off.
+  domain: automation
+  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/motion_control_enable_disable_sensors.yaml
+  author: Ufans123
+  input:
+    disable_event:
+      name: Disable Event Entity
+      description: The event entity (e.g., button press) that disables the motion sensors.
+      selector:
+        entity: {}
+    enable_event:
+      name: Enable Event Entity
+      description: The event entity (e.g., button press) that enables the motion sensors.
+      selector:
+        entity: {}
+    monitored_light:
+      name: Monitored Light
+      description: Turning this light off will automatically re-enable the motion sensors.
+      selector:
+        entity:
+          domain: light
+    motion_switches:
+      name: Motion Sensor Switch(es)
+      description: Select the motion sensor enable/disable switch entity.
+      selector:
+        target:
+          entity:
+            domain: switch
+
+alias: "Motion Control: Enable or Disable via Switches and Light State"
+description: >-
+  Enables or disables motion sensors via switch buttons or when a specific light turns off.
+triggers:
+  - trigger: event.received
+    target:
+      entity_id: !input disable_event
+    options:
+      event_type:
+        - initial_press
+    id: disable_motion
+  - trigger: event.received
+    target:
+      entity_id: !input enable_event
+    options:
+      event_type:
+        - initial_press
+    id: enable_motion
+  - trigger: state
+    entity_id: !input monitored_light
+    to: "off"
+    id: enable_motion
+conditions: []
+actions:
+  - choose:
+      - conditions:
+          - condition: trigger
+            id: disable_motion
+        sequence:
+          - action: switch.turn_off
+            target: !input motion_switches
+      - conditions:
+          - condition: trigger
+            id: enable_motion
+        sequence:
+          - action: switch.turn_on
+            target: !input motion_switches
+mode: single
