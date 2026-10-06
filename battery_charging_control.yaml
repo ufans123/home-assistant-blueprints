@@ -1,6 +1,6 @@
 blueprint:
   name: "Battery-Controlled Charging Switch"
-  description: "Turns a smart switch on when a battery drops below a low threshold, and turns it off when it exceeds a high threshold."
+  description: "Turns a smart switch on when a battery drops below a low threshold, and turns it off when it exceeds a high threshold. Handles device reconnects and Home Assistant restarts."
   domain: automation
   source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/battery_charging_control.yaml
   author: Ufans123
@@ -44,28 +44,40 @@ blueprint:
           mode: slider
 
 triggers:
+  # 1. Standard threshold crossings during normal operation
   - trigger: numeric_state
     entity_id: !input battery_sensor
     below: !input low_threshold
-    id: turn_on
   - trigger: numeric_state
     entity_id: !input battery_sensor
     above: !input high_threshold
-    id: turn_off
+
+  # 2. Catch when the device comes back online from unavailable/unknown
+  - trigger: state
+    entity_id: !input battery_sensor
+    from:
+      - unavailable
+      - unknown
+
+  # 3. Catch when Home Assistant restarts
+  - trigger: homeassistant
+    event: start
 
 actions:
   - choose:
       - conditions:
-          - condition: trigger
-            id: turn_on
+          - condition: numeric_state
+            entity_id: !input battery_sensor
+            below: !input low_threshold
         sequence:
           - action: homeassistant.turn_on
             target:
               entity_id: !input power_switch
 
       - conditions:
-          - condition: trigger
-            id: turn_off
+          - condition: numeric_state
+            entity_id: !input battery_sensor
+            above: !input high_threshold
         sequence:
           - action: homeassistant.turn_off
             target:
