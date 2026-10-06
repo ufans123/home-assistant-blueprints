@@ -5,5 +5,6 @@ Welcome to my personal Home Assistant blueprints repository! This project contai
 ## 📋 Available Blueprints
 
 * **[Battery-Controlled Charging Switch](battery-charging-control.md)** - Automatically manage charging by turning a smart plug on/off based on battery percentage thresholds.
+* **[Motion Control Enable or Disable](motion-control-enable-disable.md)** - Enable or disable motion sensors via button events or automatically when a specific light turns off.
 * **[Scheduled Task Notifications Manager](scheduled-task-notifications-manager.md)** - An advanced scheduling blueprint engine that generates up to 10 sequential persistent notification cards bound to calendar days, helper switches, or custom events.
 * **[Sync Device and Timer](device-timer-sync.md)** - Keep lights, switches, or fans synchronized with a Home Assistant timer helper.
