@@ -10,7 +10,7 @@ Turns a smart switch or plug on when a battery drops below a low threshold, and 
 
 1. **Low Battery Trigger:** When the battery sensor value falls below your configured **Low Battery Threshold**, the smart switch or light turns `on` to start charging.
 2. **High Battery Trigger:** When the battery sensor value rises above your configured **High Battery Threshold**, the smart switch or light turns `off` to stop charging.
-
+3. **Reliability & Self-Healing:** In addition to standard threshold crossings, the automation monitors for device reconnections (when a sensor comes back online from `unavailable` or `unknown`) and Home Assistant restarts. It directly evaluates the current battery level during these events to catch missed transitions and ensure your switch state always matches reality.
 
 ## Installation
 
