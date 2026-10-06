@@ -5,7 +5,7 @@ blueprint:
     Turning the device on starts the timer. Turning it off stops the timer, 
     and when the timer expires, the device turns off.
   domain: automation
-  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/blueprints/automation/ufans123/device_timer_sync.yaml
+  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/device_timer_sync.yaml
   author: Ufans123
   input:
     controlled_device:
