@@ -6,6 +6,9 @@
 
 Turns a smart switch or plug on when a battery drops below a low threshold, and turns it off when it exceeds a high threshold to protect battery health and automate charging.
 
+## 🕒 Looking for a Time Limit Failsafe?
+For an extra layer of protection, check out the **[Time Failsafe Companion Blueprint](battery-charging-control-companion.md)**. It works alongside this threshold automation to enforce a maximum charge duration, perfectly insulating basic hardware setups from network dropouts or runaway charging sessions.
+
 ## How It Works
 
 1. **Low Battery Trigger:** When the battery sensor value falls below your configured **Low Battery Threshold**, the smart switch or light turns `on` to start charging.
