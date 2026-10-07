@@ -1,16 +1,10 @@
-# Battery-Controlled Charging Switch - Time Failsafe Companion (DRAFT)
-
-This is a companion blueprint designed to work alongside the primary [Battery-Controlled Charging Control](README.md). While the main automation controls charging based strictly on percentage thresholds, this companion blueprint layers an extra layer of protection by enforcing a maximum time limit on active charging sessions.
-
-[← Back to Main Threshold Blueprint Documentation](README.md)
----
-
 # Battery-Controlled Charging Switch - Time Failsafe Companion
 
-[![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint URL pre-filled.](https://home-assistant.io)](https://home-assistant.io)
+[![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fufans123%2Fhome-assistant-blueprints%2Fblob%2Fmain%2Fbattery_charging_control_companion.yaml)
 
-This is a companion blueprint designed to work alongside the primary [Battery-Controlled Charging Switch](README.md)...
+[← Back to Main Blueprints Repository](README.md)
 
+This is a companion blueprint designed to work alongside the primary [Battery-Controlled Charging Switch](battery-charging-control.md). While the main automation controls charging based strictly on percentage thresholds, this companion blueprint layers an extra layer of protection by enforcing a maximum time limit on active charging sessions.
 
 By focusing on the `charging` and `discharging` states, this automation completely insulates your smart setup from network dropouts (`unavailable` or `unknown` blips) and accommodates brief device usage without resetting your tracking window.
 
@@ -47,3 +41,16 @@ Before configuring this blueprint, you must create a standard **Timer Helper** i
 2. **The Handshake:** Once `charging` is confirmed and the plug state is verified as `on`, the automation instantly programs your target helper timer with your custom duration and fires it.
 3. **The Interruption (Grace Period):** If you unplug your phone to check it, the automation switches to its `restart` sequence and monitors a delay. If docked again within your chosen minute threshold, the shutdown sequence vaporizes, and tracking safely resumes.
 4. **The Safe Termination:** If your primary automation tops the phone off naturally, it cuts the plug. The companion instantly catches this and cleanly breaks the active timer. If a runaway charge occurs and the timer runs out first, the companion intercepts power, cuts the plug universally, and resets.
+
+## Installation
+
+### Method 1: Click to Import (Easiest)
+Click the badge below to import this blueprint directly into your Home Assistant instance:
+
+[![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fufans123%2Fhome-assistant-blueprints%2Fblob%2Fmain%2Fbattery_charging_control_companion.yaml)
+
+### Method 2: Manual Installation
+1. Download or clone the raw `button_on_off.yaml` file from this repository. [`battery_charging_control_companion.yaml`](battery_charging_control_companion.yaml)
+2. In your Home Assistant configuration directory, navigate to your blueprints folder (e.g., `config/blueprints/automation/ufans123/`).
+3. Paste the code into a file named `battery_charging_control_companion.yaml`.
+4. Reload your automations or restart Home Assistant.
