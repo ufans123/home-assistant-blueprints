@@ -1,0 +1,124 @@
+blueprint:
+  name: "Battery-Controlled Charging Switch - Time Failsafe Companion"
+  description: "Manages a helper timer based strictly on actual device charging state, tolerating temporary usage and ignoring network dropouts."
+  domain: automation
+  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/battery_charging_control_companion.yaml
+  author: Ufans123
+  input:
+    smart_plug:
+      name: Smart Plug
+      selector:
+        entity:
+          filter:
+            - domain: switch
+            - domain: light
+    battery_status:
+      name: Battery Status Sensor
+      description: "The phone sensor reporting 'charging', 'discharging', 'unavailable'"
+      selector:
+        entity:
+          filter:
+            domain: sensor
+    charging_timer:
+      name: Helper Timer
+      description: "A helper timer (timer.*) used to track the active countdown window."
+      selector:
+        entity:
+          filter:
+            domain: timer
+    max_charge_duration:
+      name: Maximum Charge Duration
+      description: "How long the device is allowed to actively charge before a hard shutdown is forced."
+      default: "03:00:00"
+      selector:
+        duration:
+    discharge_grace_minutes:
+      name: Discharge Grace Period
+      description: "How many minutes the device can be discharging before the session is aborted."
+      default: 5
+      selector:
+        number:
+          min: 1
+          max: 60
+          unit_of_measurement: minutes
+          mode: slider
+
+mode: restart # Crucial: Restarts the automation and wipes out the pending discharge grace delays if the phone is plugged back in
+
+triggers:
+  # Trigger 1: Phone actually starts charging
+  - trigger: state
+    entity_id: !input battery_status
+    to: "charging"
+    id: phone_charging
+
+  # Trigger 2: Plug turned off manually or by threshold blueprint
+  - trigger: state
+    entity_id: !input smart_plug
+    to: "off"
+    id: plug_off
+
+  # Trigger 3: Main maximum timer finishes
+  - trigger: event
+    event_type: timer.finished
+    event_data:
+      entity_id: !input charging_timer
+    id: timer_done
+
+  # Trigger 4: Device shifts to discharging
+  - trigger: state
+    entity_id: !input battery_status
+    to: "discharging"
+    id: phone_discharging
+
+actions:
+  - choose:
+      # CASE 1: Device plugged in -> Start timer with the dynamic user-defined duration
+      - conditions:
+          - condition: trigger
+            id: phone_charging
+          - condition: state
+            entity_id: !input smart_plug
+            state: "on"
+        sequence:
+          - action: timer.start
+            target:
+              entity_id: !input charging_timer
+            data:
+              duration: !input max_charge_duration
+
+      # CASE 2: Max time reached -> Turn off plug to stop charging (Timer terminates itself)
+      - conditions:
+          - condition: trigger
+            id: timer_done
+        sequence:
+          - action: homeassistant.turn_off
+            target:
+              entity_id: !input smart_plug
+
+      # CASE 3: Plug turned off early -> Cancel the timer entirely
+      - conditions:
+          - condition: trigger
+            id: plug_off
+        sequence:
+          - action: timer.cancel
+            target:
+              entity_id: !input charging_timer
+
+      # CASE 4: Phone unplugged/discharging -> Wait to see if it's permanent
+      - conditions:
+          - condition: trigger
+            id: phone_discharging
+        sequence:
+          - delay:
+              minutes: !input discharge_grace_minutes
+          # If the state is STILL discharging after the delay, cancel timer and cut power
+          - condition: state
+            entity_id: !input battery_status
+            state: "discharging"
+          - action: timer.cancel
+            target:
+              entity_id: !input charging_timer
+          - action: homeassistant.turn_off
+            target:
+              entity_id: !input smart_plug
