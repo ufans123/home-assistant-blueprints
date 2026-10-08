@@ -1,0 +1,47 @@
+blueprint:
+  name: Reset Dropdown Helper on Light Turn Off
+  description: Resets a specified input select (dropdown) to a default option when a target light turns off.
+  domain: automation
+  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/reset_select_helper.yaml
+  author: Ufans123
+  input:
+    target_light:
+      name: Target Light
+      description: The light that, when turned off, triggers the reset.
+      selector:
+        entity:
+          domain: light
+    target_helper:
+      name: Dropdown Helper
+      description: The input_select helper to reset.
+      selector:
+        entity:
+          domain: input_select
+    default_option:
+      name: Default Option
+      description: The option to select when the light turns off.
+      default: "Select an option"
+      selector:
+        text: {}
+
+trigger:
+  - platform: state
+    entity_id: !input target_light
+    to: "off"
+    id: light_off
+
+conditions: []
+
+action:
+  - choose:
+      - conditions:
+          - condition: trigger
+            id: light_off
+        sequence:
+          - action: input_select.select_option
+            target:
+              entity_id: !input target_helper
+            data:
+              option: !input default_option
+
+mode: single
