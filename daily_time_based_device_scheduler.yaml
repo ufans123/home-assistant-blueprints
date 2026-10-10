@@ -118,7 +118,7 @@ action:
     d_sun: !input day_sun
     today_enabled: "{% set day = now().strftime('%a') | lower %} {{ (day == 'mon'
       and d_mon) or\n   (day == 'tue' and d_tue) or\n   (day == 'wed' and d_wed) or\n
-      \  (day == 'thu' and d_thu) or\n   (day == 'fri' and d_fri) or\n   (day == 'sat'
+      \      (day == 'thu' and d_thu) or\n   (day == 'fri' and d_fri) or\n   (day == 'sat'
       and d_sat) or\n   (day == 'sun' and d_sun) }}\n"
 - choose:
   - conditions:
@@ -153,7 +153,21 @@ action:
 
             | float | int if off_parts | length > 2 else 0) %}
 
-            {% set diff = off_sec - on_sec %} {% set diff = diff + 86400 if diff  0 }}'
+            {% set diff = off_sec - on_sec %} {% set diff = diff + 86400 if diff <
+            0 else diff %} {{ diff }}
+
+            '
+  - conditions:
+    - condition: trigger
+      id: turn_off
+    sequence:
+    - action: homeassistant.turn_off
+      target:
+        entity_id: '{{ target_dev }}'
+    - if:
+      - condition: template
+        value_template: '{{ timer_ent is not none and timer_ent | string | length
+          > 0 }}'
       then:
       - action: timer.cancel
         target:
@@ -188,24 +202,17 @@ action:
       target:
         entity_id: '{{ timer_ent }}'
       data:
-        duration: '{% set on_val = states(on_input) if states(on_input) != ''unknown''
-          and states(on_input) is not none else on_input %} {% set off_val = states(off_input)
-          if states(off_input) != ''unknown'' and states(off_input) is not none
-          else off_input %}
-
-          {% set on_parts = on_val.split('':'') %} {% set off_parts = off_val.split('':'')
-          %}
-
-          {% set on_sec = (on_parts[0] | int * 3600) + (on_parts[1] | int * 60)
-          + (on_parts[2] | float | int if on_parts | length > 2 else 0) %} {% set
-          off_sec = (off_parts[0] | int * 3600) + (off_parts[1] | int * 60) + (off_parts[2]
-
-          | float | int if off_parts | length > 2 else 0) %}
-
-          {% set diff = off_sec - on_sec %} {% set diff = diff + 86400 if diff <
-          0 else diff %} {{ diff }}
-
-          '
+        duration: >
+          {% set off_val = states(off_input) if states(off_input) != 'unknown' and states(off_input) is not none else off_input %}
+          {% set off_parts = off_val.split(':') %}
+          {% set off_sec = (off_parts[0] | int * 3600) + (off_parts[1] | int * 60) + (off_parts[2] | float | int if off_parts | length > 2 else 0) %}
+          
+          {% set now_sec = (now().hour * 3600) + (now().minute * 60) + now().second %}
+          
+          {# Calculate remaining seconds until off_time today, handling cross-midnight if needed #}
+          {% set diff = off_sec - now_sec %}
+          {% set diff = diff + 86400 if diff < 0 else diff %}
+          {{ diff }}
   - conditions:
     - condition: trigger
       id: device_off
@@ -217,7 +224,7 @@ action:
       then:
       - action: timer.cancel
         target:
-          entity_id: '{{ timer_ent }}'
+          entity_id: 'timer_ent'
   - conditions:
     - condition: trigger
       id: ha_rebooted
@@ -226,7 +233,18 @@ action:
     - condition: template
       value_template: '{{ timer_ent is not none and timer_ent | string | length > 0 and states(timer_ent) == "idle" }}'
     sequence:
-    - action: homeassistant.turn_off
+    - action: timer.start
       target:
-        entity_id: '{{ target_dev }}'
+        entity_id: '{{ timer_ent }}'
+      data:
+        duration: >
+          {% set off_val = states(off_input) if states(off_input) != 'unknown' and states(off_input) is not none else off_input %}
+          {% set off_parts = off_val.split(':') %}
+          {% set off_sec = (off_parts[0] | int * 3600) + (off_parts[1] | int * 60) + (off_parts[2] | float | int if off_parts | length > 2 else 0) %}
+          
+          {% set now_sec = (now().hour * 3600) + (now().minute * 60) + now().second %}
+          
+          {% set diff = off_sec - now_sec %}
+          {% set diff = diff + 86400 if diff < 0 else diff %}
+          {{ diff }}
 mode: single
