@@ -3,7 +3,7 @@
 A robust, "set-and-forget" Home Assistant blueprint for scheduling switches, lights, and fans with built-in day-of-week filtering and **fully optional, bidirectional timer synchronization**.
 
 ---
-
+[← Back to Main Blueprints Repository](README.md)
 ## Features
 
 * **Flexible Time Scheduling:** Easily set daily Turn On and Turn Off times directly in the UI.
