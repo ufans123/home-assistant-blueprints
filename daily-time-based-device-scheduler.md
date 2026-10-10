@@ -4,21 +4,21 @@
 
 [← Back to Main Blueprints Repository](README.md)
 
-A robust, "set-and-forget" Home Assistant blueprint for scheduling switches, lights, and fans with built-in day-of-week filtering and **fully optional, bidirectional timer synchronization**. This blueprint includes edge-case handling for manual physical overrides and system power loss survival.
+A robust, "set-and-forget" Home Assistant blueprint for scheduling switches, lights, and fans with built-in day-of-week filtering and **fully optional, bidirectional timer synchronization**. This blueprint includes edge-case handling for manual physical overrides and smart recovery logic after system reboots or mid-schedule turn-ons.
 
 ## Features
 
-* **Flexible Time Scheduling:** Easily set daily Turn On and Turn Off times directly in the UI.
-* **Day-of-Week Filtering:** Toggle individual days of the week (`Mon`–`Sun`) on or off. 
-* **Optional Bidirectional Timer Sync:** Link a timer helper (`timer.*`) for live dashboard tracking. The blueprint keeps the timer and device in sync automatically:
+- **Flexible Time Scheduling:** Easily set daily Turn On and Turn Off times directly in the UI.
+- **Day-of-Week Filtering:** Toggle individual days of the week (`Mon`–`Sun`) on or off. 
+- **Optional Bidirectional Timer Sync:** Link a timer helper (`timer.*`) for live dashboard tracking. The blueprint keeps the timer and device in sync automatically:
 
   | Event | Action Taken |
   | :--- | :--- |
   | **Schedule Starts** | Starts the timer with the calculated duration between On and Off times. |
-  | **Device Turned On Manually** | Detects physical or external turn-on events and starts the timer countdown to prevent the device from being left running indefinitely. |
+  | **Device Turned On Manually / Mid-Schedule** | Detects physical or external turn-on events and starts the timer countdown using the **smart remaining time** left until the scheduled off-time. |
   | **Timer Ends or Cancelled** | Automatically turns off the controlled device. |
   | **Device Turned Off** | Automatically cancels the running timer helper. |
-  | **Home Assistant Restarts** | Evaluates whether the device is stuck in an orphan "on" state while the system was offline, executing an emergency safety shutdown if the timer expires mid-reboot. |
+  | **Home Assistant Restarts** | Evaluates whether the device is on after a reboot, syncing the timer to the exact remaining time left in the schedule rather than restarting the full duration. |
 
 ---
 
@@ -36,9 +36,9 @@ A robust, "set-and-forget" Home Assistant blueprint for scheduling switches, lig
 
 ## 💡 Important Notes & Pro-Tips
 
-* **Manual Override & Loop Protection:** If the device is flipped on manually outside of the schedule, the automation automatically catches it and starts the timer countdown helper. Built-in logic filters prevent this manual state change trigger from starting a loop when the automation itself fires the schedule.
-* **Disabling the Schedule:** If you uncheck all day-of-week toggles, the scheduled on/off automation actions will never execute, acting identically to pausing or disabling the automation.
-* **Timer Restarts & Power Loss Safety:** If you use an optional timer helper, make sure to enable the **"Restore"** option in its helper settings (`Settings > Devices & Services > Helpers`). This allows the timer to survive Home Assistant system restarts and accurately finish the countdown. If the system is offline for an extended duration and boots back up *after* the timer was supposed to expire, the blueprint executes an emergency shutdown loop on boot to safeguard hardware from staying stuck on.
+- **Manual Override & Smart Recovery:** If the device is flipped on manually or after a system restart midway through an active schedule, the automation automatically calculates and syncs to the *remaining time* left until the off-time rather than restarting the full total duration.
+- **Disabling the Schedule:** If you uncheck all day-of-week toggles, the scheduled on/off automation actions will never execute, acting identically to pausing or disabling the automation.
+- **Timer Restarts & Power Loss Safety:** If you use an optional timer helper, make sure to enable the **"Restore"** option in its helper settings (`Settings > Devices & Services > Helpers`). This allows the timer to survive Home Assistant system restarts and accurately finish the countdown.
 
 ---
 
