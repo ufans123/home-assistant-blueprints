@@ -7,6 +7,7 @@ Welcome to my personal Home Assistant blueprints repository! This project contai
 - **[Battery-Controlled Charging Switch](battery-charging-control.md)** - Automatically manage charging by turning a smart plug on/off based on battery percentage thresholds.
 - **[Battery-Controlled Charging Switch - Time Failsafe Companion](battery-charging-control-companion.md)** — Adds a customizable time-limit layer to the threshold engine, insulating your charger from network dropouts and managing temporary unplugging.
 - **[Button On/Off Control with Optional Actions](button-on-off.md)** — Controls any switch, light, or input boolean using separate On/Off event buttons, complete with support for optional secondary actions.
+- **[Daily Sun-Based Device Scheduler](daily-sun-based-device-scheduler.md)** — Schedule switches, lights, or fans using sunset and day-of-week rules with optional bidirectional timer synchronization and smart remaining-time recovery.
 - **[Daily Time-Based Device Scheduler](daily-time-based-device-scheduler.md)** — Schedule switches, lights, or fans using time and day-of-week rules with optional bidirectional timer synchronization and smart remaining-time recovery.
 - **[Low or Unknown Battery Alert](low-battery-alert.md)** — Automatically scan and report devices with low battery levels or unknown/unavailable statuses via scheduled checks or an optional manual trigger.
 - **[Motion Sensor Enable or Disable](motion-control-enable-disable.md)** - Enable or disable motion sensors via button events or automatically when a specific light turns off.
