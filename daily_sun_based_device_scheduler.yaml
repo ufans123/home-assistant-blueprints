@@ -1,0 +1,223 @@
+blueprint:
+  name: Daily Sun-Based Device Scheduler with Optional Timer
+  description: Turns a device on at sunset (with offset) and off at a fixed time, with fully optional bidirectional timer synchronization.
+  domain: automation
+  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/daily_sun_based_device_scheduler.yaml
+  author: Ufans123
+  input:
+    target_device:
+      name: Device to Control
+      description: The switch, light, or fan entity to turn on and off.
+      selector:
+        entity:
+          domain:
+          - switch
+          - light
+          - fan
+          multiple: false
+          reorder: false
+    sunset_offset:
+      name: Sunset Offset
+      description: Offset relative to sunset in HH:MM:SS format. Use a minus sign for before sunset (e.g., -00:30:00) or positive for after (e.g., 00:15:00).
+      default: "-00:30:00"
+      selector:
+        text: {}
+    off_time:
+      name: Turn Off Time
+      description: Enter a fixed time (e.g., 20:00:00) or select an input_datetime helper.
+      selector:
+        time: {}
+    timer_entity:
+      name: Timer Helper (Optional)
+      description: Optional timer helper (timer.*) to track countdowns. Leave blank to disable timer features.
+      selector:
+        entity:
+          domain:
+          - timer
+          multiple: false
+          reorder: false
+      default: ''
+    day_mon:
+      name: Monday
+      selector:
+        boolean: {}
+      default: true
+    day_tue:
+      name: Tuesday
+      selector:
+        boolean: {}
+      default: true
+    day_wed:
+      name: Wednesday
+      selector:
+        boolean: {}
+      default: true
+    day_thu:
+      name: Thursday
+      selector:
+        boolean: {}
+      default: true
+    day_fri:
+      name: Friday
+      selector:
+        boolean: {}
+      default: true
+    day_sat:
+      name: Saturday
+      selector:
+        boolean: {}
+      default: true
+    day_sun:
+      name: Sunday
+      selector:
+        boolean: {}
+      default: true
+alias: 'Daily Schedule: Sunset Control with Optional Timer & Days'
+description: Turns a device on/off based on sunset (with offset) and a fixed time, with optional bidirectional timer sync.
+trigger:
+- trigger: sun
+  event: sunset
+  offset: !input sunset_offset
+  id: turn_on
+- trigger: time
+  at: !input off_time
+  id: turn_off
+- trigger: event
+  event_type: timer.finished
+  id: timer_finished
+- trigger: event
+  event_type: timer.cancelled
+  id: timer_cancelled
+- trigger: state
+  entity_id: !input target_device
+  from: 'off'
+  to: 'on'
+  id: device_on
+- trigger: state
+  entity_id: !input target_device
+  to: 'off'
+  id: device_off
+- trigger: homeassistant
+  event: start
+  id: ha_rebooted
+action:
+- variables:
+    target_dev: !input target_device
+    off_input: !input off_time
+    timer_ent: !input timer_entity
+    d_mon: !input day_mon
+    d_tue: !input day_tue
+    d_wed: !input day_wed
+    d_thu: !input day_thu
+    d_fri: !input day_fri
+    d_sat: !input day_sat
+    d_sun: !input day_sun
+    today_enabled: "{% set day = now().strftime('%a') | lower %} {{ (day == 'mon' and d_mon) or (day == 'tue' and d_tue) or (day == 'wed' and d_wed) or (day == 'thu' and d_thu) or (day == 'fri' and d_fri) or (day == 'sat' and d_sat) or (day == 'sun' and d_sun) }}"
+- choose:
+  - conditions:
+    - condition: trigger
+      id: turn_on
+    - condition: template
+      value_template: '{{ today_enabled }}'
+    sequence:
+    - action: homeassistant.turn_on
+      target:
+        entity_id: '{{ target_dev }}'
+    - if:
+      - condition: template
+        value_template: '{{ timer_ent is not none and timer_ent | string | length > 0 }}'
+      then:
+      - action: timer.start
+        target:
+          entity_id: '{{ timer_ent }}'
+        data:
+          duration: >
+            {% set off_val = states(off_input) if states(off_input) != 'unknown' and states(off_input) is not none else off_input %}
+            {% set off_parts = off_val.split(':') %}
+            {% set off_sec = (off_parts[0] | int * 3600) + (off_parts[1] | int * 60) + (off_parts[2] | float | int if off_parts | length > 2 else 0) %}
+            {% set now_sec = (now().hour * 3600) + (now().minute * 60) + now().second %}
+            {% set diff = off_sec - now_sec %}
+            {% set diff = diff + 86400 if diff < 0 else diff %}
+            {{ diff }}
+  - conditions:
+    - condition: trigger
+      id: turn_off
+    sequence:
+    - action: homeassistant.turn_off
+      target:
+        entity_id: '{{ target_dev }}'
+    - if:
+      - condition: template
+        value_template: '{{ timer_ent is not none and timer_ent | string | length > 0 }}'
+      then:
+      - action: timer.cancel
+        target:
+          entity_id: '{{ timer_ent }}'
+  - conditions:
+    - condition: trigger
+      id: timer_finished
+    - condition: template
+      value_template: '{{ timer_ent is not none and timer_ent | string | length > 0 and trigger.event.data.entity_id == timer_ent }}'
+    sequence:
+    - action: homeassistant.turn_off
+      target:
+        entity_id: '{{ target_dev }}'
+  - conditions:
+    - condition: trigger
+      id: timer_cancelled
+    - condition: template
+      value_template: '{{ timer_ent is not none and timer_ent | string | length > 0 and trigger.event.data.entity_id == timer_ent }}'
+    sequence:
+    - action: homeassistant.turn_off
+      target:
+        entity_id: '{{ target_dev }}'
+  - conditions:
+    - condition: trigger
+      id: device_on
+    - condition: template
+      value_template: '{{ timer_ent is not none and timer_ent | string | length > 0 and states(timer_ent) == "idle" }}'
+    sequence:
+    - action: timer.start
+      target:
+        entity_id: '{{ timer_ent }}'
+      data:
+        duration: >
+          {% set off_val = states(off_input) if states(off_input) != 'unknown' and states(off_input) is not none else off_input %}
+          {% set off_parts = off_val.split(':') %}
+          {% set off_sec = (off_parts[0] | int * 3600) + (off_parts[1] | int * 60) + (off_parts[2] | float | int if off_parts | length > 2 else 0) %}
+          {% set now_sec = (now().hour * 3600) + (now().minute * 60) + now().second %}
+          {% set diff = off_sec - now_sec %}
+          {% set diff = diff + 86400 if diff < 0 else diff %}
+          {{ diff }}
+  - conditions:
+    - condition: trigger
+      id: device_off
+    sequence:
+    - if:
+      - condition: template
+        value_template: '{{ timer_ent is not none and timer_ent | string | length > 0 }}'
+      then:
+      - action: timer.cancel
+        target:
+          entity_id: '{{ timer_ent }}'
+  - conditions:
+    - condition: trigger
+      id: ha_rebooted
+    - condition: template
+      value_template: '{{ states(target_dev) == "on" }}'
+    - condition: template
+      value_template: '{{ timer_ent is not none and timer_ent | string | length > 0 and states(timer_ent) == "idle" }}'
+    sequence:
+    - action: timer.start
+      target:
+        entity_id: '{{ timer_ent }}'
+      data:
+        duration: >
+          {% set off_val = states(off_input) if states(off_input) != 'unknown' and states(off_input) is not none else off_input %}
+          {% set off_parts = off_val.split(':') %}
+          {% set off_sec = (off_parts[0] | int * 3600) + (off_parts[1] | int * 60) + (off_parts[2] | float | int if off_parts | length > 2 else 0) %}
+          {% set now_sec = (now().hour * 3600) + (now().minute * 60) + now().second %}
+          {% set diff = off_sec - now_sec %}
+          {% set diff = diff + 86400 if diff < 0 else diff %}
+          {{ diff }}
+mode: single
