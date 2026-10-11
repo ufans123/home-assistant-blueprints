@@ -14,6 +14,8 @@ How to keep the lights on when busy in the kitchen
 
 This prevents lights turning off while standing at the counter or washing dishes.
 
+(Note: In my testing I am using Philips Hue motion sensors and switches)
+
 ## How It Works
 
 1. **Disable Motion:** Triggering the **Disable Event Entity** (such as a button press on) turns off the selected motion switch(es).
@@ -41,3 +43,5 @@ Click the badge below to import this blueprint directly into your Home Assistant
 2. In your Home Assistant configuration directory, navigate to your blueprints folder (e.g., `config/blueprints/automation/ufans123/`).
 3. Paste the code into a file named `motion_control_enable_disable_sensors.yaml`.
 4. Reload your automations or restart Home Assistant.
+
+(For now I would recommend using **Method 2** as there have been issues with Method 1 redirects not loading the popup prompts expected in the blueprint UI since recent core updates)
