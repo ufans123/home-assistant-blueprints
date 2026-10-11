@@ -1,5 +1,5 @@
 blueprint:
-  name: Motion Control Enable or Disable
+  name: Motion Sensor Enable or Disable
   description: Enables or disables motion sensors via switch buttons or when a monitored light turns off.
   domain: automation
   source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/motion_control_enable_disable_sensors.yaml
