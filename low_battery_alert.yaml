@@ -1,0 +1,102 @@
+blueprint:
+  name: Low or Unknown Battery Alert
+  description: Checks battery sensors daily or via an optional input_boolean helper.
+  domain: automation
+  domain: automation
+  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/low_battery_alert.yaml
+  input:
+    check_time:
+      name: Daily Check Time
+      description: Time of day to run the automatic check.
+      selector:
+        time: {}
+    trigger_helper:
+      name: Manual Trigger Helper (Optional)
+      description: An optional input_boolean helper to trigger the check manually. Leave blank if not used.
+      default: []
+      selector:
+        entity:
+          multiple: false
+          domain: input_boolean
+    threshold:
+      name: Battery Threshold (%)
+      description: Batteries below this percentage will be flagged.
+      default: 20
+      selector:
+        number:
+          min: 1
+          max: 100
+          unit_of_measurement: '%'
+
+trigger:
+  - platform: time
+    at: !input check_time
+    id: time_check
+  - platform: state
+    entity_id: !input trigger_helper
+    to: 'on'
+    id: manual_check
+
+action:
+  - variables:
+      thresh: !input threshold
+      helper_entity: !input trigger_helper
+      is_manual: "{{ trigger.id == 'manual_check' }}"
+      low_or_unknown: >
+        {% set ns = namespace(entities=[]) %}
+        {% for s in states.sensor if s.attributes.device_class | default('') == 'battery' %}
+          {% if s.state in ['unknown', 'unavailable'] %}
+            {% set ns.entities = ns.entities + [s.name ~ ' (' ~ s.state | title ~ ')'] %}
+          {% elif s.state | int(100) < thresh %}
+            {% set ns.entities = ns.entities + [s.name ~ ' (' ~ s.state ~ '%)'] %}
+          {% endif %}
+        {% endfor %}
+        {{ ns.entities }}
+
+  - choose:
+      # Case 1: Low batteries found (runs for both time and manual)
+      - conditions:
+          - condition: template
+            value_template: "{{ low_or_unknown | length > 0 }}"
+        sequence:
+          - action: persistent_notification.create
+            data:
+              notification_id: low_battery_alert
+              title: '⚠️ Low or Unknown Battery Alert'
+              message: >-
+                The following devices have low battery levels (< {{ thresh }}%) or an unknown status:<br><br>
+                {% for item in low_or_unknown %}
+                • {{ item }}<br><br>
+                {% endfor %}
+
+      # Case 2: No low batteries found AND triggered manually via helper
+      - conditions:
+          - condition: template
+            value_template: "{{ is_manual and low_or_unknown | length == 0 }}"
+        sequence:
+          - action: persistent_notification.create
+            data:
+              notification_id: low_battery_alert
+              title: '✅ Battery Status: All Clear'
+              message: 'No battery levels were below the threshold and no unknown/unavailable statuses were found.'
+
+      # Case 3: No low batteries found AND triggered by time schedule
+      - conditions:
+          - condition: template
+            value_template: "{{ not is_manual and low_or_unknown | length == 0 }}"
+        sequence:
+          - action: persistent_notification.dismiss
+            data:
+              notification_id: low_battery_alert
+
+  # Reset the manual helper back to off if it was used
+  - choose:
+      - conditions:
+          - condition: template
+            value_template: "{{ is_manual and helper_entity is defined and helper_entity not in [none, [], ''] }}"
+        sequence:
+          - action: input_boolean.turn_off
+            target:
+              entity_id: !input trigger_helper
+
+mode: single
