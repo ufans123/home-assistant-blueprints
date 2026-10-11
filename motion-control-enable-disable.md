@@ -4,11 +4,19 @@
 
 [← Back to Main Blueprints Repository](README.md)
 
-Enables or disables motion sensors via button/event entities or automatically when a monitored light turns off.
+Enables or disables motion sensors via button/event entities or automatically when a monitored light turns off. 
+This can be useful when in a room that you do not want lights turning off based on a motion clear event.
+
+**My approach...**  
+How to keep the lights on when busy in the kitchen
+- **turning on** the smart light switch to **disable the motion sensor**
+- **turning off** the smart light switch to **enable the motion sensor**
+
+This prevents lights turning off while standing at the counter or washing dishes.
 
 ## How It Works
 
-1. **Disable Motion:** Triggering the **Disable Event Entity** (such as a button press) turns off the selected motion switch(es).
+1. **Disable Motion:** Triggering the **Disable Event Entity** (such as a button press on) turns off the selected motion switch(es).
 2. **Enable via Event:** Triggering the **Enable Event Entity** turns the motion switch(es) back on.
 3. **Auto-Enable via Light:** When the **Monitored Light** changes state to `off`, it automatically re-enables the motion switch(es).
 
