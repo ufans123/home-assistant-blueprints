@@ -18,9 +18,9 @@ This prevents lights turning off while standing at the counter or washing dishes
 
 ## How It Works
 
-1. **Disable Motion:** Triggering the **Disable Event Entity** (such as a button press on) turns off the selected motion switch(es).
-2. **Enable via Event:** Triggering the **Enable Event Entity** turns the motion switch(es) back on.
-3. **Auto-Enable via Light:** When the **Monitored Light** changes state to `off`, it automatically re-enables the motion switch(es).
+1. **Disable Motion Sensor:** Triggering the **Disable Event Entity** (such as the button press on for a light) disables the selected motion sensor(s).
+2. **Enable Motion Sensor:** Triggering the **Enable Event Entity** (such as the button press off for a light) enables the selected motion sensor(s).
+3. **Auto-Enable via Light:** When the **Monitored Light** changes state to `off`, even by timer, it automatically re-enables the motion sensor(s).
 
 ## ⚙️ Configuration Properties
 
