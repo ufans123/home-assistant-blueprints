@@ -44,4 +44,9 @@ Click the badge below to import this blueprint directly into your Home Assistant
 3. Paste the code into a file named `motion_control_enable_disable_sensors.yaml`.
 4. Reload your automations or restart Home Assistant.
 
-(For now I would recommend using **Method 2** as there have been issues with Method 1 redirects not loading the popup prompts expected in the blueprint UI since recent core updates)
+### Method 3: Manual Installation using the Blueprints Dashboard (easier) 
+1. Copy the following URL... 
+<pre>https://github.com/ufans123/home-assistant-blueprints/blob/main/motion_control_enable_disable_sensors.yaml</pre>
+2. Navigate to your Home Assistant Blueprints Dashboard UI
+3. In the bottom right corner click on the `Input blueprint` button
+4. Paste in the URL and follow the prompts
