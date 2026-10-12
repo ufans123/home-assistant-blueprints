@@ -36,9 +36,11 @@ Click the badge below to import this blueprint directly into your Home Assistant
 3. Paste the code into a file named `low_battery_alert.yaml`.
 4. Go to **Developer Tools** > **YAML** and click **Reload Automation Blueprints** (or restart Home Assistant).
 
-### Method 3: Manual Installation using the Blueprints Dashboard (easier) 
-1. Copy the following URL... 
-<pre>https://github.com/ufans123/home-assistant-blueprints/blob/main/low_battery_alert.yaml</pre>
+### Method 3: Manual Installation using the Blueprints Dashboard (Easier) 
+1. Copy the following URL...
+```
+https://github.com/ufans123/home-assistant-blueprints/blob/main/low_battery_alert.yaml
+```
 2. Navigate to your Home Assistant Blueprints Dashboard UI
-3. In the bottom right corner click on the `Input blueprint` button
+3. In the bottom right corner click on the *'Import blueprint'* button
 4. Paste in the URL and follow the prompts
