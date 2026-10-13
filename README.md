@@ -2,6 +2,19 @@
 
 Welcome to my personal Home Assistant blueprints repository! This project contains advanced, highly customized configuration engines designed to streamline smart home automation orchestration.
 
+## ⚠️ Disclaimer
+
+These Home Assistant blueprints are provided **"as-is"** and meant to be shared freely with the Home Assistant community. 
+
+By using these blueprints, you acknowledge and agree that:
+* **No Warranty:** The author makes no warranties or guarantees regarding the stability, reliability, security, or functionality of these blueprints.
+* **Assumption of Risk:** Smart home environments vary widely. You are solely responsible for testing these blueprints in your specific environment before relying on them.
+* **Artificial Intelligence (AI) Notice:** Portions of these blueprints may have been generated, optimized, or assisted by Artificial Intelligence tools. Additionally, if these blueprints interact with AI integration APIs (such as OpenAI or Google Gemini), the author is not responsible for AI-generated hallucinations, unexpected API usage costs, or erratic automation triggers caused by non-deterministic AI outputs.
+* **Limitation of Liability:** In no event shall the author be held liable for any damages, logic errors, loop-triggers, device malfunctions, excessive API fees, security vulnerabilities, or physical property damage resulting from the use or misuse of these blueprints.
+
+Always review the automation YAML and test changes safely before deploying them to critical production devices (e.g., locks, sirens, or heating systems).
+
+
 ## 📋 Available Blueprints
 
 - **[Battery-Controlled Charging Switch](battery-charging-control.md)** - Automatically manage charging by turning a smart plug on/off based on battery percentage thresholds.
