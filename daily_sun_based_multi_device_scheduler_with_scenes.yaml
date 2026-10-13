@@ -1,0 +1,250 @@
+blueprint:
+  name: Daily Sun-Based Multi-Device & Multi-Scene Scheduler with Timer
+  description: >
+    Turns multiple devices/lights on or applies multiple scenes at sunset (with offset) 
+    and off at a fixed time, with bidirectional timer synchronization.
+    - Target devices are required to ensure reliable timer syncing.
+    - Scenes are stateless snapshots activated at sunset.
+    - Note: If a device included in a scene is also listed under 'Devices to Control', its state change to 'on' will successfully trigger and sync the timer automatically!
+  domain: automation
+  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/daily_sun_based_multi_device_scheduler_with_scenes.yaml
+  author: Ufans123
+  input:
+    target_devices:
+      name: Devices to Control
+      description: Switches, lights, or fans to turn on/off and sync with the timer if toggled manually or via scene activation.
+      selector:
+        entity:
+          domain:
+            - switch
+            - light
+            - fan
+          multiple: true
+          reorder: false
+    turn_on_scenes:
+      name: Turn On Scenes (Optional)
+      description: Select one or more scenes to activate at sunset alongside your devices.
+      default: []
+      selector:
+        entity:
+          domain: scene
+          multiple: true
+    sunset_offset:
+      name: Sunset Offset
+      description: Offset relative to sunset in HH:MM:SS format (e.g., -00:30:00 or 00:15:00).
+      default: "-00:30:00"
+      selector:
+        text: {}
+    off_time:
+      name: Turn Off Time
+      description: Enter a fixed time (e.g., 20:00:00) or select an input_datetime helper.
+      selector:
+        time: {}
+    timer_entity:
+      name: Timer Helper (Optional)
+      description: Optional timer helper (timer.*) to track countdowns. Leave blank if not using timers.
+      selector:
+        entity:
+          domain: timer
+          multiple: false
+          reorder: false
+      default: ''
+    day_mon:
+      name: Monday
+      selector:
+        boolean: {}
+      default: true
+    day_tue:
+      name: Tuesday
+      selector:
+        boolean: {}
+      default: true
+    day_wed:
+      name: Wednesday
+      selector:
+        boolean: {}
+      default: true
+    day_thu:
+      name: Thursday
+      selector:
+        boolean: {}
+      default: true
+    day_fri:
+      name: Friday
+      selector:
+        boolean: {}
+      default: true
+    day_sat:
+      name: Saturday
+      selector:
+        boolean: {}
+      default: true
+    day_sun:
+      name: Sunday
+      selector:
+        boolean: {}
+      default: true
+
+alias: 'Daily Schedule: Multi-Device & Multi-Scene Sunset Control with Timer'
+description: Turns devices and/or scenes on based on sunset (with offset) and off at a fixed time, with bidirectional timer sync.
+
+trigger:
+  - trigger: sun
+    event: sunset
+    offset: !input sunset_offset
+    id: turn_on
+  - trigger: time
+    at: !input off_time
+    id: turn_off
+  - trigger: event
+    event_type: timer.finished
+    id: timer_finished
+  - trigger: event
+    event_type: timer.cancelled
+    id: timer_cancelled
+  - trigger: state
+    entity_id: !input target_devices
+    from: 'off'
+    to: 'on'
+    id: device_on
+  - trigger: state
+    entity_id: !input target_devices
+    to: 'off'
+    id: device_off
+  - trigger: homeassistant
+    event: start
+    id: ha_rebooted
+
+action:
+  - variables:
+      target_devs: !input target_devices
+      on_scenes: !input turn_on_scenes
+      off_input: !input off_time
+      timer_ent: !input timer_entity
+      d_mon: !input day_mon
+      d_tue: !input day_tue
+      d_wed: !input day_wed
+      d_thu: !input day_thu
+      d_fri: !input day_fri
+      d_sat: !input day_sat
+      d_sun: !input day_sun
+      today_enabled: "{% set day = now().strftime('%a') | lower %} {{ (day == 'mon' and d_mon) or (day == 'tue' and d_tue) or (day == 'wed' and d_wed) or (day == 'thu' and d_thu) or (day == 'fri' and d_fri) or (day == 'sat' and d_sat) or (day == 'sun' and d_sun) }}"
+      has_timer: "{{ timer_ent is not none and timer_ent | string | length > 0 }}"
+
+  - choose:
+      # 1. SUNSET / SCHEDULED TURN ON
+      - conditions:
+          - condition: trigger
+            id: turn_on
+          - condition: template
+            value_template: '{{ today_enabled }}'
+        sequence:
+          - if:
+              - condition: template
+                value_template: '{{ on_scenes is defined and on_scenes | length > 0 }}'
+            then:
+              - action: scene.turn_on
+                target:
+                  entity_id: '{{ on_scenes }}'
+          - action: homeassistant.turn_on
+            target:
+              entity_id: '{{ target_devs }}'
+          - if:
+              - condition: template
+                value_template: '{{ has_timer }}'
+            then:
+              - action: timer.start
+                target:
+                  entity_id: '{{ timer_ent }}'
+                data:
+                  duration: >
+                    {% set off_val = states(off_input) if states(off_input) != 'unknown' and states(off_input) is not none else off_input %}
+                    {% set off_parts = off_val.split(':') %}
+                    {% set off_sec = (off_parts[0] | int * 3600) + (off_parts[1] | int * 60) + (off_parts[2] | float | int if off_parts | length > 2 else 0) %}
+                    {% set now_sec = (now().hour * 3600) + (now().minute * 60) + now().second %}
+                    {% set diff = off_sec - now_sec %}
+                    {% set diff = diff + 86400 if diff < 0 else diff %}
+                    {{ diff }}
+
+      # 2. FIXED TIME TURN OFF
+      - conditions:
+          - condition: trigger
+            id: turn_off
+        sequence:
+          - action: homeassistant.turn_off
+            target:
+              entity_id: '{{ target_devs }}'
+          - if:
+              - condition: template
+                value_template: '{{ has_timer }}'
+            then:
+              - action: timer.cancel
+                target:
+                  entity_id: '{{ timer_ent }}'
+
+      # 3. TIMER FINISHED / CANCELLED -> TURN OFF DEVICES
+      - conditions:
+          - condition: template
+            value_template: '{{ trigger.id in ["timer_finished", "timer_cancelled"] and has_timer and trigger.event.data.entity_id == timer_ent }}'
+        sequence:
+          - action: homeassistant.turn_off
+            target:
+              entity_id: '{{ target_devs }}'
+
+      # 4. MANUAL OR SCENE-TRIGGERED DEVICE TURN ON -> START TIMER IF IDLE
+      - conditions:
+          - condition: trigger
+            id: device_on
+          - condition: template
+            value_template: '{{ has_timer and states(timer_ent) == "idle" }}'
+        sequence:
+          - action: timer.start
+            target:
+              entity_id: '{{ timer_ent }}'
+            data:
+              duration: >
+                {% set off_val = states(off_input) if states(off_input) != 'unknown' and states(off_input) is not none else off_input %}
+                {% set off_parts = off_val.split(':') %}
+                {% set off_parts = off_val.split(':') %}
+                {% set off_sec = (off_parts[0] | int * 3600) + (off_parts[1] | int * 60) + (off_parts[2] | float | int if off_parts | length > 2 else 0) %}
+                {% set now_sec = (now().hour * 3600) + (now().minute * 60) + now().second %}
+                {% set diff = off_sec - now_sec %}
+                {% set diff = diff + 86400 if diff < 0 else diff %}
+                {{ diff }}
+
+      # 5. MANUAL DEVICE TURN OFF -> CANCEL TIMER
+      - conditions:
+          - condition: trigger
+            id: device_off
+        sequence:
+          - if:
+              - condition: template
+                value_template: '{{ has_timer }}'
+            then:
+              - action: timer.cancel
+                target:
+                  entity_id: '{{ timer_ent }}'
+
+      # 6. HA REBOOTED -> RESYNC TIMER IF ANY DEVICE IS ON
+      - conditions:
+          - condition: trigger
+            id: ha_rebooted
+          - condition: template
+            value_template: '{{ target_devs | expand | selectattr("state", "eq", "on") | list | count > 0 }}'
+          - condition: template
+            value_template: '{{ has_timer and states(timer_ent) == "idle" }}'
+        sequence:
+          - action: timer.start
+            target:
+              entity_id: '{{ timer_ent }}'
+            data:
+              duration: >
+                {% set off_val = states(off_input) if states(off_input) != 'unknown' and states(off_input) is not none else off_input %}
+                {% set off_parts = off_val.split(':') %}
+                {% set off_sec = (off_parts[0] | int * 3600) + (off_parts[1] | int * 60) + (off_parts[2] | float | int if off_parts | length > 2 else 0) %}
+                {% set now_sec = (now().hour * 3600) + (now().minute * 60) + now().second %}
+                {% set diff = off_sec - now_sec %}
+                {% set diff = diff + 86400 if diff < 0 else diff %}
+                {{ diff }}
+
+mode: single
