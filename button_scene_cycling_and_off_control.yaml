@@ -1,0 +1,110 @@
+blueprint:
+  name: Button Scene Cycling and Off Control
+  description: >
+    Cycles sequentially through scenes with an On/Scene button, and turns off target devices 
+    and resets the counter with an Off button.
+    
+    Hardware Compatibility Note: Works seamlessly across different generations of remotes. 
+    For older remotes, use separate dedicated On and Off buttons. For newer Philips Hue remotes, 
+    you can map the scene button to cycle scenes and configure the power toggle button strictly 
+    as a shutdown command to keep the cycle perfectly synchronized.
+  domain: automation
+  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/button_scene_cycling_and_off_control.yaml
+  author: Ufans123
+  input:
+    on_button:
+      name: On Button
+      description: The event entity for cycling through scenes.
+      selector:
+        entity:
+          domain:
+            - event
+          multiple: false
+          reorder: false
+    off_button:
+      name: Off Button
+      description: The event entity for turning off the target devices and resetting the counter.
+      selector:
+        entity:
+          domain:
+            - event
+          multiple: false
+          reorder: false
+    scene_list:
+      name: Scenes to Cycle
+      description: Select and reorder the scenes you want to cycle through in sequence.
+      selector:
+        entity:
+          domain: scene
+          multiple: true
+          reorder: true
+    target_entity:
+      name: Target Devices for Off Button
+      description: The switches, lights, or devices to turn off when the off button is pressed.
+      selector:
+        target:
+          entity:
+            - domain:
+                - switch
+                - light
+                - input_boolean
+    counter_entity:
+      name: Counter Helper
+      description: Select your Counter helper to remember your place in the cycle.
+      selector:
+        entity:
+          domain: counter
+
+mode: single
+max_exceeded: silent
+
+triggers:
+  - trigger: event.received
+    target:
+      entity_id: !input on_button
+    options:
+      event_type:
+        - initial_press
+    id: turn_on
+  - trigger: event.received
+    target:
+      entity_id: !input off_button
+    options:
+      event_type:
+        - initial_press
+    id: turn_off
+
+conditions: []
+
+actions:
+  - choose:
+      - conditions:
+          - condition: trigger
+            id: turn_on
+        sequence:
+          - variables:
+              scenes: !input scene_list
+              counter: !input counter_entity
+              total_scenes: "{{ scenes | length }}"
+              current_count: "{{ states(counter) | int(0) }}"
+              next_index: "{{ current_count % total_scenes }}"
+              target_scene: "{{ scenes[next_index] }}"
+
+          - action: scene.turn_on
+            target:
+              entity_id: "{{ target_scene }}"
+
+          - action: counter.increment
+            target:
+              entity_id: !input counter_entity
+
+      - conditions:
+          - condition: trigger
+            id: turn_off
+        sequence:
+          - action: homeassistant.turn_off
+            target: !input target_entity
+
+          - action: counter.reset
+            target:
+              entity_id: !input counter_entity
