@@ -24,6 +24,11 @@ This automation blueprint cycles sequentially through a selected list of scenes 
 | **Target Devices for Off Button** | Target Entity | The switches, lights, or input booleans to turn off when the off button is pressed. |
 | **Counter Helper** | Counter Entity | The counter helper used to remember your place in the active scene cycle. |
 
+### Pro Tips
+- **Counter Step Size:** When creating your counter helper (`counter.*`), leave the step size at `1` so the cycle advances by exactly one scene per button press. You can leave the minimum and maximum values at their defaults (or set a max if you want a hard limit, though modulo math handles infinite loops automatically).
+- **First Scene Priority:** Because the Off button resets the counter to `0`, always place your favorite "default" or "welcome" scene at the very top of your selected scene list. That way, turning the system on after a shutdown is always completely predictable.
+- **Multi-Device Power Control:** The target entity selector accepts multiple devices, groups, or domains (lights, switches, input booleans). If you want an entire room or zone to shut down together, group them into a Home Assistant Light or Switch Group and target that group.
+
 ## Installation
 
 ### Method 1: Click to Import (Easiest)
