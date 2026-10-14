@@ -7,10 +7,10 @@ Welcome to my personal Home Assistant blueprints repository! This project contai
 These Home Assistant blueprints are provided **"as-is"** and meant to be shared freely with the Home Assistant community. 
 
 By using these blueprints, you acknowledge and agree that:
-* **No Warranty:** The author makes no warranties or guarantees regarding the stability, reliability, security, or functionality of these blueprints.
-* **Assumption of Risk:** Smart home environments vary widely. You are solely responsible for testing these blueprints in your specific environment before relying on them.
-* **Artificial Intelligence (AI) Notice:** Portions of these blueprints may have been generated, optimized, or assisted by Artificial Intelligence tools. Additionally, if these blueprints interact with AI integration APIs (such as OpenAI or Google Gemini), the author is not responsible for AI-generated hallucinations, unexpected API usage costs, or erratic automation triggers caused by non-deterministic AI outputs.
-* **Limitation of Liability:** In no event shall the author be held liable for any damages, logic errors, loop-triggers, device malfunctions, excessive API fees, security vulnerabilities, or physical property damage resulting from the use or misuse of these blueprints.
+- **No Warranty:** The author makes no warranties or guarantees regarding the stability, reliability, security, or functionality of these blueprints.
+- **Assumption of Risk:** Smart home environments vary widely. You are solely responsible for testing these blueprints in your specific environment before relying on them.
+- **Artificial Intelligence (AI) Notice:** Portions of these blueprints may have been generated, optimized, or assisted by Artificial Intelligence tools. Additionally, if these blueprints interact with AI integration APIs (such as OpenAI or Google Gemini), the author is not responsible for AI-generated hallucinations, unexpected API usage costs, or erratic automation triggers caused by non-deterministic AI outputs.
+- **Limitation of Liability:** In no event shall the author be held liable for any damages, logic errors, loop-triggers, device malfunctions, excessive API fees, security vulnerabilities, or physical property damage resulting from the use or misuse of these blueprints.
 
 Always review the automation YAML and test changes safely before deploying them to critical production devices (e.g., locks, sirens, or heating systems).
 
@@ -20,6 +20,7 @@ Always review the automation YAML and test changes safely before deploying them 
 - **[Battery-Controlled Charging Switch](battery-charging-control.md)** - Automatically manage charging by turning a smart plug on/off based on battery percentage thresholds.
 - **[Battery-Controlled Charging Switch - Time Failsafe Companion](battery-charging-control-companion.md)** — Adds a customizable time-limit layer to the threshold engine, insulating your charger from network dropouts and managing temporary unplugging.
 - **[Button On/Off Control with Optional Actions](button-on-off.md)** — Controls any switch, light, or input boolean using separate On/Off event buttons, complete with support for optional secondary actions.
+- **[Button Scene Cycling and Off Control](button-scene-cycling-and-off-control.md)** — Cycles sequentially through a list of scenes using an On/Scene button and a counter helper, with complete shutdown and counter reset on Off.
 - **[Daily Sun-Based Device Scheduler](daily-sun-based-device-scheduler.md)** — Schedule switches, lights, or fans using sunset and day-of-week rules with optional bidirectional timer synchronization and smart remaining-time recovery.
 - **[Daily Sun-Based Multi-Device & Multi-Scene Scheduler with Timer](daily-sun-based-multi-device-scheduler-with-scenes.md)** — Schedule multiple switches, lights, fans, and scenes using sunset rules and day-of-week filtering, featuring bidirectional timer synchronization and smart remaining-time recovery.
 - **[Daily Time-Based Device Scheduler](daily-time-based-device-scheduler.md)** — Schedule switches, lights, or fans using time and day-of-week rules with optional bidirectional timer synchronization and smart remaining-time recovery.
