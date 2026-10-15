@@ -1,0 +1,50 @@
+blueprint:
+  name: Cycle Through Multiple Scenes (NFC & Switches)
+  description: >
+    Cycles sequentially through a list of selected scenes using a counter helper upon any trigger. 
+    This blueprint is specifically optimized for **NFC tags**—tap your phone to a tag to seamlessly 
+    cycle through different lighting presets, moods, or device states every time you scan it!
+  domain: automation
+  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/cycle_scenes_by_trigger.yaml
+  author: Ufans123
+  input:
+    trigger_source:
+      name: Triggers
+      description: Add your triggers here. **NFC tags** work brilliantly here—scan a tag to instantly advance to the next scene in your list.
+      selector:
+        trigger: {}
+    scene_list:
+      name: Scenes to Cycle
+      description: Select the scenes you want to cycle through in order.
+      selector:
+        entity:
+          domain: scene
+          multiple: true
+          reorder: true
+    counter_entity:
+      name: Counter Helper
+      description: Select your Counter helper to remember your place in the cycle.
+      selector:
+        entity:
+          domain: counter
+mode: single
+max_exceeded: silent
+
+trigger: !input trigger_source
+
+action:
+  - variables:
+      scenes: !input scene_list
+      counter: !input counter_entity
+      total_scenes: "{{ scenes | length }}"
+      current_count: "{{ states(counter) | int(0) }}"
+      next_index: "{{ current_count % total_scenes }}"
+      target_scene: "{{ scenes[next_index] }}"
+
+  - action: scene.turn_on
+    target:
+      entity_id: "{{ target_scene }}"
+
+  - action: counter.increment
+    target:
+      entity_id: "{{ counter }}"
