@@ -1,0 +1,96 @@
+blueprint:
+  name: "Ring Keypad v2: Z-Wave Multi-Trigger Sound Player"
+  description: |
+    ### Overview
+    Allows multiple custom triggers (like door open events, light switches, or motion sensors) to play built-in sound samples, chimes, and system tones on a Ring Keypad v2 via Z-Wave JS.
+    
+    ### Prerequisites
+    1. **Z-Wave JS Integration:** Your Home Assistant instance must have the official `zwave_js` integration running.
+    2. **Connected Ring Keypad v2:** The keypad must already be paired to your Z-Wave network.
+       * *Note:* Ring Keypads require **S2 Security** during pairing to process Z-Wave Indicator Command Class (135) audio commands correctly.
+    3. **Device Selection:** Choose the target Ring Keypad device in the settings below.
+
+  domain: automation
+  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/ring_keypad_sounds.yaml
+  author: Ufans123
+  input:
+    keypad_device:
+      name: Ring Keypad Device
+      description: Select your Ring Keypad device (targets its Z-Wave entity automatically).
+      selector:
+        device:
+          integration: zwave_js
+          manufacturer: Ring
+
+    trigger_events:
+      name: Automation Triggers
+      description: Define what events, states, or sensors trigger this automation.
+      selector:
+        trigger: {}
+
+    sound_selection:
+      name: Sound Effect or Tone
+      description: Choose which built-in sound sample, prompt, or tone to play.
+      default: "100"
+      selector:
+        select:
+          options:
+            # Chimes (Alphabetical)
+            - label: "Echoing Boing Boing (Chime)"
+              value: "99"
+            - label: "Electronic Double Beep (Chime)"
+              value: "96"
+            - label: "Guitar Riff (Chime)"
+              value: "97"
+            - label: "Ring Doorbell Chime (Chime)"
+              value: "100"
+            - label: "Windchime (Chime)"
+              value: "98"
+            # Tones (Alphabetical)
+            - label: "Soft Error Beep (Tone)"
+              value: "9"
+
+    sound_volume:
+      name: Volume Level
+      description: Set the playback volume percentage (1-100%).
+      default: 50
+      selector:
+        number:
+          min: 1
+          max: 100
+          unit_of_measurement: '%'
+          mode: slider
+
+mode: queued
+max: 10
+
+trigger: !input trigger_events
+
+action:
+  - choose:
+      # If the Soft Error Beep (Tone) is chosen, it routes through property_key "1"
+      - conditions:
+          - condition: template
+            value_template: "{{ sound_selection == '9' }}"
+        sequence:
+          - action: zwave_js.set_value
+            target:
+              device_id: !input keypad_device
+            data:
+              command_class: "135"
+              endpoint: "0"
+              property: "9"
+              property_key: "1"
+              value: !input sound_volume
+
+    # Default fallback for standard chimes (property_key "9")
+    default:
+      - action: zwave_js.set_value
+        target:
+          device_id: !input keypad_device
+        data:
+          command_class: "135"
+          endpoint: "0"
+          property: !input sound_selection
+          property_key: "9"
+          value: !input sound_volume
