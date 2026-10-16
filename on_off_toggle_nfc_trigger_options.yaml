@@ -1,0 +1,126 @@
+blueprint:
+  name: "On/Off or Toggle Control with Scene Options (NFC & Triggers)"
+  description: "Effortlessly control lights, switches, fans, and inputs using NFC tags or buttons with explicit On, Off, and Toggle logic, plus optional multi-scene presets."
+  domain: automation
+  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/on_off_toggle_nfc_trigger_options.yaml
+  author: Ufans123
+  input:
+    trigger_source:
+      name: Triggers
+      description: "Add your triggers here. NFC tags work brilliantly here!"
+      selector:
+        trigger: {}
+    target_entity:
+      name: Target Entity
+      description: "The lights, switches, fans, or input booleans to control."
+      selector:
+        target:
+          entity:
+            domain:
+              - light
+              - switch
+              - fan
+              - input_boolean
+    action_type:
+      name: Action
+      description: "Choose what happens when triggered."
+      default: toggle
+      selector:
+        select:
+          options:
+            - label: "Turn On"
+              value: "turn_on"
+            - label: "Turn Off"
+              value: "turn_off"
+            - label: "Toggle"
+              value: "toggle"
+    optional_scenes:
+      name: Optional Scenes (Turn On Presets)
+      description: "Optional: Applied right after turning ON (or toggling on)."
+      default: []
+      selector:
+        entity:
+          domain: scene
+          multiple: true
+
+mode: single
+
+triggers: !input trigger_source
+
+variables:
+  action_selection: !input action_type
+  scene_selection: !input optional_scenes
+  target_selection: !input target_entity
+  
+  # Safely extract entity IDs from the target selector dictionary
+  target_ids: >-
+    {% if target_selection.entity_id is defined %}
+      {{ target_selection.entity_id if target_selection.entity_id is iterable and target_selection.entity_id is not string else [target_selection.entity_id] }}
+    {% else %}
+      {{ [] }}
+    {% endif %}
+
+  has_scenes: "{{ scene_selection is defined and scene_selection != none and scene_selection != '' and scene_selection != [] and scene_selection | length > 0 }}"
+  
+  # Check if anything in the extracted list is currently on
+  anything_on: "{{ expand(target_ids) | selectattr('state', 'eq', 'on') | list | count > 0 }}"
+
+conditions: []
+
+actions:
+  - choose:
+      # ==========================================
+      # 1. TURN ON ACTION
+      # ==========================================
+      - conditions:
+          - condition: template
+            value_template: "{{ action_selection == 'turn_on' }}"
+        sequence:
+          - action: homeassistant.turn_on
+            target: !input target_entity
+          - choose:
+              - conditions:
+                  - condition: template
+                    value_template: "{{ has_scenes }}"
+                sequence:
+                  - action: scene.turn_on
+                    target:
+                      entity_id: !input optional_scenes
+
+      # ==========================================
+      # 2. TURN OFF ACTION
+      # ==========================================
+      - conditions:
+          - condition: template
+            value_template: "{{ action_selection == 'turn_off' }}"
+        sequence:
+          - action: homeassistant.turn_off
+            target: !input target_entity
+
+      # ==========================================
+      # 3. TOGGLE ACTION
+      # ==========================================
+      - conditions:
+          - condition: template
+            value_template: "{{ action_selection == 'toggle' }}"
+        sequence:
+          - choose:
+              # If anything in the target list is ON, turn them OFF
+              - conditions:
+                  - condition: template
+                    value_template: "{{ anything_on }}"
+                sequence:
+                  - action: homeassistant.turn_off
+                    target: !input target_entity
+            # Otherwise, turn on the target(s) and apply any optional scenes
+            default:
+              - action: homeassistant.turn_on
+                target: !input target_entity
+              - choose:
+                  - conditions:
+                      - condition: template
+                        value_template: "{{ has_scenes }}"
+                    sequence:
+                      - action: scene.turn_on
+                        target:
+                          entity_id: !input optional_scenes
