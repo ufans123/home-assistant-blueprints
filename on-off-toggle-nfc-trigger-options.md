@@ -19,12 +19,13 @@ This automation blueprint provides a robust, universal controller optimized for 
 | :--- | :--- | :--- |
 | **Triggers** | Trigger Selector | Add your custom triggers here (NFC tags work brilliantly here!). |
 | **Target Entity** | Target Entity | The lights, switches, fans, or input booleans to control. |
-| **Action** | Select Dropdown | Choose what happens when triggered (`Turn On`, `Turn Off`, or `Toggle`). |
+| **Action** | Radio Buttons (Select) | Choose what happens when triggered (`Turn On`, `Turn Off`, or `Toggle`). |
 | **Optional Scenes (Turn On Presets)** | Scene Entities (Multiple & Reorderable) | Optional: Applied right after turning ON (or toggling on). |
 
 ### Pro Tips
 - **NFC Placement:** Place NFC tags near entryways, bedside tables, or desks to quickly toggle room states or activate your favorite mood lighting with a simple tap of your phone.
 - **Scene Sequencing:** If you select multiple optional scenes, Home Assistant will apply them in sequence right after the target devices wake up.
+- **Off Action & Scenes:** The **Turn Off** action (and the off phase of a toggle) only turns off your specified target devices; it does not explicitly deactivate scenes, as Home Assistant scenes are state presets rather than persistent running entities.
 - **Group Control:** Target a Home Assistant light or switch group to control an entire room's worth of devices with a single NFC tap or button press.
 
 ## Installation
