@@ -1,0 +1,66 @@
+blueprint:
+  name: Two-Way Device Sync
+  description: Syncs the state of any two binary entities (lights, switches, fans, and input booleans) mutually in both directions without infinite loops.
+  domain: automation
+  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/device_sync.yaml
+  author: Ufans123
+  input:
+    entity_1:
+      name: First Entity
+      selector:
+        entity:
+          domain:
+            - light
+            - switch
+            - input_boolean
+            - fan
+    entity_2:
+      name: Second Entity
+      selector:
+        entity:
+          domain:
+            - light
+            - switch
+            - input_boolean
+            - fan
+
+trigger:
+  - platform: state
+    entity_id: !input entity_1
+    to:
+      - 'on'
+      - 'off'
+    id: from_1
+  - platform: state
+    entity_id: !input entity_2
+    to:
+      - 'on'
+      - 'off'
+    id: from_2
+
+condition:
+  # 1. Ensure the state actually changed (ignore attribute updates)
+  - condition: template
+    value_template: '{{ trigger.to_state.state != trigger.from_state.state }}'
+  # 2. Prevent infinite loops
+  - condition: template
+    value_template: '{{ trigger.to_state.context.parent_id != this.context.id }}'
+
+action:
+  - variables:
+      ent_1: !input entity_1
+      ent_2: !input entity_2
+      target_entity: "{{ ent_2 if trigger.id == 'from_1' else ent_1 }}"
+      target_domain: "{{ target_entity.split('.')[0] }}"
+      new_state: "{{ trigger.to_state.state }}"
+
+  # 3. Only proceed if the target isn't already in the desired state
+  - condition: template
+    value_template: "{{ states(target_entity) != new_state }}"
+
+  # Dynamically turn on/off the target entity based on its domain
+  - action: "{{ target_domain }}.turn_{{ new_state }}"
+    target:
+      entity_id: "{{ target_entity }}"
+
+mode: single
