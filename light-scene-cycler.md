@@ -74,4 +74,3 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/light_scene_cycl
 2. Navigate to your Home Assistant Blueprints Dashboard UI (Settings > Automations & Scenes > Blueprints).
 3. In the bottom right corner, click on the *'Import blueprint'* button.
 4. Paste in the URL and follow the prompts.
-5. 
