@@ -14,23 +14,31 @@ By using these blueprints, you acknowledge and agree that:
 
 Always review the automation YAML and test changes safely before deploying them to critical production devices (e.g., locks, sirens, or heating systems).
 
+---
 
 ## 📋 Available Blueprints
 
-- **[Battery-Controlled Charging Switch](battery-charging-control.md)** - Automatically manage charging by turning a smart plug on/off based on battery percentage thresholds.
-- **[Battery-Controlled Charging Switch - Time Failsafe Companion](battery-charging-control-companion.md)** — Adds a customizable time-limit layer to the threshold engine, insulating your charger from network dropouts and managing temporary unplugging.
-- **[Button On/Off Control with Optional Actions](button-on-off.md)** — Controls any switch, light, or input boolean using separate On/Off event buttons, complete with support for optional secondary actions (2026-10-14).
-- **[Button Scene Cycling and Off Control](button-scene-cycling-and-off-control.md)** — Cycles sequentially through a list of scenes using an On/Scene button and a counter helper, with complete shutdown and counter reset on Off.
-- **[Cycle Through Multiple Scenes (NFC & Switches)](cycle-scenes-by-trigger.md)** — Cycles sequentially through a list of scenes using NFC tags, buttons, or custom triggers with a counter helper to remember your position.
+### ⏱️ Scheduling & Time
 - **[Daily Sun-Based Device Scheduler](daily-sun-based-device-scheduler.md)** — Schedule switches, lights, or fans using sunset and day-of-week rules with optional bidirectional timer synchronization and smart remaining-time recovery (2026-10-12).
 - **[Daily Sun-Based Multi-Device & Multi-Scene Scheduler with Timer](daily-sun-based-multi-device-scheduler-with-scenes.md)** — Schedule multiple switches, lights, fans, and scenes using sunset rules and day-of-week filtering, featuring bidirectional timer synchronization and smart remaining-time recovery (2026-10-13).
 - **[Daily Time-Based Device Scheduler](daily-time-based-device-scheduler.md)** — Schedule switches, lights, or fans using time and day-of-week rules with optional bidirectional timer synchronization and smart remaining-time recovery (2026-10-10).
-- **[Low or Unknown Battery Alert](low-battery-alert.md)** — Automatically scan and report devices with low battery levels or unknown/unavailable statuses via scheduled checks or an optional manual trigger.
-- **[Motion Sensor Enable or Disable](motion-control-enable-disable.md)** - Enable or disable motion sensors via button events or automatically when a specific light turns off (2026-10-12).
-- **[On/Off or Toggle Control with Scene Options (NFC & Triggers)](on-off-toggle-nfc-trigger-options.md)** — Effortlessly control lights, switches, fans, and inputs using NFC tags or buttons with explicit On, Off, and Toggle logic, plus optional multi-scene presets (2026-10-15).
+- **[Scheduled Task Notifications Manager](scheduled-task-notifications-manager.md)** — An advanced scheduling blueprint engine that generates up to 10 sequential persistent notification cards bound to calendar days, helper switches, or custom events (2026-10-05).
+
+### 🔄 Device Synchronization & State Management
 - **[Reset Dropdown Helper on Light Turn Off](reset-select-helper.md)** — Quickly reset any select input helper back to a designated default or unselected state based on triggers or automation events.
-- **[Ring Keypad v2: Z-Wave Multi-Trigger Sound Player](ring-keypad-sounds.md)** — Effortlessly play built-in chimes, notification sounds, and system tones on a Ring Keypad v2 using flexible trigger sources and automated Z-Wave property key routing (2026-10-16).
-- **[Scheduled Task Notifications Manager](scheduled-task-notifications-manager.md)** - An advanced scheduling blueprint engine that generates up to 10 sequential persistent notification cards bound to calendar days, helper switches, or custom events (2026-10-05).
+- **[Sync Device and Timer](device-timer-sync.md)** — Keep lights, switches, or fans synchronized with a Home Assistant timer helper (2026-10-08).
 - **[Sync Device and Scheduled Off-Time](device-sync-scheduled-time-off.md)** — Sync switches, lights, or fans with a scheduled off-time picker, dynamically computing countdown durations with optional timer helper tracking.
-- **[Sync Device and Timer](device-timer-sync.md)** - Keep lights, switches, or fans synchronized with a Home Assistant timer helper (2026-10-08).
 - **[Two-Way Device Sync: Binary State Mirroring & Loop Prevention](device-sync.md)** — Synchronize the state of any two binary entities (lights, switches, fans, and input booleans) mutually in both directions without infinite loops (2026-10-16).
+
+### 🔘 Buttons, Triggers & Scene Control
+- **[Button On/Off Control with Optional Actions](button-on-off.md)** — Controls any switch, light, or input boolean using separate On/Off event buttons, complete with support for optional secondary actions (2026-10-14).
+- **[Button Scene Cycling and Off Control](button-scene-cycling-and-off-control.md)** — Cycles sequentially through a list of scenes using an On/Scene button and a counter helper, with complete shutdown and counter reset on Off.
+- **[Cycle Through Multiple Scenes (NFC & Switches)](cycle-scenes-by-trigger.md)** — Cycles sequentially through a list of scenes using NFC tags, buttons, or custom triggers with a counter helper to remember your position.
+- **[On/Off or Toggle Control with Scene Options (NFC & Triggers)](on-off-toggle-nfc-trigger-options.md)** — Effortlessly control lights, switches, fans, and inputs using NFC tags or buttons with explicit On, Off, and Toggle logic, plus optional multi-scene presets (2026-10-15).
+- **[Motion Sensor Enable or Disable](motion-control-enable-disable.md)** — Enable or disable motion sensors via button events or automatically when a specific light turns off (2026-10-12).
+
+### 🔋 Power, Hardware & Notifications
+- **[Battery-Controlled Charging Switch](battery-charging-control.md)** — Automatically manage charging by turning a smart plug on/off based on battery percentage thresholds.
+- **[Battery-Controlled Charging Switch - Time Failsafe Companion](battery-charging-control-companion.md)** — Adds a customizable time-limit layer to the threshold engine, insulating your charger from network dropouts and managing temporary unplugging.
+- **[Low or Unknown Battery Alert](low-battery-alert.md)** — Automatically scan and report devices with low battery levels or unknown/unavailable statuses via scheduled checks or an optional manual trigger.
+- **[Ring Keypad v2: Z-Wave Multi-Trigger Sound Player](ring-keypad-sounds.md)** — Effortlessly play built-in chimes, notification sounds, and system tones on a Ring Keypad v2 using flexible trigger sources and automated Z-Wave property key routing (2026-10-16).
