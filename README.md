@@ -37,6 +37,7 @@ Always review the automation YAML and test changes safely before deploying them 
 - **[Cycle Through Multiple Scenes (NFC & Switches)](cycle-scenes-by-trigger.md)** — Cycles sequentially through a list of scenes using NFC tags, buttons, or custom triggers with a counter helper to remember your position.
 - **[On/Off or Toggle Control with Scene Options (NFC & Triggers)](on-off-toggle-nfc-trigger-options.md)** — Effortlessly control lights, switches, fans, and inputs using NFC tags or buttons with explicit On, Off, and Toggle logic, plus optional multi-scene presets (2026-10-15).
 - **[Motion Sensor Enable or Disable](motion-control-enable-disable.md)** — Enable or disable motion sensors via button events or automatically when a specific light turns off (2026-10-12).
+- **[Timed Light Scene Cycler](timed-light-scene-cycler.md)** — Seamlessly cycles a light or light group through an ordered sequence of custom scenes using an input boolean switch, featuring smooth transitions, a dedicated turn-off scene, and an optional auto-off timer (2026-10-17).
 
 ### 🔋 Power, Hardware & Notifications
 - **[Battery-Controlled Charging Switch](battery-charging-control.md)** — Automatically manage charging by turning a smart plug on/off based on battery percentage thresholds.
