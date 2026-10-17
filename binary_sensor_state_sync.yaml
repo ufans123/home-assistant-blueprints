@@ -1,0 +1,36 @@
+blueprint:
+  name: "Binary Sensor State Sync"
+  description: "Directly syncs the state of a binary sensor (like a door or window) to an input boolean, switch, or light."
+  domain: automation
+  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/binary_sensor_state_sync.yaml
+  input:
+    source_sensor:
+      name: Binary Sensor
+      description: "The door sensor, window sensor, or binary sensor to monitor."
+      selector:
+        entity:
+          domain:
+            - binary_sensor
+    target_entity:
+      name: Target Entity
+      description: "The entity to sync the state to (e.g., input_boolean or switch)."
+      selector:
+        entity:
+          domain:
+            - input_boolean
+            - switch
+            - light
+
+mode: restart
+
+trigger:
+  - platform: state
+    entity_id: !input source_sensor
+    to:
+      - 'on'
+      - 'off'
+
+action:
+  - action: "homeassistant.turn_{{ trigger.to_state.state }}"
+    target:
+      entity_id: !input target_entity
