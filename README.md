@@ -16,7 +16,7 @@ Always review the automation YAML and test changes safely before deploying them 
 
 ---
 
-## 🧰 My Blueprint Toolkit
+## 🧰 My Home Assistant Blueprint Toolkit
 
 ### ⏱️ Scheduling & Time
 - **[Daily Sun-Based Device Scheduler](daily-sun-based-device-scheduler.md)** — Schedule switches, lights, or fans using sunset and day-of-week rules with optional bidirectional timer synchronization and smart remaining-time recovery (2026-10-12).
@@ -25,7 +25,7 @@ Always review the automation YAML and test changes safely before deploying them 
 - **[Scheduled Task Notifications Manager](scheduled-task-notifications-manager.md)** — An advanced scheduling blueprint engine that generates up to 10 sequential persistent notification cards bound to calendar days, helper switches, or custom events (2026-10-05).
 
 ### 🔄 Device Synchronization & State Management
-- **[Binary Sensor State Sync](binary-sensor-state-sync.md)** — Directly syncs the state of any binary sensor (such as a door or window) to an input boolean, switch, or light using explicit state mapping.
+- **[Binary Sensor State Sync](binary-sensor-state-sync.md)** — Directly syncs the state of any binary sensor (such as a door or window) to an input boolean, switch, or light using explicit state mapping (2026-10-16).
 - **[Reset Dropdown Helper on Light Turn Off](reset-select-helper.md)** — Quickly reset any select input helper back to a designated default or unselected state based on triggers or automation events.
 - **[Sync Device and Timer](device-timer-sync.md)** — Keep lights, switches, or fans synchronized with a Home Assistant timer helper (2026-10-08).
 - **[Sync Device and Scheduled Off-Time](device-sync-scheduled-time-off.md)** — Sync switches, lights, or fans with a scheduled off-time picker, dynamically computing countdown durations with optional timer helper tracking (2026-10-16).
