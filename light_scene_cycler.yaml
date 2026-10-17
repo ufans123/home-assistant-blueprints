@@ -1,0 +1,176 @@
+blueprint:
+  name: Timed Light Scene Cycler
+  description: >
+    Seamlessly cycles a light or light group through a sequence of custom scenes 
+    using an input boolean switch. Features adjustable transition and hold times, 
+    an optional "turn on if off" check, a dedicated turn-off scene, and an optional 
+    auto-off timer.
+  domain: automation
+  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/light_scene_cycler.yaml
+  input:
+    target_light:
+      name: Target Light or Light Group
+      selector:
+        entity:
+          domain: light
+    scene_sequence:
+      name: Scene Sequence
+      description: Select the scenes you want to cycle through in order.
+      selector:
+        entity:
+          multiple: true
+          domain: scene
+    turn_off_scene:
+      name: Turn Off Scene
+      description: Select the scene to trigger when the helper switch is turned off.
+      selector:
+        entity:
+          domain: scene
+    transition_time:
+      name: Transition Time (seconds)
+      default: 5
+      selector:
+        number:
+          min: 1
+          max: 30
+          unit_of_measurement: seconds
+          mode: slider
+    hold_time:
+      name: Hold Time (seconds)
+      default: 20
+      selector:
+        number:
+          min: 5
+          max: 300
+          unit_of_measurement: seconds
+          mode: slider
+    auto_off_timer:
+      name: Auto-Off Timer (minutes)
+      description: Automatically turn off the helper switch after this duration. Set to 0 to run indefinitely until manually turned off.
+      default: 0
+      selector:
+        number:
+          min: 0
+          max: 480
+          unit_of_measurement: minutes
+          mode: slider
+    turn_on_if_off:
+      name: Turn On If Off
+      description: Automatically turn on the light if it is currently off when the helper is enabled.
+      default: true
+      selector:
+        boolean: {}
+    trigger_entity:
+      name: Ambient Mode Helper
+      description: Turning this input boolean on starts the scene cycle, and turning it off stops it.
+      selector:
+        entity:
+          domain: input_boolean
+
+mode: restart
+
+trigger:
+  - platform: state
+    entity_id: !input trigger_entity
+    from: "off"
+    to: "on"
+    id: helper_turned_on
+  - platform: state
+    entity_id: !input trigger_entity
+    from: "on"
+    to: "off"
+    id: helper_turned_off
+
+action:
+  - variables:
+      helper_ent: !input trigger_entity
+      light_ent: !input target_light
+      scenes: !input scene_sequence
+      off_scene: !input turn_off_scene
+      t_time: !input transition_time
+      h_time: !input hold_time
+      timer_mins: !input auto_off_timer
+      turn_on_opt: !input turn_on_if_off
+
+  - choose:
+      # --- WHEN HELPER TURNS ON ---
+      - conditions:
+          - condition: trigger
+            id: helper_turned_on
+        sequence:
+          # 1. Check if light is off
+          - if:
+              - condition: template
+                value_template: "{{ is_state(light_ent, 'off') }}"
+            then:
+              - if: "{{ not turn_on_opt }}"
+                then:
+                  - stop: "Light is off and 'Turn On If Off' is disabled."
+                else:
+                  - service: light.turn_on
+                    target:
+                      entity_id: "{{ light_ent }}"
+                  - delay:
+                      milliseconds: 200
+
+          # 2. Parallel execution: Run scene loop alongside auto-off timer
+          - parallel:
+              # Task A: Main cycling loop
+              - repeat:
+                  while:
+                    - condition: state
+                      entity_id: !input trigger_entity
+                      state: "on"
+                  sequence:
+                    - repeat:
+                        count: "{{ scenes | length }}"
+                        sequence:
+                          - condition: state
+                            entity_id: !input trigger_entity
+                            state: "on"
+                          
+                          # Trigger scene immediately
+                          - service: scene.turn_on
+                            target:
+                              entity_id: "{{ scenes[repeat.index - 1] }}"
+                            data:
+                              transition: "{{ t_time }}"
+                              
+                          # Hold time chunked for instant abort
+                          - repeat:
+                              count: "{{ h_time }}"
+                              sequence:
+                                - condition: state
+                                  entity_id: !input trigger_entity
+                                  state: "on"
+                                - delay:
+                                    seconds: 1
+
+              # Task B: Auto-off timer (only if timer_mins > 0)
+              - if:
+                  - condition: template
+                    value_template: "{{ timer_mins > 0 }}"
+                then:
+                  - delay:
+                      minutes: "{{ timer_mins }}"
+                  # Reset the helper switch (triggers 'helper_turned_off' branch)
+                  - service: input_boolean.turn_off
+                    target:
+                      entity_id: "{{ helper_ent }}"
+
+      # --- WHEN HELPER TURNS OFF ---
+      - conditions:
+          - condition: trigger
+            id: helper_turned_off
+        sequence:
+          # Trigger the turn-off scene AND a direct safety turn_off command
+          - service: scene.turn_on
+            target:
+              entity_id: "{{ off_scene }}"
+            data:
+              transition: "{{ t_time }}"
+          - service: light.turn_off
+            target:
+              entity_id: "{{ light_ent }}"
+            data:
+              transition: "{{ t_time }}"
