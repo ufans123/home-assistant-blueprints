@@ -22,7 +22,7 @@ blueprint:
             text: {}
         temp_unit:
           name: Temperature Unit
-          description: Choose whether to display temperatures in Celsius (°C) or Fahrenheit (°F). Note Home Assistant native weather attributes are typically in Celsius.
+          description: Choose whether to display temperatures in Celsius (°C) or Fahrenheit (°F).
           default: "°C"
           selector:
             select:
@@ -118,17 +118,24 @@ action:
       type: daily
     response_variable: forecast_data
 
-  # Parse variables (with automatic C to F conversion if Fahrenheit is selected)
+  # Parse variables (with smart C/F unit detection)
   - variables:
       region_name: >-
         {{ custom_location_name if custom_location_name != "" else state_attr(weather_entity, 'friendly_name') | default('Local Area', true) }}
       current_cond: "{{ states(weather_entity) | title }}"
       
-      # Temperatures conversion logic
+      # Detect entity's native temperature unit (°C or °F)
+      entity_unit: "{{ state_attr(weather_entity, 'temperature_unit') | default('°C', true) }}"
+
+      # Temperature conversion logic (only converts if source is °C and target is °F)
       raw_temp: "{{ state_attr(weather_entity, 'temperature') }}"
       current_temp: >-
         {% set t = raw_temp | float(0) %}
-        {{ (t * 9/5 + 32) | round(1) if unit == '°F' and raw_temp is not none else (raw_temp | default('N/A', true)) }}
+        {% if unit == '°F' and 'C' in entity_unit and raw_temp is not none %}
+          {{ (t * 9/5 + 32) | round(1) }}
+        {% else %}
+          {{ raw_temp | default('N/A', true) }}
+        {% endif %}
         
       humidity: "{{ state_attr(weather_entity, 'humidity') | default('N/A', true) }}"
       
@@ -139,12 +146,20 @@ action:
       raw_high: "{{ today.get('temperature') }}"
       high_temp: >-
         {% set t = raw_high | float(0) %}
-        {{ (t * 9/5 + 32) | round(1) if unit == '°F' and raw_high is not none else (raw_high | default('N/A', true)) }}
+        {% if unit == '°F' and 'C' in entity_unit and raw_high is not none %}
+          {{ (t * 9/5 + 32) | round(1) }}
+        {% else %}
+          {{ raw_high | default('N/A', true) }}
+        {% endif %}
         
       raw_low: "{{ today.get('templow') }}"
       low_temp: >-
         {% set t = raw_low | float(0) %}
-        {{ (t * 9/5 + 32) | round(1) if unit == '°F' and raw_low is not none else (raw_low | default('N/A', true)) }}
+        {% if unit == '°F' and 'C' in entity_unit and raw_low is not none %}
+          {{ (t * 9/5 + 32) | round(1) }}
+        {% else %}
+          {{ raw_low | default('N/A', true) }}
+        {% endif %}
         
       forecast_cond: "{{ today.get('condition', 'N/A') | replace('-', ' ') | title }}"
       precipitation_prob: "{{ today.get('precipitation_probability', 0) }}"
