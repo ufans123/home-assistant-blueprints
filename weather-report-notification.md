@@ -4,7 +4,7 @@
 
 [← Back to Main Blueprints Repository](README.md)
 
-A clean, optimized Home Assistant blueprint designed to generate detailed daily weather notifications with custom region headings, dynamic unit conversion, timestamps, and quick links **controlled via flexible triggers (Schedule, NFC, or Helper Switch)**.
+A clean, mobile-optimized Home Assistant blueprint designed to generate detailed daily weather notifications with custom region headings, dynamic unit conversion, timestamps, and quick links **controlled via flexible triggers (Schedule, NFC, or Helper Switch)**.
 
 ---
 
@@ -50,6 +50,7 @@ A clean, optimized Home Assistant blueprint designed to generate detailed daily 
 
 ## 💡 Important Notes & Pro-Tips
 
+- **Custom Region Names vs. Weather Data:** The **Custom Region Name** input is strictly a visual text label override for your notification header. It does **not** change the underlying location of the weather data. If you want to receive weather reports for multiple different cities or locations, you must set up separate weather entities for each location in Home Assistant first, and then create a separate automation instance for each entity.
 - **Momentary Trigger Switch Behavior:** When triggered via the `input_boolean` helper, the blueprint resets the helper back to `off` at the start of execution. This prevents switches from staying toggled `on` in your UI and ensures it is always ready to be clicked again on demand.
 - **Modern Weather Forecast Handling:** This blueprint utilizes Home Assistant's modern `weather.get_forecasts` service, ensuring full compatibility across standard weather integrations (Met.no, AccuWeather, Environment Canada, etc.).
 - **Smart Unit Conversion:** The blueprint checks the entity's native `temperature_unit` attribute before applying math. If your Home Assistant system natively operates in °F, selecting °F will safely display raw values rather than converting them twice.
