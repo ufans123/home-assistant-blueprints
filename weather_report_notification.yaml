@@ -1,0 +1,175 @@
+blueprint:
+  name: Configurable Daily Weather Report
+  description: Generates clean, mobile-optimized weather notifications with custom region headings, multiple triggers (Schedule, NFC, Helper), unit conversion (°C/°F), timestamps, and quick links.
+  domain: automation
+  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/weather_report_notification.yaml
+  input:
+    weather_section:
+      name: Weather Configuration
+      icon: mdi:weather-partly-cloudy
+      input:
+        weather_entity:
+          name: Weather Entity
+          description: The weather entity to pull forecasts from.
+          selector:
+            entity:
+              domain: weather
+        custom_location_name:
+          name: Custom Location / Region Name (Optional)
+          description: Override the entity name with a specific region (e.g., "Courtenay, BC"). If left blank, it uses the weather entity's name.
+          default: ""
+          selector:
+            text: {}
+        temp_unit:
+          name: Temperature Unit
+          description: Choose whether to display temperatures in Celsius (°C) or Fahrenheit (°F). Note Home Assistant native weather attributes are typically in Celsius.
+          default: "°C"
+          selector:
+            select:
+              options:
+                - label: Celsius (°C)
+                  value: "°C"
+                - label: Fahrenheit (°F)
+                  value: "°F"
+
+    trigger_section:
+      name: Triggers
+      icon: mdi:clock-outline
+      input:
+        notification_time:
+          name: Daily Schedule Time
+          description: Time of day to run automatically.
+          default: "07:00:00"
+          selector:
+            time: {}
+        nfc_tag:
+          name: NFC Tag ID (Optional)
+          description: Scanning this tag will trigger the report.
+          default: ""
+          selector:
+            text: {}
+        helper_trigger:
+          name: Input Boolean Helper (Optional)
+          description: Toggle switch to manually trigger the report.
+          default: []
+          selector:
+            entity:
+              domain: input_boolean
+
+    link_section:
+      name: Custom Links
+      icon: mdi:link-variant
+      input:
+        dashboard_path:
+          name: Internal Dashboard Path (Optional)
+          description: Path to your HA dashboard (e.g., /dashboard-sensors/temperatures). Leave blank to omit.
+          default: ""
+          selector:
+            text: {}
+        external_url:
+          name: External Weather Link (Optional)
+          description: |
+            URL to an external weather service. You can click any link below to open a search or right-click to copy:
+
+            * **City Query (AccuWeather):** [AccuWeather Search](https://www.accuweather.com/en/search-locations?query=Courtenay+BC)
+            * **Google Weather Query:** [Google Search](https://www.google.com/search?q=weather+Courtenay+BC)
+            * **Canada (Coords):** [Environment Canada](https://weather.gc.ca/en/location/index.html?coords=49.689,-124.999)
+            * **US NWS (City/State):** [NOAA Weather](https://forecast.weather.gov/MapClick.php?CityName=Seattle&state=WA)
+
+            Look up latitude & longitude coordinates at [GPS Coordinates Finder](https://www.gps-coordinates.net/).
+          default: "https://weather.gc.ca/en/location/index.html?coords=49.689,-124.999"
+          selector:
+            text: {}
+
+trigger:
+  - platform: time
+    at: !input notification_time
+    id: trigger_time
+  - platform: tag
+    tag_id: !input nfc_tag
+    id: trigger_nfc
+  - platform: state
+    entity_id: !input helper_trigger
+    to: "on"
+    id: trigger_helper
+
+action:
+  # Turn off helper switch if activated via switch
+  - if:
+      - condition: trigger
+        id: trigger_helper
+    then:
+      - action: input_boolean.turn_off
+        target:
+          entity_id: !input helper_trigger
+
+  - variables:
+      weather_entity: !input weather_entity
+      custom_location_name: !input custom_location_name
+      dashboard_path: !input dashboard_path
+      external_url: !input external_url
+      unit: !input temp_unit
+
+  # Fetch weather forecast and store response
+  - action: weather.get_forecasts
+    target:
+      entity_id: "{{ weather_entity }}"
+    data:
+      type: daily
+    response_variable: forecast_data
+
+  # Parse variables (with automatic C to F conversion if Fahrenheit is selected)
+  - variables:
+      region_name: >-
+        {{ custom_location_name if custom_location_name != "" else state_attr(weather_entity, 'friendly_name') | default('Local Area', true) }}
+      current_cond: "{{ states(weather_entity) | title }}"
+      
+      # Temperatures conversion logic
+      raw_temp: "{{ state_attr(weather_entity, 'temperature') }}"
+      current_temp: >-
+        {% set t = raw_temp | float(0) %}
+        {{ (t * 9/5 + 32) | round(1) if unit == '°F' and raw_temp is not none else (raw_temp | default('N/A', true)) }}
+        
+      humidity: "{{ state_attr(weather_entity, 'humidity') | default('N/A', true) }}"
+      
+      today: >-
+        {{ forecast_data[weather_entity].forecast[0] if
+        (forecast_data is defined and weather_entity in forecast_data and forecast_data[weather_entity].forecast is defined) else {} }}
+        
+      raw_high: "{{ today.get('temperature') }}"
+      high_temp: >-
+        {% set t = raw_high | float(0) %}
+        {{ (t * 9/5 + 32) | round(1) if unit == '°F' and raw_high is not none else (raw_high | default('N/A', true)) }}
+        
+      raw_low: "{{ today.get('templow') }}"
+      low_temp: >-
+        {% set t = raw_low | float(0) %}
+        {{ (t * 9/5 + 32) | round(1) if unit == '°F' and raw_low is not none else (raw_low | default('N/A', true)) }}
+        
+      forecast_cond: "{{ today.get('condition', 'N/A') | replace('-', ' ') | title }}"
+      precipitation_prob: "{{ today.get('precipitation_probability', 0) }}"
+      report_timestamp: "{{ now().strftime('%Y-%m-%d %H:%M') }}"
+
+  # Create persistent notification
+  - action: persistent_notification.create
+    data:
+      notification_id: daily_weather_report
+      title: "☀️ Daily Weather Report"
+      message: >-
+        ### 📍 Location: <b>{{ region_name }}</b><br><br>
+
+        **Current Conditions:**<br> • Status: {{ current_cond }}<br> •
+        Temperature: {{ current_temp }}{{ unit }}<br> • Humidity: {{ humidity
+        }}%<br><br>
+
+        **Today's Forecast:**<br> • Condition: {{ forecast_cond }}<br> • High /
+        Low: {{ high_temp }}{{ unit }} / {{ low_temp }}{{ unit }}<br> • Rain / Snow Chance: {{
+        precipitation_prob }}%
+        
+        {% if dashboard_path != "" or external_url != "" %}<br><br>**More Details:**{% endif %}
+        {% if dashboard_path != "" %}<br> • Open [Home Assistant Dashboard]({{ dashboard_path }}){% endif %}
+        {% if external_url != "" %}<br> • View [External Forecast]({{ external_url }}){% endif %}
+
+        <br><br><sub>🕒 Updated: {{ report_timestamp }}</sub>
+
+mode: single
