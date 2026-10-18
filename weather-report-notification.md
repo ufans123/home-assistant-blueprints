@@ -4,7 +4,7 @@
 
 [← Back to Main Blueprints Repository](README.md)
 
-A clean, mobile-optimized Home Assistant blueprint designed to generate detailed daily weather notifications with custom region headings, dynamic unit conversion, timestamps, and quick links **controlled via flexible triggers (Schedule, NFC, or Helper Switch)**.
+A clean, optimized Home Assistant blueprint designed to generate detailed daily weather notifications with custom region headings, dynamic unit conversion, timestamps, and quick links **controlled via flexible triggers (Schedule, NFC, or Helper Switch)**.
 
 ---
 
