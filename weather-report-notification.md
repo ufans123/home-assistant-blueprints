@@ -4,19 +4,22 @@
 
 [← Back to Main Blueprints Repository](README.md)
 
-A clean, mobile-optimized Home Assistant blueprint designed to generate detailed daily weather notifications with custom region headings, dynamic unit conversion, timestamps, and quick links **controlled via flexible triggers (Schedule, NFC, or Helper Switch)**.
+A clean, optimized Home Assistant blueprint designed to generate detailed daily weather notifications with custom region headings, dynamic unit conversion, timestamps, and quick links **controlled via flexible triggers (Schedule, NFC, or Helper Switch)**.
 
 ---
 
-> ⚠️ **Prerequisite Note:** This automation can be triggered by a daily time schedule, an NFC tag scan, or an **Input Boolean (`input_boolean.*`)** helper switch. If you plan to use manual helper triggers, create your helper entity first in Home Assistant (`Settings > Devices & Services > Helpers`).
+> ⚠️ **Prerequisites:**
+> - **Weather Entity:** You must have an active weather integration set up in Home Assistant (`weather.*`, such as Met.no, AccuWeather, Environment Canada, etc.) to pull current conditions and daily forecasts.
+> - **Input Boolean Helper (Optional):** If you plan to use a manual trigger switch, create your helper entity first in Home Assistant (`Settings > Devices & Services > Helpers`).
 
 ---
 
 ## Features
 
 - **Multi-Trigger Architecture:** Trigger your weather report automatically via a daily schedule, by scanning an NFC tag, or instantly using an input boolean helper switch.
+- **Auto-Resetting Helper Switch:** Turning on the input boolean helper triggers the report and instantly resets the switch back to `off` (acting like a momentary push button).
 - **Custom Region & Location Headings:** Override entity names with a specific region name (e.g., "Courtenay, BC") to format clean, custom headers.
-- **Dynamic Temperature Unit Conversion:** Choose between Celsius (°C) and Fahrenheit (°F) with automatic underlying math conversion and rounding.
+- **Smart Temperature Unit Detection:** Choose between Celsius (°C) and Fahrenheit (°F) with built-in native unit detection to prevent double-conversion on US Imperial system setups.
 - **Universal Timestamps:** Includes a discreet, globally understood timestamp (`YYYY-MM-DD HH:MM`) at the footer of every report.
 - **Quick Links Integration:** Easily attach links to your internal Home Assistant dashboard or external weather sources/search queries.
 - **Mobile-Optimized UI Layout:** Formatted using lightweight HTML and Markdown (`<br>`, bolding, dividers) for crisp readability on smartphones.
@@ -25,7 +28,7 @@ A clean, mobile-optimized Home Assistant blueprint designed to generate detailed
   | Event | Action Taken |
   | :--- | :--- |
   | **Schedule, NFC, or Helper Triggered** | Pulls modern forecast data, formats conditions/temperatures, and generates a robust persistent notification. |
-  | **Helper Switch Activated** | Automatically toggles the input boolean back off after firing to keep your switches cleanly managed. |
+  | **Helper Switch Activated** | Automatically resets the input boolean back `off` immediately so it's ready for the next manual trigger. |
   | **Data Unavailable** | Gracefully handles missing weather attributes or forecast keys using safe fallbacks (`N/A`) without breaking the automation. |
 
 ---
@@ -36,10 +39,10 @@ A clean, mobile-optimized Home Assistant blueprint designed to generate detailed
 | :--- | :--- | :--- | :--- |
 | **Weather Entity** | The weather entity to pull forecasts from (`weather.*`). | **Yes** | N/A |
 | **Custom Location / Region Name** | Override the entity name with a specific region (e.g., "Courtenay, BC"). Leave blank to use entity name. | No | `""` |
-| **Temperature Unit** | Choose whether to display temperatures in Celsius (°C) or Fahrenheit (°F). | Yes | `°C` |
+| **Temperature Unit** | Choose whether to display temperatures in Celsius (°C) or Fahrenheit (°F). Native °F source values are safely preserved without double conversion. | Yes | `°C` |
 | **Daily Schedule Time** | Time of day to run the report automatically. | Yes | `07:00:00` |
 | **NFC Tag ID** | Scanning this tag ID will trigger the report. | No | `""` |
-| **Input Boolean Helper** | Toggle switch entity (`input_boolean.*`) to manually trigger the report. | No | `[]` |
+| **Input Boolean Helper** | Toggle switch entity (`input_boolean.*`) to manually trigger the report. Automatically turns off upon execution. | No | `[]` |
 | **Internal Dashboard Path** | Path to your HA dashboard (e.g., `/dashboard-sensors/temperatures`). Leave blank to omit. | No | `""` |
 | **External Weather Link** | URL to an external weather service or search query. | No | Environment Canada coords link |
 
@@ -47,7 +50,9 @@ A clean, mobile-optimized Home Assistant blueprint designed to generate detailed
 
 ## 💡 Important Notes & Pro-Tips
 
+- **Momentary Trigger Switch Behavior:** When triggered via the `input_boolean` helper, the blueprint resets the helper back to `off` at the start of execution. This prevents switches from staying toggled `on` in your UI and ensures it is always ready to be clicked again on demand.
 - **Modern Weather Forecast Handling:** This blueprint utilizes Home Assistant's modern `weather.get_forecasts` service, ensuring full compatibility across standard weather integrations (Met.no, AccuWeather, Environment Canada, etc.).
+- **Smart Unit Conversion:** The blueprint checks the entity's native `temperature_unit` attribute before applying math. If your Home Assistant system natively operates in °F, selecting °F will safely display raw values rather than converting them twice.
 - **Smart Coordinate Lookups:** The default external URL link uses coordinate lookups. You can easily find precise latitude and longitude values using tools like [GPS Coordinates Finder](https://www.gps-coordinates.net/).
 - **Airtight Error Handling:** The template code utilizes Python safe `.get()` methods and fallback defaults (`N/A`), meaning temporary weather integration hiccups won't throw automation errors.
 
