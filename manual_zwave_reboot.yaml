@@ -1,0 +1,141 @@
+blueprint:
+  name: "Manual Z-Wave Outlet Restart (Router Reboot)"
+  description: >
+    Cycles a Z-Wave smart plug when triggered, manages power-off duration, cooldown stabilization, and status notifications.
+    
+    **Prerequisites & Important Warning:**
+    * **Z-Wave Mesh:** Ensure you use a reliable Z-Wave smart plug that can maintain its connection or recover cleanly.
+    * **Hardware Safety:** Do NOT use a regular non-Z-Wave plug or apply this to sensitive equipment that requires a graceful shutdown (such as a NAS or computer running filesystems). This blueprint is designed for hard power-cycling routers, modems, or network gear.
+  domain: automation
+  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/manual_zwave_reboot.yaml
+  author: Ufans123
+  input:
+    trigger_entity:
+      name: Trigger Entity
+      description: The input_boolean or switch used to trigger the outlet restart.
+      selector:
+        entity:
+          domain:
+            - input_boolean
+            - switch
+    router_plug:
+      name: Z-Wave Smart Plug
+      description: The Z-Wave plug or switch.
+      selector:
+        entity:
+          domain: switch
+    off_duration:
+      name: Power Off Duration (Seconds)
+      description: How long to keep the outlet powered off before turning it back on.
+      default: 30
+      selector:
+        number:
+          min: 5
+          max: 120
+          unit_of_measurement: seconds
+          mode: slider
+    cooldown_duration:
+      name: Cooldown Duration (Minutes)
+      description: Stabilization time to wait after restoring power before resetting the trigger and sending the completion notification.
+      default: 5
+      selector:
+        number:
+          min: 1
+          max: 30
+          unit_of_measurement: minutes
+          mode: slider
+    notify_device:
+      name: Notification Target (Optional)
+      description: Select a mobile device to send notifications to. Leave unselected to disable notifications.
+      default: ""
+      selector:
+        device:
+          integration: mobile_app
+    notify_start_title:
+      name: Start Notification Title
+      description: Title for the notification sent when the reboot process starts.
+      default: "Reboot Triggered"
+      selector:
+        text: {}
+    notify_start_message:
+      name: Start Notification Message
+      description: Custom message body sent at the start (timing info will be automatically appended).
+      default: "Internet connection will be temporarily interrupted."
+      selector:
+        text: {}
+    notify_complete_title:
+      name: Completion Notification Title
+      description: Title for the notification sent when the reboot completes.
+      default: "Reboot Completed"
+      selector:
+        text: {}
+    notify_complete_message:
+      name: Completion Notification Message
+      description: Custom message body sent when the restart cycle is complete.
+      default: "Network connectivity should be restored."
+      selector:
+        text: {}
+
+variables:
+  notify_dev: !input notify_device
+  start_title: !input notify_start_title
+  start_msg: !input notify_start_message
+  complete_title: !input notify_complete_title
+  complete_msg: !input notify_complete_message
+  off_sec: !input off_duration
+  cooldown_min: !input cooldown_duration
+
+trigger:
+  - platform: state
+    entity_id: !input trigger_entity
+    to: 'on'
+
+action:
+  - choose:
+      - conditions:
+          - condition: template
+            value_template: "{{ notify_dev != '' }}"
+        sequence:
+          - action: notify.send_message
+            target:
+              device_id: "{{ notify_dev }}"
+            data:
+              title: "{{ start_title }}"
+              message: >
+                {{ start_msg }}
+                
+                (Outlet powered off for {{ off_sec }}s; total cycle duration ~{{ cooldown_min + (off_sec // 60) + (1 if off_sec % 60 > 0 else 0) }} minutes).
+            continue_on_error: true
+
+  - action: switch.turn_off
+    target:
+      entity_id: !input router_plug
+
+  - delay:
+      seconds: !input off_duration
+
+  - action: switch.turn_on
+    target:
+      entity_id: !input router_plug
+
+  - delay:
+      minutes: !input cooldown_duration
+
+  - action: homeassistant.turn_off
+    target:
+      entity_id: !input trigger_entity
+
+  - choose:
+      - conditions:
+          - condition: template
+            value_template: "{{ notify_dev != '' }}"
+        sequence:
+          - action: notify.send_message
+            target:
+              device_id: "{{ notify_dev }}"
+            data:
+              title: "{{ complete_title }}"
+              message: "{{ complete_msg }}"
+            continue_on_error: true
+
+mode: single
