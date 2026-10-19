@@ -1,0 +1,94 @@
+blueprint:
+  name: Persistent Notification via Manual Switch (with Optional NFC)
+  description: >
+    Triggers a persistent notification when the required manual input boolean is turned on, 
+    with an optional NFC tag scan as an additional trigger. Automatically resets the switch after use.
+  domain: automation
+  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/persistent_notification_manual_nfc.yaml
+  author: Ufans123
+  input:
+    trigger_section:
+      name: Trigger Settings
+      icon: mdi:toggle-switch
+      description: Configure the required manual trigger and optional NFC tag.
+      input:
+        manual_trigger:
+          name: Manual Trigger Switch (Required)
+          description: Select an Input Boolean helper to trigger this notification and auto-reset.
+          selector:
+            entity:
+              domain: input_boolean
+              multiple: false
+        tag_id:
+          name: NFC Tag ID (Optional)
+          description: Paste a unique Tag ID here if you also want an NFC scan to trigger this. Leave blank otherwise.
+          default: ""
+          selector:
+            text: {}
+        tag_name:
+          name: NFC Tag Name / Description
+          description: A friendly name or label for your reference.
+          default: "My NFC Tag"
+          selector:
+            text: {}
+
+    notification_section:
+      name: Notification Content
+      icon: mdi:bell-badge
+      description: Configure the message and title displayed.
+      input:
+        notification_title:
+          name: Notification Title
+          description: The title displayed on the persistent notification.
+          default: "Dads Super Secret PW"
+          selector:
+            text: {}
+        notification_message:
+          name: Notification Message
+          description: The message or code shown in the persistent notification.
+          default: "12345"
+          selector:
+            text:
+              multiline: true
+        notification_id:
+          name: Notification ID
+          description: A unique ID for this notification (prevents duplicate notification spam).
+          default: "DS"
+          selector:
+            text: {}
+
+mode: single
+
+triggers:
+  - trigger: event
+    event_type: tag_scanned
+    id: tag_scanned
+  - trigger: state
+    entity_id: !input manual_trigger
+    from: "off"
+    to: "on"
+    id: manual_switched
+
+actions:
+  # Ensure the run is valid (manual switch always triggers, NFC only triggers if ID matches and isn't blank)
+  - condition: template
+    value_template: >-
+      {% set target_tag = '!input tag_id' | string | trim %}
+      {{ (trigger.id == 'tag_scanned' and target_tag != '' and trigger.event.data.tag_id == target_tag) or (trigger.id == 'manual_switched') }}
+
+  # Fire the persistent notification
+  - action: notify.persistent_notification
+    data:
+      title: !input notification_title
+      message: !input notification_message
+      data:
+        notification_id: !input notification_id
+
+  # Automatically reset the switch back to OFF if it was used
+  - if:
+      - condition: trigger
+        id: manual_switched
+    then:
+      - action: input_boolean.turn_off
+        target:
+          entity_id: !input manual_trigger
