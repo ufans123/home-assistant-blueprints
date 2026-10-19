@@ -57,6 +57,10 @@ blueprint:
           selector:
             text: {}
 
+# Map the blueprint input to a local variable so Jinja can read it
+variables:
+  configured_tag: !input tag_id
+
 mode: single
 
 triggers:
@@ -70,10 +74,10 @@ triggers:
     id: manual_switched
 
 actions:
-  # Ensure the run is valid (manual switch always triggers, NFC only triggers if ID matches and isn't blank)
+  # Verify condition using the variable instead of !input inside Jinja
   - condition: template
     value_template: >-
-      {% set target_tag = '!input tag_id' | string | trim %}
+      {% set target_tag = configured_tag | string | trim %}
       {{ (trigger.id == 'tag_scanned' and target_tag != '' and trigger.event.data.tag_id == target_tag) or (trigger.id == 'manual_switched') }}
 
   # Fire the persistent notification
