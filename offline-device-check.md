@@ -72,7 +72,7 @@ Because this blueprint uses Home Assistant's native labeling system for precise 
 
 ## 🙏 Acknowledgements & Credits
 
-- Huge thanks to **[Smart Home Junkie (@SmartHomeJunkie)](https://www.youtube.com/@SmartHomeJunkie)** for the original concept and inspiration behind monitoring unavailable entities via templates and automations shared on his YouTube channel!
+- Huge thanks to **[Smart Home Junkie (@SmartHomeJunkie)](https://www.youtube.com/@SmartHomeJunkie)** for the original concept and inspiration behind monitoring unavailable entities and ideas shared on his YouTube channel!
 
 ---
 
