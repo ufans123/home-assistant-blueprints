@@ -1,0 +1,262 @@
+blueprint:
+  name: Offline Device Notifications (Scheduled, NFC, Manual Triggers)
+  description: Scans specified labels and domains on a schedule, via a helper toggle/button, or via a pasted NFC tag ID. Alerts when devices are offline and provides explicit feedback on manual checks.
+  domain: automation
+  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/offline_device_check.yaml
+  input:
+    scan_interval:
+      name: Scan Interval
+      description: How often to check for offline devices (configured in hours/minutes).
+      default:
+        hours: 1
+      selector:
+        duration:
+    manual_trigger_entity:
+      name: Manual Helper / Button (Optional)
+      description: Select an input_boolean, switch, or input_button to trigger an on-demand check with feedback. Leave blank if not used.
+      default: ""
+      selector:
+        entity:
+          domain:
+            - input_boolean
+            - switch
+            - input_button
+    nfc_tag_id:
+      name: NFC Tag ID (Optional)
+      description: Paste the unique tag ID string from your Home Assistant NFC tag event here to trigger an on-demand check with feedback.
+      default: ""
+      selector:
+        text:
+    checked_labels:
+      name: Labels to Check (Whitelist)
+      description: Select the labels whose entities you want to monitor for offline status.
+      default:
+        - Smart Plug
+        - Light
+      selector:
+        label:
+          multiple: true
+    ignored_labels:
+      name: Labels to Ignore (Blacklist)
+      description: Entities with these labels will be excluded from the check.
+      default:
+        - Unavailable
+      selector:
+        label:
+          multiple: true
+    checked_domains:
+      name: Entity Domains to Include
+      description: Restrict the check to specific domains (e.g., light, switch, sensor).
+      default:
+        - light
+        - switch
+      selector:
+        select:
+          multiple: true
+          options:
+            - light
+            - switch
+            - sensor
+            - binary_sensor
+            - climate
+            - media_player
+            - camera
+            - lock
+            - cover
+    notification_mode:
+      name: Notification Method
+      description: Choose how you want to be notified when offline devices are found.
+      default: both
+      selector:
+        select:
+          options:
+            - label: Mobile App Only
+              value: mobile
+            - label: Persistent Notification Only
+              value: persistent
+            - label: Both
+              value: both
+    mobile_targets:
+      name: Mobile Notification Targets
+      description: Select one or more phone devices, targets, or notification groups.
+      default: {}
+      selector:
+        target:
+    persistent_notification_id:
+      name: Persistent Notification ID
+      description: A unique ID for persistent notifications so it updates instead of spamming new entries in the web UI.
+      default: offline_devices_scan_alert
+      selector:
+        text:
+
+mode: single
+
+trigger_variables:
+  interval: !input scan_interval
+  manual_entity: !input manual_trigger_entity
+
+trigger:
+  # 1. Regular Scheduled Interval Trigger
+  - platform: template
+    id: scheduled_check
+    value_template: >-
+      {% set hours = interval.hours | default(0, true) | int %}
+      {% set minutes = interval.minutes | default(0, true) | int %}
+      {% set total_minutes = (hours * 60) + minutes %}
+      {% if total_minutes < 1 %}{% set total_minutes = 60 %}{% endif %}
+      {{ (now().timestamp() | int // 60) % total_minutes == 0 }}
+
+  # 2. NFC Tag Trigger (Fires when the pasted tag ID is scanned)
+  - platform: event
+    id: nfc_check
+    event_type: tag_scanned
+    event_data:
+      tag_id: !input nfc_tag_id
+
+  # 3. Native State Trigger for Helper (Fires ONLY when turned to 'on', safe if blank)
+  - platform: state
+    id: helper_check
+    entity_id: !input manual_trigger_entity
+    to: "on"
+
+action:
+  - variables:
+      checked_labels: !input checked_labels
+      ignored_labels: !input ignored_labels
+      checked_domains: !input checked_domains
+      notif_mode: !input notification_mode
+      notif_id: !input persistent_notification_id
+      is_manual: "{{ trigger.id != 'scheduled_check' }}"
+      
+      # 1. Gather entities from all whitelisted labels
+      raw_checked: >
+        {% set ns = namespace(entities=[]) %}
+        {% for lbl in checked_labels %}
+          {% set ns.entities = ns.entities + (label_entities(lbl) or []) %}
+        {% endfor %}
+        {{ ns.entities }}
+
+      # 2. Gather all ignored entities from blacklisted labels
+      raw_ignored: >
+        {% set ns = namespace(entities=[]) %}
+        {% for lbl in ignored_labels %}
+          {% set ns.entities = ns.entities + (label_entities(lbl) or []) %}
+        {% endfor %}
+        {{ ns.entities }}
+
+      # 3. Filter by domains if domains are specified
+      filtered_checked: >
+        {% set domains = checked_domains | default([], true) %}
+        {% if domains | length > 0 %}
+          {{ raw_checked | select('match', '^(' + domains | join('|') + ')\.') | list }}
+        {% else %}
+          {{ raw_checked }}
+        {% endif %}
+
+      # 4. Final offline evaluation
+      offline: >
+        {{ filtered_checked | unique | reject('in', raw_ignored) | select('is_state', ['unavailable', 'unknown']) | list }}
+
+  # Execute actions based on the scan results cleanly
+  - choose:
+      # PATH A: Devices ARE offline
+      - conditions: "{{ offline | length > 0 }}"
+        sequence:
+          - choose:
+              - conditions: "{{ notif_mode == 'mobile' }}"
+                sequence:
+                  - action: notify.send_message
+                    target: !input mobile_targets
+                    data:
+                      title: "⚠️ Offline Devices Detected"
+                      message: >
+                        The following devices were found offline during the scan:
+                        {% for entity in offline %}
+                          - **{{ state_attr(entity, 'friendly_name') or entity }}** (`{{ entity }}`)
+                        {% endfor %}
+
+              - conditions: "{{ notif_mode == 'persistent' }}"
+                sequence:
+                  - action: persistent_notification.create
+                    data:
+                      title: "⚠️ Offline Devices Detected"
+                      message: >
+                        The following devices were found offline during the scan:
+                        {% for entity in offline %}
+                          - **{{ state_attr(entity, 'friendly_name') or entity }}** (`{{ entity }}`)
+                        {% endfor %}
+                      notification_id: "{{ notif_id }}"
+
+              - conditions: "{{ notif_mode == 'both' }}"
+                sequence:
+                  - parallel:
+                      - action: notify.send_message
+                        target: !input mobile_targets
+                        data:
+                          title: "⚠️ Offline Devices Detected"
+                          message: >
+                            The following devices were found offline during the scan:
+                            {% for entity in offline %}
+                              - **{{ state_attr(entity, 'friendly_name') or entity }}** (`{{ entity }}`)
+                            {% endfor %}
+                      - action: persistent_notification.create
+                        data:
+                          title: "⚠️ Offline Devices Detected"
+                          message: >
+                            The following devices were found offline during the scan:
+                            {% for entity in offline %}
+                              - **{{ state_attr(entity, 'friendly_name') or entity }}** (`{{ entity }}`)
+                            {% endfor %}
+                          notification_id: "{{ notif_id }}"
+
+      # PATH B: All clear (0 offline)
+      - conditions: "{{ offline | length == 0 }}"
+        sequence:
+          - choose:
+              # Sub-path 1: Triggered Manually (Helper or NFC) -> Send explicit "All Clear" feedback
+              - conditions: "{{ is_manual }}"
+                sequence:
+                  - choose:
+                      - conditions: "{{ notif_mode == 'mobile' }}"
+                        sequence:
+                          - action: notify.send_message
+                            target: !input mobile_targets
+                            data:
+                              title: "✅ Status Check: All Clear"
+                              message: "Manual scan completed. All monitored devices and sensors are online and functioning normally!"
+
+                      - conditions: "{{ notif_mode == 'persistent' }}"
+                        sequence:
+                          - action: persistent_notification.create
+                            data:
+                              title: "✅ Status Check: All Clear"
+                              message: "Manual scan completed. All monitored devices and sensors are online and functioning normally!"
+                              notification_id: "{{ notif_id }}"
+
+                      - conditions: "{{ notif_mode == 'both' }}"
+                        sequence:
+                          - parallel:
+                              - action: notify.send_message
+                                target: !input mobile_targets
+                                data:
+                                  title: "✅ Status Check: All Clear"
+                                  message: "Manual scan completed. All monitored devices and sensors are online and functioning normally!"
+                              - action: persistent_notification.create
+                                data:
+                                  title: "✅ Status Check: All Clear"
+                                  message: "Manual scan completed. All monitored devices and sensors are online and functioning normally!"
+                                  notification_id: "{{ notif_id }}"
+
+              # Sub-path 2: Regular Scheduled Run -> Just quietly dismiss any leftover UI notifications
+              - conditions: "{{ notif_mode in ['persistent', 'both'] }}"
+                sequence:
+                  - action: persistent_notification.dismiss
+                    data:
+                      notification_id: "{{ notif_id }}"
+
+  # Clean up: If triggered by the helper, automatically turn it back off so it's ready for next time
+  - condition: template
+    value_template: "{{ trigger.id == 'helper_check' and manual_entity not in ['', 'none', none] }}"
+  - action: homeassistant.turn_off
+    target:
+      entity_id: !input manual_trigger_entity
