@@ -4,7 +4,7 @@ Welcome to my personal Home Assistant blueprints repository! This project contai
 
 - Please note anything with a date beside has been uploaded to the Home Assistant Blueprint Exchange to share with the community. 
 - Blueprints without a date have not as yet been posted on the exchange and may be updated before they are posted to the exchange.
-- Also some of the blueprints below maybe niche and use cases for people may vary. Hope you enjoy. 
+- Also some of the blueprints below maybe niche and use cases for people may vary. Enjoy. 
 
 ## ⚠️ Disclaimer
 
