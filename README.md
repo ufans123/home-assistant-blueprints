@@ -48,6 +48,7 @@ Always review the automation YAML and test changes safely before deploying them 
 - **[Battery-Controlled Charging Switch - Time Failsafe Companion](battery-charging-control-companion.md)** — Adds a customizable time-limit layer to the threshold engine, insulating your charger from network dropouts and managing temporary unplugging.
 - **[Low or Unknown Battery Alert](low-battery-alert.md)** — Automatically scan and report devices with low battery levels or unknown/unavailable statuses via scheduled checks or an optional manual trigger.
 - **[Offline Device Notifications](offline-device-check.md)** — Monitors devices and sensors for unavailable or unknown states using whitelist labels, domain filters, and blacklist exclusions, triggered by schedules, NFC tags, or auto-resetting helper switches.
+- **[Persistent Notification via Manual Switch (with Optional NFC)](persistent-notification-manual-nfc.md)** — Triggers persistent notifications via a required manual input boolean toggle with automatic switch reset, featuring an optional NFC tag scan secondary trigger channel.
 - **[Ring Keypad v2: Z-Wave Multi-Trigger Sound Player](ring-keypad-sounds.md)** — Effortlessly play built-in chimes, notification sounds, and system tones on a Ring Keypad v2 using flexible trigger sources and automated Z-Wave property key routing (2026-10-16).
 
 ### ☀️ Weather & Information
