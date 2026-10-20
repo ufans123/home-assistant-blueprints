@@ -1,0 +1,96 @@
+blueprint:
+  name: Switch Event Long-Press Control (with Optional NFC)
+  description: Triggers on long-press event entities or an optional NFC tag ID to Turn On, Turn Off, or Toggle selected lights and switches.
+  domain: automation
+  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/long_press_options.yaml
+  author: Ufans123
+  input:
+    button_entities:
+      name: Switch Button Event Entities
+      description: Select one or more event entities (e.g., event.living_room_switch_button_1).
+      selector:
+        entity:
+          multiple: true
+          domain: event
+    optional_nfc_tag_id:
+      name: Optional NFC Tag ID
+      description: >-
+        (Optional) Paste the UUID of an NFC tag that should also trigger this action. 
+        Leave completely blank if not using an NFC tag.
+      default: ""
+      selector:
+        text: {}
+    nfc_tag_label:
+      name: NFC Tag Description / Label (Optional)
+      description: >-
+        Non-functional text field just to label or remind yourself which NFC tag this is 
+        (e.g., "Front Door Keyfob").
+      default: ""
+      selector:
+        text: {}
+    action_type:
+      name: Action
+      description: Choose what action to perform on the target devices.
+      default: "turn_off"
+      selector:
+        select:
+          options:
+            - label: "Turn Off"
+              value: "turn_off"
+            - label: "Turn On"
+              value: "turn_on"
+            - label: "Toggle"
+              value: "toggle"
+    target_lights:
+      name: Target Lights
+      description: (Optional) The lights you want to control.
+      default: {}
+      selector:
+        target:
+          entity:
+            domain: light
+    target_switches:
+      name: Target Switches
+      description: (Optional) The switches you want to control.
+      default: {}
+      selector:
+        target:
+          entity:
+            domain: switch
+
+variables:
+  action_selection: !input action_type
+  nfc_tag: !input optional_nfc_tag_id
+  t_lights: !input target_lights
+  t_switches: !input target_switches
+
+triggers:
+  - trigger: event.received
+    target:
+      entity_id: !input button_entities
+    options:
+      event_type:
+        - long_press
+  - trigger: tag
+    tag_id: !input optional_nfc_tag_id
+    enabled: "{{ nfc_tag | trim != '' }}"
+
+conditions: []
+
+actions:
+  - choose:
+      - conditions:
+          - condition: template
+            value_template: "{{ t_lights is defined and (t_lights.entity_id is defined or t_lights.device_id is defined or t_lights.area_id is defined or t_lights.floor_id is defined or t_lights.label_id is defined) }}"
+        sequence:
+          - action: "light.{{ action_selection }}"
+            target: !input target_lights
+  - choose:
+      - conditions:
+          - condition: template
+            value_template: "{{ t_switches is defined and (t_switches.entity_id is defined or t_switches.device_id is defined or t_switches.area_id is defined or t_switches.floor_id is defined or t_switches.label_id is defined) }}"
+        sequence:
+          - action: "switch.{{ action_selection }}"
+            target: !input target_switches
+
+mode: single
