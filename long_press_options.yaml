@@ -71,11 +71,18 @@ triggers:
     options:
       event_type:
         - long_press
-  - trigger: tag
-    tag_id: !input optional_nfc_tag_id
-    enabled: "{{ nfc_tag | trim != '' }}"
+  - trigger: event
+    event_type: tag_scanned
 
-conditions: []
+conditions:
+  - condition: template
+    value_template: >
+      {% set current_trigger = trigger.platform | default('') %}
+      {% if current_trigger == 'event' %}
+        {{ nfc_tag | trim != '' and trigger.event.data.tag_id == nfc_tag }}
+      {% else %}
+        true
+      {% endif %}
 
 actions:
   - choose:
