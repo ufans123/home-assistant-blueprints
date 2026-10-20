@@ -65,6 +65,7 @@ triggers:
     options:
       event_type:
         - initial_press
+        - multi_press_1
     id: turn_on
   - trigger: event.received
     target:
@@ -72,6 +73,7 @@ triggers:
     options:
       event_type:
         - initial_press
+        - multi_press_1
     id: turn_off
 
 conditions: []
