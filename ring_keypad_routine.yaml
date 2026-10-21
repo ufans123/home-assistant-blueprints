@@ -1,0 +1,503 @@
+blueprint:
+  name: "Ring Keypad V2: Multi-Code Routine Hub"
+  description: |
+    ### Overview
+    Map single digits (0-9) and one custom multi-digit PIN code to separate actions on a Ring Keypad V2. Pressing a shortcut key followed by the Checkmark button triggers your custom actions, operating completely independently of Alarmo. It also includes optional global audio feedback chimes.
+
+    ### Prerequisites
+    1. **Z-Wave JS Integration:** Your Home Assistant instance must have the official zwave_js integration running.
+    2. **Connected Ring Keypad v2:** The keypad must already be paired to your Z-Wave network.
+       **Note:** Ring Keypads require S2 Security during pairing to process Z-Wave Indicator Command Class (135) audio feedback commands correctly.
+    3. **Device Selection:** Choose the target Ring Keypad device and configure your desired action slots and global audio preferences below.
+  domain: automation
+  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/ring_keypad_routine.yaml
+  input:
+    # --- Primary Device Settings ---
+    keypad_device:
+      name: Ring Keypad
+      description: Select your Ring Keypad V2 Z-Wave device.
+      selector:
+        device:
+          integration: zwave_js
+
+    # --- Section: Global Audio Feedback ---
+    audio_section:
+      name: "Global Audio Feedback Options"
+      icon: mdi:volume-high
+      description: "Configure confirmation chimes, volume levels, and sound effects."
+      collapsed: true
+      input:
+        feedback_volume:
+          name: Confirmation Chime Volume (%)
+          description: Set speaker volume for feedback chimes (0 = muted).
+          default: 50
+          selector:
+            number:
+              min: 0
+              max: 100
+              step: 5
+              unit_of_measurement: "%"
+        feedback_sound:
+          name: Feedback Sound Effect
+          description: Choose the sound effect to play on successful entries.
+          default: "96"
+          selector:
+            select:
+              options:
+                - label: "Double Beep (Default)"
+                  value: "96"
+                - label: "Keytone Click"
+                  value: "97"
+                - label: "Wind Chime / Doorbell"
+                  value: "98"
+                - label: "Soft Error Beep"
+                  value: "99"
+
+    # --- Section: Custom PIN ---
+    custom_code_section:
+      name: "Custom / Multi-Digit PIN"
+      icon: mdi:numeric
+      description: "Configure a custom multi-digit PIN (e.g., 1234) and its action."
+      collapsed: true
+      input:
+        custom_code:
+          name: Custom PIN Code
+          default: "1234"
+          selector:
+            text:
+        play_sound_custom:
+          name: Play Sound on Custom PIN?
+          default: false
+          selector:
+            boolean:
+        action_custom:
+          name: Custom Code Action
+          default: []
+          selector:
+            action: {}
+
+    # --- Individual Key Sections (0 - 9) ---
+    section_key_0:
+      name: "Key 0 Action"
+      icon: mdi:numeric-0-box-outline
+      collapsed: true
+      input:
+        play_sound_0:
+          name: Play Sound on Key 0?
+          default: false
+          selector:
+            boolean:
+        action_0:
+          name: Action for '0' + Checkmark
+          default: []
+          selector:
+            action: {}
+
+    section_key_1:
+      name: "Key 1 Action"
+      icon: mdi:numeric-1-box-outline
+      collapsed: true
+      input:
+        play_sound_1:
+          name: Play Sound on Key 1?
+          default: false
+          selector:
+            boolean:
+        action_1:
+          name: Action for '1' + Checkmark
+          default: []
+          selector:
+            action: {}
+
+    section_key_2:
+      name: "Key 2 Action"
+      icon: mdi:numeric-2-box-outline
+      collapsed: true
+      input:
+        play_sound_2:
+          name: Play Sound on Key 2?
+          default: false
+          selector:
+            boolean:
+        action_2:
+          name: Action for '2' + Checkmark
+          default: []
+          selector:
+            action: {}
+
+    section_key_3:
+      name: "Key 3 Action"
+      icon: mdi:numeric-3-box-outline
+      collapsed: true
+      input:
+        play_sound_3:
+          name: Play Sound on Key 3?
+          default: false
+          selector:
+            boolean:
+        action_3:
+          name: Action for '3' + Checkmark
+          default: []
+          selector:
+            action: {}
+
+    section_key_4:
+      name: "Key 4 Action"
+      icon: mdi:numeric-4-box-outline
+      collapsed: true
+      input:
+        play_sound_4:
+          name: Play Sound on Key 4?
+          default: false
+          selector:
+            boolean:
+        action_4:
+          name: Action for '4' + Checkmark
+          default: []
+          selector:
+            action: {}
+
+    section_key_5:
+      name: "Key 5 Action"
+      icon: mdi:numeric-5-box-outline
+      collapsed: true
+      input:
+        play_sound_5:
+          name: Play Sound on Key 5?
+          default: false
+          selector:
+            boolean:
+        action_5:
+          name: Action for '5' + Checkmark
+          default: []
+          selector:
+            action: {}
+
+    section_key_6:
+      name: "Key 6 Action"
+      icon: mdi:numeric-6-box-outline
+      collapsed: true
+      input:
+        play_sound_6:
+          name: Play Sound on Key 6?
+          default: false
+          selector:
+            boolean:
+        action_6:
+          name: Action for '6' + Checkmark
+          default: []
+          selector:
+            action: {}
+
+    section_key_7:
+      name: "Key 7 Action"
+      icon: mdi:numeric-7-box-outline
+      collapsed: true
+      input:
+        play_sound_7:
+          name: Play Sound on Key 7?
+          default: false
+          selector:
+            boolean:
+        action_7:
+          name: Action for '7' + Checkmark
+          default: []
+          selector:
+            action: {}
+
+    section_key_8:
+      name: "Key 8 Action"
+      icon: mdi:numeric-8-box-outline
+      collapsed: true
+      input:
+        play_sound_8:
+          name: Play Sound on Key 8?
+          default: false
+          selector:
+            boolean:
+        action_8:
+          name: Action for '8' + Checkmark
+          default: []
+          selector:
+            action: {}
+
+    section_key_9:
+      name: "Key 9 Action"
+      icon: mdi:numeric-9-box-outline
+      collapsed: true
+      input:
+        play_sound_9:
+          name: Play Sound on Key 9?
+          default: false
+          selector:
+            boolean:
+        action_9:
+          name: Action for '9' + Checkmark
+          default: []
+          selector:
+            action: {}
+
+mode: queued
+
+variables:
+  target_device: !input keypad_device
+  vol_level: !input feedback_volume
+  selected_sound: !input feedback_sound
+  custom_code_val: !input custom_code
+  snd_custom: !input play_sound_custom
+  act_custom: !input action_custom
+  snd_0: !input play_sound_0
+  act_0: !input action_0
+  snd_1: !input play_sound_1
+  act_1: !input action_1
+  snd_2: !input play_sound_2
+  act_2: !input action_2
+  snd_3: !input play_sound_3
+  act_3: !input action_3
+  snd_4: !input play_sound_4
+  act_4: !input action_4
+  snd_5: !input play_sound_5
+  act_5: !input action_5
+  snd_6: !input play_sound_6
+  act_6: !input action_6
+  snd_7: !input play_sound_7
+  act_7: !input action_7
+  snd_8: !input play_sound_8
+  act_8: !input action_8
+  snd_9: !input play_sound_9
+  act_9: !input action_9
+
+trigger:
+  - platform: event
+    event_type: zwave_js_notification
+    event_data:
+      command_class: 111 # Entry Control CC
+      event_type: 2      # Submit / Enter event
+
+condition:
+  - condition: template
+    value_template: "{{ trigger.event.data.device_id == target_device }}"
+  - condition: template
+    value_template: "{{ trigger.event.data.event_data is not none }}"
+
+action:
+  - choose:
+      # --- Single Digit 0 ---
+      - conditions:
+          - condition: template
+            value_template: "{{ trigger.event.data.event_data | string == '0' and act_0 != [] }}"
+        sequence:
+          - if:
+              - condition: template
+                value_template: "{{ snd_0 }}"
+            then:
+              - action: zwave_js.set_value
+                target:
+                  device_id: !input keypad_device
+                data:
+                  command_class: 135
+                  endpoint: 0
+                  property: "{{ selected_sound | int }}"
+                  property_key: 9
+                  value: "{{ vol_level | int }}"
+          - sequence: !input action_0
+
+      # --- Single Digit 1 ---
+      - conditions:
+          - condition: template
+            value_template: "{{ trigger.event.data.event_data | string == '1' and act_1 != [] }}"
+        sequence:
+          - if:
+              - condition: template
+                value_template: "{{ snd_1 }}"
+            then:
+              - action: zwave_js.set_value
+                target:
+                  device_id: !input keypad_device
+                data:
+                  command_class: 135
+                  endpoint: 0
+                  property: "{{ selected_sound | int }}"
+                  property_key: 9
+                  value: "{{ vol_level | int }}"
+          - sequence: !input action_1
+
+      # --- Single Digit 2 ---
+      - conditions:
+          - condition: template
+            value_template: "{{ trigger.event.data.event_data | string == '2' and act_2 != [] }}"
+        sequence:
+          - if:
+              - condition: template
+                value_template: "{{ snd_2 }}"
+            then:
+              - action: zwave_js.set_value
+                target:
+                  device_id: !input keypad_device
+                data:
+                  command_class: 135
+                  endpoint: 0
+                  property: "{{ selected_sound | int }}"
+                  property_key: 9
+                  value: "{{ vol_level | int }}"
+          - sequence: !input action_2
+
+      # --- Single Digit 3 ---
+      - conditions:
+          - condition: template
+            value_template: "{{ trigger.event.data.event_data | string == '3' and act_3 != [] }}"
+        sequence:
+          - if:
+              - condition: template
+                value_template: "{{ snd_3 }}"
+            then:
+              - action: zwave_js.set_value
+                target:
+                  device_id: !input keypad_device
+                data:
+                  command_class: 135
+                  endpoint: 0
+                  property: "{{ selected_sound | int }}"
+                  property_key: 9
+                  value: "{{ vol_level | int }}"
+          - sequence: !input action_3
+
+      # --- Single Digit 4 ---
+      - conditions:
+          - condition: template
+            value_template: "{{ trigger.event.data.event_data | string == '4' and act_4 != [] }}"
+        sequence:
+          - if:
+              - condition: template
+                value_template: "{{ snd_4 }}"
+            then:
+              - action: zwave_js.set_value
+                target:
+                  device_id: !input keypad_device
+                data:
+                  command_class: 135
+                  endpoint: 0
+                  property: "{{ selected_sound | int }}"
+                  property_key: 9
+                  value: "{{ vol_level | int }}"
+          - sequence: !input action_4
+
+      # --- Single Digit 5 ---
+      - conditions:
+          - condition: template
+            value_template: "{{ trigger.event.data.event_data | string == '5' and act_5 != [] }}"
+        sequence:
+          - if:
+              - condition: template
+                value_template: "{{ snd_5 }}"
+            then:
+              - action: zwave_js.set_value
+                target:
+                  device_id: !input keypad_device
+                data:
+                  command_class: 135
+                  endpoint: 0
+                  property: "{{ selected_sound | int }}"
+                  property_key: 9
+                  value: "{{ vol_level | int }}"
+          - sequence: !input action_5
+
+      # --- Single Digit 6 ---
+      - conditions:
+          - condition: template
+            value_template: "{{ trigger.event.data.event_data | string == '6' and act_6 != [] }}"
+        sequence:
+          - if:
+              - condition: template
+                value_template: "{{ snd_6 }}"
+            then:
+              - action: zwave_js.set_value
+                target:
+                  device_id: !input keypad_device
+                data:
+                  command_class: 135
+                  endpoint: 0
+                  property: "{{ selected_sound | int }}"
+                  property_key: 9
+                  value: "{{ vol_level | int }}"
+          - sequence: !input action_6
+
+      # --- Single Digit 7 ---
+      - conditions:
+          - condition: template
+            value_template: "{{ trigger.event.data.event_data | string == '7' and act_7 != [] }}"
+        sequence:
+          - if:
+              - condition: template
+                value_template: "{{ snd_7 }}"
+            then:
+              - action: zwave_js.set_value
+                target:
+                  device_id: !input keypad_device
+                data:
+                  command_class: 135
+                  endpoint: 0
+                  property: "{{ selected_sound | int }}"
+                  property_key: 9
+                  value: "{{ vol_level | int }}"
+          - sequence: !input action_7
+
+      # --- Single Digit 8 ---
+      - conditions:
+          - condition: template
+            value_template: "{{ trigger.event.data.event_data | string == '8' and act_8 != [] }}"
+        sequence:
+          - if:
+              - condition: template
+                value_template: "{{ snd_8 }}"
+            then:
+              - action: zwave_js.set_value
+                target:
+                  device_id: !input keypad_device
+                data:
+                  command_class: 135
+                  endpoint: 0
+                  property: "{{ selected_sound | int }}"
+                  property_key: 9
+                  value: "{{ vol_level | int }}"
+          - sequence: !input action_8
+
+      # --- Single Digit 9 ---
+      - conditions:
+          - condition: template
+            value_template: "{{ trigger.event.data.event_data | string == '9' and act_9 != [] }}"
+        sequence:
+          - if:
+              - condition: template
+                value_template: "{{ snd_9 }}"
+            then:
+              - action: zwave_js.set_value
+                target:
+                  device_id: !input keypad_device
+                data:
+                  command_class: 135
+                  endpoint: 0
+                  property: "{{ selected_sound | int }}"
+                  property_key: 9
+                  value: "{{ vol_level | int }}"
+          - sequence: !input action_9
+
+      # --- Custom Code ---
+      - conditions:
+          - condition: template
+            value_template: "{{ trigger.event.data.event_data | string == custom_code_val | string and act_custom != [] }}"
+        sequence:
+          - if:
+              - condition: template
+                value_template: "{{ snd_custom }}"
+            then:
+              - action: zwave_js.set_value
+                target:
+                  device_id: !input keypad_device
+                data:
+                  command_class: 135
+                  endpoint: 0
+                  property: "{{ selected_sound | int }}"
+                  property_key: 9
+                  value: "{{ vol_level | int }}"
+          - sequence: !input action_custom
