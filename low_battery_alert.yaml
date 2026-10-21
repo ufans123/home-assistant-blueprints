@@ -1,5 +1,5 @@
 blueprint:
-  name: Low or Unknown Battery Alert
+  name: Battery Level & Status Monitor (Scheduled & Manual)
   description: Checks battery sensors daily or at a custom hourly interval, with optional mobile notifications and dashboard links.
   domain: automation
   homeassistant:
