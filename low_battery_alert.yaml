@@ -175,6 +175,11 @@ action:
         {% endfor %}
         {{ ns.entities }}
 
+      # Explicit line breaks using joined list elements for mobile push notifications
+      mobile_msg_body: >-
+        The following devices have low battery levels (< {{ thresh }}%) or an unknown status:
+        {{ low_or_unknown | map('regex_replace', '^', '• ') | join('\n') }}
+
   # Filter out triggers that don't match the selected schedule type
   - condition: template
     value_template: "{{ is_valid_schedule }}"
@@ -193,11 +198,7 @@ action:
                     target: !input mobile_targets
                     data:
                       title: '⚠️ Low or Unknown Battery Alert'
-                      message: >-
-                        The following devices have low battery levels (< {{ thresh }}%) or an unknown status:
-                        {% for item in low_or_unknown %}
-                        • {{ item }}
-                        {% endfor %}
+                      message: "{{ mobile_msg_body }}"
 
               # Option B: Persistent Notification Only
               - conditions: "{{ notif_mode == 'persistent' }}"
@@ -226,11 +227,7 @@ action:
                         target: !input mobile_targets
                         data:
                           title: '⚠️ Low or Unknown Battery Alert'
-                          message: >-
-                            The following devices have low battery levels (< {{ thresh }}%) or an unknown status:
-                            {% for item in low_or_unknown %}
-                            • {{ item }}
-                            {% endfor %}
+                          message: "{{ mobile_msg_body }}"
                   - action: persistent_notification.create
                     data:
                       notification_id: low_battery_alert
