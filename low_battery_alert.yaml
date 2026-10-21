@@ -1,47 +1,169 @@
 blueprint:
   name: Low or Unknown Battery Alert
-  description: Checks battery sensors daily or via an optional input_boolean helper.
+  description: Checks battery sensors daily or at a custom hourly interval, with optional mobile notifications and dashboard links.
   domain: automation
-  domain: automation
+  homeassistant:
+    min_version: '2024.6.0'
   source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/low_battery_alert.yaml
+  
   input:
-    check_time:
-      name: Daily Check Time
-      description: Time of day to run the automatic check.
-      selector:
-        time: {}
-    trigger_helper:
-      name: Manual Trigger Helper (Optional)
-      description: An optional input_boolean helper to trigger the check manually. Leave blank if not used.
-      default: []
-      selector:
-        entity:
-          multiple: false
-          domain: input_boolean
-    threshold:
-      name: Battery Threshold (%)
-      description: Batteries below this percentage will be flagged.
-      default: 20
-      selector:
-        number:
-          min: 1
-          max: 100
-          unit_of_measurement: '%'
+    # ==========================================
+    # SECTION 1: SCHEDULE MODE
+    # ==========================================
+    schedule_mode_section:
+      name: Schedule Mode
+      icon: mdi:calendar-sync-outline
+      description: Choose how you want to schedule the battery check.
+      input:
+        schedule_type:
+          name: Schedule Type
+          description: Select whether to check once daily at a fixed time or repeatedly every N hours.
+          default: daily
+          selector:
+            select:
+              options:
+                - label: Once Daily (Fixed Time)
+                  value: daily
+                - label: Recurring Interval (Every N Hours)
+                  value: interval
 
+    # ==========================================
+    # SECTION 2: DAILY SCHEDULE SETTINGS
+    # ==========================================
+    schedule_daily_section:
+      name: Daily Schedule Settings
+      icon: mdi:clock-outline
+      description: Configure settings when 'Once Daily' mode is selected.
+      input:
+        check_time:
+          name: Daily Check Time
+          description: Time of day to run the check.
+          default: "08:00:00"
+          selector:
+            time: {}
+
+    # ==========================================
+    # SECTION 3: INTERVAL SCHEDULE SETTINGS
+    # ==========================================
+    schedule_interval_section:
+      name: Interval Schedule Settings
+      icon: mdi:timer-sand-complete
+      description: Configure settings when 'Recurring Interval' mode is selected.
+      input:
+        check_interval:
+          name: Check Interval (Hours)
+          description: How often to repeat the check in hours (e.g., 6, 12, or 24).
+          default: 12
+          selector:
+            number:
+              min: 1
+              max: 24
+              unit_of_measurement: 'hours'
+
+    # ==========================================
+    # SECTION 4: ADVANCED / MANUAL CONTROL
+    # ==========================================
+    advanced_section:
+      name: Advanced / Manual Control
+      icon: mdi:tune
+      description: Optional helper configuration for manual testing.
+      input:
+        trigger_helper:
+          name: Manual Trigger Helper (Optional)
+          description: An optional input_boolean helper to trigger the check manually. Leave blank if not used.
+          default: []
+          selector:
+            entity:
+              multiple: false
+              domain: input_boolean
+
+    # ==========================================
+    # SECTION 5: ALERT & DASHBOARD SETTINGS
+    # ==========================================
+    alert_section:
+      name: Alert & Dashboard Settings
+      icon: mdi:alert-circle-outline
+      description: Configure thresholds, notification methods, and dashboard destinations.
+      input:
+        threshold:
+          name: Battery Threshold (%)
+          description: Batteries below this percentage will be flagged.
+          default: 20
+          selector:
+            number:
+              min: 1
+              max: 100
+              unit_of_measurement: '%'
+        notification_mode:
+          name: Notification Method
+          description: Choose how you want to be notified when low batteries are found.
+          default: persistent
+          selector:
+            select:
+              options:
+                - label: Mobile App Only
+                  value: mobile
+                - label: Persistent Notification Only
+                  value: persistent
+                - label: Both
+                  value: both
+        mobile_targets:
+          name: Mobile Notification Targets
+          description: Select one or more phone devices, targets, or notification groups. Leave blank if not using mobile alerts.
+          default: {}
+          selector:
+            target: {}
+        alert_link:
+          name: Dashboard Link (Optional)
+          description: Path or URL to link in the web notification (e.g., /maintenance). Clear if you do not want a link.
+          default: "/maintenance"
+          selector:
+            text: {}
+
+# ==========================================
+# TRIGGERS
+# ==========================================
 trigger:
   - platform: time
     at: !input check_time
     id: time_check
+  - platform: time_pattern
+    hours: "/1"
+    id: interval_check
   - platform: state
     entity_id: !input trigger_helper
     to: 'on'
     id: manual_check
 
+# ==========================================
+# ACTIONS & LOGIC
+# ==========================================
 action:
   - variables:
+      sched_mode: !input schedule_type
+      interval_val: !input check_interval
       thresh: !input threshold
       helper_entity: !input trigger_helper
-      is_manual: "{{ trigger.id == 'manual_check' }}"
+      link_url: !input alert_link
+      notif_mode: !input notification_mode
+      mob_targets: !input mobile_targets
+      trig_id: "{{ trigger.id }}"
+      is_manual: "{{ trig_id == 'manual_check' }}"
+      has_mobile_target: "{{ mob_targets is mapping and mob_targets | length > 0 }}"
+      
+      # Validate schedule mode matching
+      is_valid_schedule: >-
+        {% if is_manual %}
+          true
+        {% elif sched_mode == 'daily' and trig_id == 'time_check' %}
+          true
+        {% elif sched_mode == 'interval' and trig_id == 'interval_check' %}
+          {{ (now().hour % (interval_val | int(12))) == 0 and now().minute == 0 }}
+        {% else %}
+          false
+        {% endif %}
+
+      # Scan sensors for low battery or unknown status
       low_or_unknown: >
         {% set ns = namespace(entities=[]) %}
         {% for s in states.sensor if s.attributes.device_class | default('') == 'battery' %}
@@ -53,34 +175,115 @@ action:
         {% endfor %}
         {{ ns.entities }}
 
+  # Filter out triggers that don't match the selected schedule type
+  - condition: template
+    value_template: "{{ is_valid_schedule }}"
+
   - choose:
-      # Case 1: Low batteries found (runs for both time and manual)
+      # Case 1: Low batteries found
       - conditions:
           - condition: template
             value_template: "{{ low_or_unknown | length > 0 }}"
         sequence:
-          - action: persistent_notification.create
-            data:
-              notification_id: low_battery_alert
-              title: '⚠️ Low or Unknown Battery Alert'
-              message: >-
-                The following devices have low battery levels (< {{ thresh }}%) or an unknown status:<br><br>
-                {% for item in low_or_unknown %}
-                • {{ item }}<br><br>
-                {% endfor %}
+          - choose:
+              # Option A: Mobile App Only
+              - conditions: "{{ notif_mode == 'mobile' and has_mobile_target }}"
+                sequence:
+                  - action: notify.send_message
+                    target: !input mobile_targets
+                    data:
+                      title: '⚠️ Low or Unknown Battery Alert'
+                      message: >-
+                        The following devices have low battery levels (< {{ thresh }}%) or an unknown status:
+                        {% for item in low_or_unknown %}
+                        • {{ item }}
+                        {% endfor %}
+
+              # Option B: Persistent Notification Only
+              - conditions: "{{ notif_mode == 'persistent' }}"
+                sequence:
+                  - action: persistent_notification.create
+                    data:
+                      notification_id: low_battery_alert
+                      title: '⚠️ Low or Unknown Battery Alert'
+                      message: >-
+                        The following devices have low battery levels (< {{ thresh }}%) or an unknown status:<br><br>
+                        {% for item in low_or_unknown %}
+                        • {{ item }}<br><br>
+                        {% endfor %}
+                        {% if link_url is defined and link_url | string | trim != '' %}
+                        <br>👉 <a href="{{ link_url }}">View Maintenance Dashboard</a>
+                        {% endif %}
+
+              # Option C: Both
+              - conditions: "{{ notif_mode == 'both' }}"
+                sequence:
+                  - if:
+                      - condition: template
+                        value_template: "{{ has_mobile_target }}"
+                    then:
+                      - action: notify.send_message
+                        target: !input mobile_targets
+                        data:
+                          title: '⚠️ Low or Unknown Battery Alert'
+                          message: >-
+                            The following devices have low battery levels (< {{ thresh }}%) or an unknown status:
+                            {% for item in low_or_unknown %}
+                            • {{ item }}
+                            {% endfor %}
+                  - action: persistent_notification.create
+                    data:
+                      notification_id: low_battery_alert
+                      title: '⚠️ Low or Unknown Battery Alert'
+                      message: >-
+                        The following devices have low battery levels (< {{ thresh }}%) or an unknown status:<br><br>
+                        {% for item in low_or_unknown %}
+                        • {{ item }}<br><br>
+                        {% endfor %}
+                        {% if link_url is defined and link_url | string | trim != '' %}
+                        <br>👉 <a href="{{ link_url }}">View Maintenance Dashboard</a>
+                        {% endif %}
 
       # Case 2: No low batteries found AND triggered manually via helper
       - conditions:
           - condition: template
             value_template: "{{ is_manual and low_or_unknown | length == 0 }}"
         sequence:
-          - action: persistent_notification.create
-            data:
-              notification_id: low_battery_alert
-              title: '✅ Battery Status: All Clear'
-              message: 'No battery levels were below the threshold and no unknown/unavailable statuses were found.'
+          - choose:
+              - conditions: "{{ notif_mode == 'mobile' and has_mobile_target }}"
+                sequence:
+                  - action: notify.send_message
+                    target: !input mobile_targets
+                    data:
+                      title: '✅ Battery Status: All Clear'
+                      message: 'Manual battery scan completed. No low batteries or unknown statuses were found!'
 
-      # Case 3: No low batteries found AND triggered by time schedule
+              - conditions: "{{ notif_mode == 'persistent' }}"
+                sequence:
+                  - action: persistent_notification.create
+                    data:
+                      notification_id: low_battery_alert
+                      title: '✅ Battery Status: All Clear'
+                      message: 'No battery levels were below the threshold and no unknown/unavailable statuses were found.'
+
+              - conditions: "{{ notif_mode == 'both' }}"
+                sequence:
+                  - if:
+                      - condition: template
+                        value_template: "{{ has_mobile_target }}"
+                    then:
+                      - action: notify.send_message
+                        target: !input mobile_targets
+                        data:
+                          title: '✅ Battery Status: All Clear'
+                          message: 'Manual battery scan completed. No low batteries or unknown statuses were found!'
+                  - action: persistent_notification.create
+                    data:
+                      notification_id: low_battery_alert
+                      title: '✅ Battery Status: All Clear'
+                      message: 'No battery levels were below the threshold and no unknown/unavailable statuses were found.'
+
+      # Case 3: No low batteries found AND triggered by schedule (Clears notification)
       - conditions:
           - condition: template
             value_template: "{{ not is_manual and low_or_unknown | length == 0 }}"
