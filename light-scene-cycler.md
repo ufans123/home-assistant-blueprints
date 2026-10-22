@@ -2,7 +2,7 @@
 
 [![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fufans123%2Fhome-assistant-blueprints%2Fblob%2Fmain%2Flight_scene_cycler.yaml)
 
-[← Back to Main Blueprints Repository](README.md)
+> **Version:** 1.1 | **Initial Release:** 2026-10-17 | [← Back to Main Blueprints Repository](README.md)
 
 A clean, robust, snapshot-free Home Assistant blueprint designed to cycle a light or light group through an ordered sequence of custom scenes **controlled by a dedicated input boolean switch**. Features smooth transitions, an optional startup check, a dedicated turn-off scene, and a built-in auto-off timer.
 
@@ -74,3 +74,10 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/light_scene_cycl
 2. Navigate to your Home Assistant Blueprints Dashboard UI (Settings > Automations & Scenes > Blueprints).
 3. In the bottom right corner, click on the *'Import blueprint'* button.
 4. Paste in the URL and follow the prompts.
+
+---
+## Changelog
+
+| Version | Date | Summary of Changes |
+| :--- | :--- | :--- |
+| **v1.0** | 2026-10-17 | Initial release |
