@@ -71,7 +71,7 @@ Always review the automation YAML and test changes safely before deploying them 
 
 | Blueprint | Description | Current Version | Exchange Release |
 | :--- | :--- | :---: | :---: |
-| **[Button On/Off Control with Optional Actions](button-on-off.md)** | Controls any switch, light, or input boolean using separate On/Off event buttons, complete with support for optional secondary actions. | `v1.0` | `2026-10-14` |
+| **[Button On/Off Control with Optional Actions](button-on-off.md)** | Controls any switch, light, or input boolean using separate On/Off event buttons, complete with support for optional secondary actions. | `v1.0` | — |
 | **[Button Scene Cycling and Off Control](button-scene-cycling-and-off-control.md)** | Cycles sequentially through a list of scenes using an On/Scene button and a counter helper, with complete shutdown and counter reset on Off. | `v1.1` | `2026-10-14` |
 | **[Cycle Through Multiple Scenes (NFC & Switches)](cycle-scenes-by-trigger.md)** | Cycles sequentially through a list of scenes using NFC tags, buttons, or custom triggers with a counter helper to remember your position. | `v1.0` | — |
 | **[Switch Event Long-Press Control (with Optional NFC)](long-press-options.md)** | Triggers light and switch actions (Turn Off, Turn On, or Toggle) via long-press event entities and an optional NFC tag scan with custom UI labeling. | `v1.0` | `2026-10-20` |
