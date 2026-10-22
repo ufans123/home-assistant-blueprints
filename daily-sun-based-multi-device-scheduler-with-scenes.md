@@ -2,7 +2,7 @@
 
 [![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fufans123%2Fhome-assistant-blueprints%2Fblob%2Fmain%2Fdaily_sun_based_multi_device_scheduler_with_scenes.yaml)
 
-[← Back to Main Blueprints Repository](README.md)
+> **Version:** 1.1 | **Initial Release:** 2026-10-13 | [← Back to Main Blueprints Repository](README.md)
 
 A robust, "set-and-forget" Home Assistant blueprint for scheduling multiple devices (switches, lights, fans) and activating multiple scenes automatically at **sunset with a custom offset**, turning off at a fixed time. It features built-in day-of-week filtering and **bidirectional timer synchronization** that seamlessly bridges scene activations and manual overrides with live countdown tracking.
 
@@ -68,3 +68,10 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/daily_sun_based_
 2. Navigate to your Home Assistant Blueprints Dashboard UI
 3. In the bottom right corner click on the *'Import blueprint'* button
 4. Paste in the URL and follow the prompts
+
+---
+## Changelog
+
+| Version | Date | Summary of Changes |
+| :--- | :--- | :--- |
+| **v1.0** | 2026-10-13 | Initial release |
