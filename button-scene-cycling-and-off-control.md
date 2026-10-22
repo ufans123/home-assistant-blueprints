@@ -2,7 +2,7 @@
 
 [![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fufans123%2Fhome-assistant-blueprints%2Fblob%2Fmain%2Fbutton_scene_cycling_and_off_control.yaml)
 
-> **Version:** 1.1.0 | **Last Updated:** 2026-10-21 | [← Back to Main Blueprints Repository](README.md)
+> **Version:** 1.1.0 | **Last Updated:** 2026-10-19 | [← Back to Main Blueprints Repository](README.md)
 
 This automation blueprint cycles sequentially through a selected list of scenes using an **On Button** (or scene button) and a **Counter helper** to remember your place in the cycle. Pressing the **Off Button** (or power toggle configured for off) shuts down target devices and resets the counter to `0`, ensuring your cycle always starts fresh on your preferred first scene every time you turn it back on.
 
