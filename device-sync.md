@@ -2,7 +2,7 @@
 
 [![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fufans123%2Fhome-assistant-blueprints%2Fblob%2Fmain%2Fdevice_sync.yaml)
 
-[← Back to Main Blueprints Repository](README.md)
+> **Version:** 1.1 | **Initial Release:** 2026-10-16 | [← Back to Main Blueprints Repository](README.md)
 
 This automation blueprint allows you to synchronize the state of **any two binary entities** (such as lights, switches, fans, and input booleans) mutually in both directions. Effortlessly mirror states between paired devices without writing complex YAML or worrying about cascading infinite loops.
 
@@ -51,3 +51,10 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/device_sync.yaml
 2. Navigate to your Home Assistant Blueprints Dashboard UI (Settings > Automations & Scenes > Blueprints).
 3. In the bottom right corner, click on the 'Import blueprint' button.
 4. Paste in the URL and follow the prompts.
+
+---
+## Changelog
+
+| Version | Date | Summary of Changes |
+| :--- | :--- | :--- |
+| **v1.0** | 2026-10-16 | Initial release |
