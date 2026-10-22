@@ -2,7 +2,7 @@
 
 [![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fufans123%2Fhome-assistant-blueprints%2Fblob%2Fmain%2Fweather_report_notification.yaml)
 
-[← Back to Main Blueprints Repository](README.md)
+> **Version:** 1.1 | **Initial Release:** 2026-10-18 | [← Back to Main Blueprints Repository](README.md)
 
 A clean, optimized Home Assistant blueprint designed to generate detailed daily weather notifications with custom region headings, dynamic unit conversion, timestamps, and quick links **controlled via flexible triggers (Schedule, NFC, or Helper Switch)**.
 
@@ -80,3 +80,10 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/weather_report_n
 2. Navigate to your Home Assistant Blueprints Dashboard UI (`Settings > Automations & Scenes > Blueprints`).
 3. In the bottom right corner, click on the *'Import blueprint'* button.
 4. Paste in the URL and follow the prompts.
+
+---
+## Changelog
+
+| Version | Date | Summary of Changes |
+| :--- | :--- | :--- |
+| **v1.0** | 2026-10-18 | Initial release |
