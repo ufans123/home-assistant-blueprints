@@ -1,3 +1,4 @@
+<a name="top"></a>
 # Home Assistant Blueprints 🏠
 
 Welcome to my personal Home Assistant blueprints repository! This project contains advanced, highly customized configuration engines designed to streamline smart home automation orchestration.
@@ -48,7 +49,7 @@ Always review the automation YAML and test changes safely before deploying them 
 | **[Daily Time-Based Device Scheduler](daily-time-based-device-scheduler.md)** | Schedule switches, lights, or fans using time and day-of-week rules with optional bidirectional timer synchronization and smart remaining-time recovery. | `v1.0` | `2026-10-10` |
 | **[Scheduled Task Notifications Manager](scheduled-task-notifications-manager.md)** | Advanced scheduling engine that generates up to 10 sequential persistent notification cards bound to calendar days, helper switches, or custom events. | `v1.0` | `2026-10-05` |
 
-[⬆ Back to top](#-home-assistant-blueprints)
+[⬆ Back to top](#top)
 
 ---
 
@@ -62,7 +63,7 @@ Always review the automation YAML and test changes safely before deploying them 
 | **[Sync Device and Scheduled Off-Time](device-sync-scheduled-time-off.md)** | Sync switches, lights, or fans with a scheduled off-time picker, dynamically computing countdown durations with optional timer helper tracking. | `v1.0` | `2026-10-16` |
 | **[Two-Way Device Sync: Binary State Mirroring & Loop Prevention](device-sync.md)** | Synchronize the state of any two binary entities (lights, switches, fans, input booleans) mutually in both directions without infinite loops. | `v1.0` | `2026-10-16` |
 
-[⬆ Back to top](#-home-assistant-blueprints)
+[⬆ Back to top](#top)
 
 ---
 
@@ -78,7 +79,7 @@ Always review the automation YAML and test changes safely before deploying them 
 | **[Motion Sensor Enable or Disable](motion-control-enable-disable.md)** | Enable or disable motion sensors via button events or automatically when a specific light turns off. | `v1.0` | `2026-10-12` |
 | **[Timed Light Scene Cycler](light-scene-cycler.md)** | Seamlessly cycles a light/group through custom scenes using an input boolean switch, featuring smooth transitions and auto-off timer. | `v1.0` | `2026-10-17` |
 
-[⬆ Back to top](#-home-assistant-blueprints)
+[⬆ Back to top](#top)
 
 ---
 
@@ -95,7 +96,7 @@ Always review the automation YAML and test changes safely before deploying them 
 | **[Ring Keypad V2: Multi-Code Routine Hub (Z-Wave)](ring-keypad-routine.md)** | Map single-digit shortcuts (0–9) and custom multi-digit PIN codes on a Ring Keypad V2 to custom action sequences with audio feedback. | `v1.0` | `2026-10-21` |
 | **[Ring Keypad v2: Z-Wave Multi-Trigger Sound Player](ring-keypad-sounds.md)** | Play built-in chimes, notification sounds, and system tones on a Ring Keypad v2 using flexible triggers and Z-Wave routing. | `v1.0` | `2026-10-16` |
 
-[⬆ Back to top](#-home-assistant-blueprints)
+[⬆ Back to top](#top)
 
 ---
 
@@ -105,4 +106,4 @@ Always review the automation YAML and test changes safely before deploying them 
 | :--- | :--- | :---: | :---: |
 | **[Configurable Daily Weather Report](weather-report-notification.md)** | Generates clean weather notifications with regional headings, smart unit conversion (°C/°F), timestamps, quick links, and multiple triggers. | `v1.0` | `2026-10-18` |
 
-[⬆ Back to top](#-home-assistant-blueprints)
+[⬆ Back to top](#top)
