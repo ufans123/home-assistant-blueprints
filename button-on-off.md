@@ -2,7 +2,7 @@
 
 [![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fufans123%2Fhome-assistant-blueprints%2Fblob%2Fmain%2Fbutton_on_off.yaml.yaml)
 
-[← Back to Main Blueprints Repository](README.md)
+> **Version:** 1.0 | **Initial release:** 2026-10-22 | [← Back to Main Blueprints Repository](README.md)
 
 This automation blueprint maps an **On Button** and an **Off Button** (designed for event-based smart switches and remotes) to control any switch, light, or input boolean. It also includes support for **optional secondary actions** for each button press.
 
@@ -43,3 +43,10 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/button_on_off.ya
 2. Navigate to your Home Assistant Blueprints Dashboard UI
 3. In the bottom right corner click on the *'Import blueprint'* button
 4. Paste in the URL and follow the prompts
+
+---
+## Changelog
+
+| Version | Date | Summary of Changes |
+| :--- | :--- | :--- |
+| **v1.0** | 2026-10-22 | Initial release |
