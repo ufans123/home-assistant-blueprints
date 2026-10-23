@@ -33,7 +33,7 @@ By using these blueprints, you acknowledge and agree that:
 - **Limitation of Liability:** In no event shall the author be held liable for any damages, logic errors, loop-triggers, device malfunctions, excessive API fees, security vulnerabilities, or physical property damage resulting from the use or misuse of these blueprints.
 
 Always review the automation YAML and test changes safely before deploying them to critical production devices (e.g., locks, sirens, or heating systems).
-
+[⬆ Back to top](#top)
 </details>
 
 ---
