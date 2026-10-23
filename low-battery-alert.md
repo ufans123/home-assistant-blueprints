@@ -11,7 +11,7 @@ This automation blueprint scans all entities with `device_class: battery` across
 - **Low & Offline Detection:** Flags battery levels below your configurable percentage threshold as well as sensors reporting `unknown` or `unavailable`.
 - **Dual Scheduling Engine:** 
   - **Once Daily:** Run the check at a specific time of day (e.g., `08:00:00`).
-  - **Recurring Interval:** Repeat the check automatically every $N$ hours (e.g., every 6, 12, or 24 hours).
+  - **Recurring Interval:** Repeat the check automatically every `N` hours (e.g., every 6, 12, or 24 hours).
 - **Flexible Notification Modes:** Choose between **Mobile App Only**, **Persistent Notification Only**, or **Both**.
 - **Formatted Mobile Push:** Cleanly formatted mobile notifications with explicit line breaks for easy reading on iOS and Android.
 - **Optional Dashboard Link:** Attach a custom URL or dashboard path (e.g., `/maintenance`) directly to persistent notifications.
