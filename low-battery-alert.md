@@ -2,7 +2,7 @@
 
 [![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fufans123%2Fhome-assistant-blueprints%2Fblob%2Fmain%2Flow_battery_alert.yaml)
 
-[← Back to Main Blueprints Repository](README.md)
+> **Version:** 1.0 | **Initial Release:** 2026-10-23 | [← Back to Main Blueprints Repository](README.md)
 
 This automation blueprint scans all entities with `device_class: battery` across your Home Assistant instance. It supports dual scheduling modes (once daily or recurring hourly intervals), delivers flexible notification options (mobile app push, persistent UI cards, or both), and includes manual check capabilities with optional dashboard links.
 
@@ -75,3 +75,10 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/low_battery_aler
 2. Navigate to your Home Assistant Blueprints Dashboard UI
 3. In the bottom right corner click on the *'Import blueprint'* button
 4. Paste in the URL and follow the prompts
+
+---
+## Changelog
+
+| Version | Date | Summary of Changes |
+| :--- | :--- | :--- |
+| **v1.0** | 2026-10-23 | Initial release |
