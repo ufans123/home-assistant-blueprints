@@ -124,6 +124,7 @@ trigger:
     id: device_on
   - platform: state
     entity_id: !input target_device
+    from: 'on'
     to: 'off'
     id: device_off
   - platform: homeassistant
