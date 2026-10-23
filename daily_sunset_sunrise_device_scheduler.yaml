@@ -46,7 +46,7 @@ blueprint:
       name: Advanced / Timer Helper
       icon: mdi:timer-outline
       description: Optionally tie the schedule to a Home Assistant timer helper for visual countdowns.
-      collapsed: true
+      collapsed: false
       input:
         timer_entity:
           name: Timer Helper (Optional)
