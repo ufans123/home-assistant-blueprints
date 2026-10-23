@@ -36,6 +36,7 @@ Always review the automation YAML and test changes safely before deploying them 
 
 </details>
 
+[⬆ Back to top](#top)
 
 ---
 
@@ -51,6 +52,7 @@ Always review the automation YAML and test changes safely before deploying them 
 | **[Daily Time-Based Device Scheduler](daily-time-based-device-scheduler.md)** | Schedule switches, lights, or fans using time and day-of-week rules with optional bidirectional timer synchronization and smart remaining-time recovery. | `v1.0` | `2026-10-10` |
 | **[Scheduled Task Notifications Manager](scheduled-task-notifications-manager.md)** | Advanced scheduling engine that generates up to 10 sequential persistent notification cards bound to calendar days, helper switches, or custom events. | `v1.0` | `2026-10-05` |
 
+[⬆ Back to top](#top)
 
 ---
 
@@ -64,7 +66,7 @@ Always review the automation YAML and test changes safely before deploying them 
 | **[Sync Device and Scheduled Off-Time](device-sync-scheduled-time-off.md)** | Sync switches, lights, or fans with a scheduled off-time picker, dynamically computing countdown durations with optional timer helper tracking. | `v1.0` | `2026-10-16` |
 | **[Two-Way Device Sync: Binary State Mirroring & Loop Prevention](device-sync.md)** | Synchronize the state of any two binary entities (lights, switches, fans, input booleans) mutually in both directions without infinite loops. | `v1.0` | `2026-10-16` |
 
-
+[⬆ Back to top](#top)
 
 ---
 
