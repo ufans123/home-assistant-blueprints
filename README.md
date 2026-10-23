@@ -10,12 +10,12 @@ Welcome to my personal Home Assistant blueprints repository! This project contai
 ---
 
 ## 📌 Table of Contents
-- [⚠️ Disclaimer](#disclaimer)
-- [⏱️ Scheduling & Time](#️-scheduling--time)
-- [🔄 Device Synchronization & State Management](#-device-synchronization--state-management)
-- [🔘 Buttons, Triggers & Scene Control](#-buttons-triggers--scene-control)
-- [🔋 Power, Hardware & Notifications](#-power-hardware--notifications)
-- [☀️ Weather & Information](#️-weather--information)
+- ⚠️[Disclaimer](#disclaimer)
+- ⏱️[Scheduling & Time](#️-scheduling--time)
+- 🔄[Device Synchronization & State Management](#-device-synchronization--state-management)
+- 🔘[Buttons, Triggers & Scene Control](#-buttons-triggers--scene-control)
+- 🔋[Power, Hardware & Notifications](#-power-hardware--notifications)
+- ☀️[Weather & Information](#️-weather--information)
 
 ---
 
