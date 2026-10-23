@@ -1,0 +1,281 @@
+blueprint:
+  name: Daily Sun-Based Multi-Device Scheduler with Sunrise Off & Optional Timer
+  description: >-
+    Turns multiple devices on at sunset (with offset) and off at sunrise (with offset), with fully optional bidirectional timer synchronization.
+
+    **Version:** v1.0
+  domain: automation
+  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/daily_sunset_sunrise_device_scheduler.yaml
+  author: Ufans123
+  input:
+    devices_section:
+      name: Target Devices
+      icon: mdi:devices
+      description: Select the entities you want to schedule and synchronize.
+      input:
+        target_device:
+          name: Devices to Control
+          description: The switch, light, or fan entities to turn on and off.
+          selector:
+            entity:
+              domain:
+                - switch
+                - light
+                - fan
+              multiple: true
+
+    timing_section:
+      name: Sun Timing
+      icon: mdi:weather-sunset
+      description: Configure offsets relative to sunset (turn on) and sunrise (turn off).
+      input:
+        sunset_offset:
+          name: Sunset Offset
+          description: Offset relative to sunset in HH:MM:SS format (e.g. -00:30:00).
+          default: "-00:30:00"
+          selector:
+            text: {}
+        sunrise_offset:
+          name: Sunrise Offset
+          description: Offset relative to sunrise in HH:MM:SS format (e.g. 00:00:00).
+          default: "00:00:00"
+          selector:
+            text: {}
+
+    timer_section:
+      name: Advanced / Timer Helper
+      icon: mdi:timer-outline
+      description: Optionally tie the schedule to a Home Assistant timer helper for visual countdowns.
+      collapsed: true
+      input:
+        timer_entity:
+          name: Timer Helper (Optional)
+          description: Optional timer helper (timer.*) to track countdowns. Leave blank to disable.
+          selector:
+            entity:
+              domain:
+                - timer
+          default: ''
+
+    days_section:
+      name: Active Days
+      icon: mdi:calendar-week
+      description: Select which days of the week this automation is allowed to run.
+      collapsed: true
+      input:
+        day_mon:
+          name: Monday
+          selector:
+            boolean: {}
+          default: true
+        day_tue:
+          name: Tuesday
+          selector:
+            boolean: {}
+          default: true
+        day_wed:
+          name: Wednesday
+          selector:
+            boolean: {}
+          default: true
+        day_thu:
+          name: Thursday
+          selector:
+            boolean: {}
+          default: true
+        day_fri:
+          name: Friday
+          selector:
+            boolean: {}
+          default: true
+        day_sat:
+          name: Saturday
+          selector:
+            boolean: {}
+          default: true
+        day_sun:
+          name: Sunday
+          selector:
+            boolean: {}
+          default: true
+
+alias: 'Daily Schedule: Sunset to Sunrise Multi-Device Control with Timer & Days'
+description: Turns multiple devices on/off based on sunset and sunrise (with offsets), with optional bidirectional timer sync.
+
+trigger:
+  - platform: sun
+    event: sunset
+    offset: !input sunset_offset
+    id: turn_on
+  - platform: sun
+    event: sunrise
+    offset: !input sunrise_offset
+    id: turn_off
+  - platform: event
+    event_type: timer.finished
+    id: timer_finished
+  - platform: event
+    event_type: timer.cancelled
+    id: timer_cancelled
+  - platform: state
+    entity_id: !input target_device
+    from: 'off'
+    to: 'on'
+    id: device_on
+  - platform: state
+    entity_id: !input target_device
+    to: 'off'
+    id: device_off
+  - platform: homeassistant
+    event: start
+    id: ha_rebooted
+
+action:
+  - variables:
+      target_devs: !input target_device
+      timer_ent: !input timer_entity
+      sr_offset: !input sunrise_offset
+      d_mon: !input day_mon
+      d_tue: !input day_tue
+      d_wed: !input day_wed
+      d_thu: !input day_thu
+      d_fri: !input day_fri
+      d_sat: !input day_sat
+      d_sun: !input day_sun
+      today_enabled: "{% set day = now().strftime('%a') | lower %} {{ (day == 'mon' and d_mon) or (day == 'tue' and d_tue) or (day == 'wed' and d_wed) or (day == 'thu' and d_thu) or (day == 'fri' and d_fri) or (day == 'sat' and d_sat) or (day == 'sun' and d_sun) }}"
+      any_on: >
+        {% set ns = namespace(on=false) %}
+        {% for dev in target_devs %}
+          {% if states(dev) == 'on' %}
+            {% set ns.on = true %}
+          {% endif %}
+        {% endfor %}
+        {{ ns.on }}
+
+  - choose:
+      - conditions:
+          - condition: trigger
+            id: turn_on
+          - condition: template
+            value_template: '{{ today_enabled | bool }}'
+        sequence:
+          - service: homeassistant.turn_on
+            target:
+              entity_id: !input target_device
+          - choose:
+              - conditions:
+                  - condition: template
+                    value_template: '{{ timer_ent is not none and timer_ent | string | length > 0 }}'
+                sequence:
+                  - service: timer.start
+                    target:
+                      entity_id: !input timer_entity
+                    data:
+                      duration: >
+                        {% set parts = sr_offset.split(':') %}
+                        {% set offset_seconds = (parts[0] | int * 3600) + (parts[1] | int * 60) + (parts[2] | float | int if parts | length > 2 else 0) %}
+                        {% set next_rising = state_attr('sun.sun', 'next_rising') %}
+                        {% set next_sunrise = next_rising | as_datetime if next_rising is string else now() + timedelta(hours=8) %}
+                        {% set target_time = next_sunrise + timedelta(seconds=offset_seconds) %}
+                        {% set diff = (target_time - now()).total_seconds() | int %}
+                        {{ diff if diff > 0 else 1 }}
+
+      - conditions:
+          - condition: trigger
+            id: turn_off
+        sequence:
+          - service: homeassistant.turn_off
+            target:
+              entity_id: !input target_device
+          - choose:
+              - conditions:
+                  - condition: template
+                    value_template: '{{ timer_ent is not none and timer_ent | string | length > 0 }}'
+                sequence:
+                  - service: timer.cancel
+                    target:
+                      entity_id: !input timer_entity
+
+      - conditions:
+          - condition: trigger
+            id: timer_finished
+          - condition: template
+            value_template: '{{ timer_ent is not none and timer_ent | string | length > 0 and trigger.event.data.entity_id == timer_ent }}'
+        sequence:
+          - service: homeassistant.turn_off
+            target:
+              entity_id: !input target_device
+
+      - conditions:
+          - condition: trigger
+            id: timer_cancelled
+          - condition: template
+            value_template: '{{ timer_ent is not none and timer_ent | string | length > 0 and trigger.event.data.entity_id == timer_ent }}'
+        sequence:
+          - service: homeassistant.turn_off
+            target:
+              entity_id: !input target_device
+
+      - conditions:
+          - condition: trigger
+            id: device_on
+          - condition: template
+            value_template: '{{ timer_ent is not none and timer_ent | string | length > 0 }}'
+        sequence:
+          - service: timer.start
+            target:
+              entity_id: !input timer_entity
+            data:
+              duration: >
+                {% set parts = sr_offset.split(':') %}
+                {% set offset_seconds = (parts[0] | int * 3600) + (parts[1] | int * 60) + (parts[2] | float | int if parts | length > 2 else 0) %}
+                {% set next_rising = state_attr('sun.sun', 'next_rising') %}
+                {% set next_sunrise = next_rising | as_datetime if next_rising is string else now() + timedelta(hours=8) %}
+                {% set target_time = next_sunrise + timedelta(seconds=offset_seconds) %}
+                {% set diff = (target_time - now()).total_seconds() | int %}
+                {{ diff if diff > 0 else 1 }}
+
+      - conditions:
+          - condition: trigger
+            id: device_off
+        sequence:
+          - variables:
+              all_off: >
+                {% set ns = namespace(all_off=true) %}
+                {% for dev in target_devs %}
+                  {% if states(dev) != 'off' %}
+                    {% set ns.all_off = false %}
+                  {% endif %}
+                {% endfor %}
+                {{ ns.all_off }}
+          - choose:
+              - conditions:
+                  - condition: template
+                    value_template: '{{ all_off and timer_ent is not none and timer_ent | string | length > 0 }}'
+                sequence:
+                  - service: timer.cancel
+                    target:
+                      entity_id: !input timer_entity
+
+      - conditions:
+          - condition: trigger
+            id: ha_rebooted
+          - condition: template
+            value_template: '{{ any_on }}'
+          - condition: template
+            value_template: '{{ timer_ent is not none and timer_ent | string | length > 0 }}'
+        sequence:
+          - service: timer.start
+            target:
+              entity_id: !input timer_entity
+            data:
+              duration: >
+                {% set parts = sr_offset.split(':') %}
+                {% set offset_seconds = (parts[0] | int * 3600) + (parts[1] | int * 60) + (parts[2] | float | int if parts | length > 2 else 0) %}
+                {% set next_rising = state_attr('sun.sun', 'next_rising') %}
+                {% set next_sunrise = next_rising | as_datetime if next_rising is string else now() + timedelta(hours=8) %}
+                {% set target_time = next_sunrise + timedelta(seconds=offset_seconds) %}
+                {% set diff = (target_time - now()).total_seconds() | int %}
+                {{ diff if diff > 0 else 1 }}
+
+mode: single
