@@ -10,7 +10,7 @@ Welcome to my personal Home Assistant blueprints repository! This project contai
 ---
 
 ## 📌 Table of Contents
-- [⚠️ Disclaimer](#️-disclaimer)
+- [⚠️ Disclaimer](#disclaimer)
 - [⏱️ Scheduling & Time](#️-scheduling--time)
 - [🔄 Device Synchronization & State Management](#-device-synchronization--state-management)
 - [🔘 Buttons, Triggers & Scene Control](#-buttons-triggers--scene-control)
@@ -19,7 +19,7 @@ Welcome to my personal Home Assistant blueprints repository! This project contai
 
 ---
 
-<details>
+<details id="disclaimer">
 <summary><b>⚠️ Disclaimer & Usage Notice (Click to expand)</b></summary>
 
 <br/>
