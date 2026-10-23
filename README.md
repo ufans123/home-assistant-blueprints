@@ -92,7 +92,7 @@ Always review the automation YAML and test changes safely before deploying them 
 | :--- | :--- | :---: | :---: |
 | **[Battery-Controlled Charging Switch](battery-charging-control.md)** | Automatically manage charging by turning a smart plug on/off based on battery percentage thresholds. | `v1.0` | — |
 | **[Battery-Controlled Charging Switch - Time Failsafe Companion](battery-charging-control-companion.md)** | Adds a customizable time-limit layer to the threshold engine, insulating your charger from network dropouts. | `v1.0` | — |
-| **[Battery Level & Status Monitor (Scheduled & Manual)](low-battery-alert.md)** | Automatically scan and report devices with low battery levels or unknown/unavailable statuses via scheduled checks or manual trigger. | `v1.0` | — |
+| **[Battery Level & Status Monitor (Scheduled & Manual)](low-battery-alert.md)** | Automatically scan and report devices with low battery levels or unknown/unavailable statuses via scheduled checks or manual trigger. | `v1.0` | `2026-10-23` |
 | **[Manual Z-Wave Outlet Restart (Router Reboot)](manual-zwave-reboot.md)** | Safely automates a controlled power-cycle sequence for routers/modems using a Z-Wave plug with dynamic durations and notifications. | `v1.0` | `2026-10-20` |
 | **[Offline Device Notifications](offline-device-check.md)** | Monitors devices and sensors for unavailable/unknown states using whitelist labels, domain filters, and blacklist exclusions. | `v1.0` | `2026-10-19` |
 | **[Persistent Notification via Manual Switch (with Optional NFC)](persistent-notification-manual-nfc.md)** | Triggers persistent notifications via a manual input boolean toggle with automatic reset and optional NFC secondary trigger. | `v1.0` | — |
