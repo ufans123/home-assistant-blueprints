@@ -1,0 +1,282 @@
+blueprint:
+  name: Safe Battery-Controlled Charging & Failsafe Manager
+  description: >
+    Turns a smart switch on when a battery drops below a low threshold, and turns it 
+    off when it exceeds a high threshold or hits a safety timer/discharge limit. 
+    Handles device reconnects, HA restarts, and includes a time failsafe companion 
+    where the safety timer automatically starts when the device begins charging.
+    
+    **Disclaimer:** If the device is offline before it indicates it is charging, the timer will not start automatically and should be started manually or via NFC tag.
+    
+    **Version:** v1.0
+  domain: automation
+  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/battery_charging_control_combined.yaml
+  author: Ufans123 (Combined)
+  input:
+    sensors:
+      name: Sensors
+      description: Select the battery sensors. Note that these are typically two separate sensors belonging to the exact same physical device (e.g., your phone, tablet, or laptop).
+      icon: mdi:sensor
+      input:
+        battery_sensor:
+          name: Battery Percentage Sensor
+          description: The percentage sensor monitoring the battery level (0-100%).
+          selector:
+            entity:
+              domain:
+                - sensor
+              multiple: false
+              reorder: false
+        battery_status:
+          name: Battery Status Sensor
+          description: The device sensor reporting state like 'charging', 'discharging', etc.
+          selector:
+            entity:
+              domain:
+                - sensor
+              multiple: false
+              reorder: false
+
+    plug_and_timer:
+      name: Plug & Timer
+      description: Select the smart plug controlling power to the charger and the helper timer entity used to track the safety countdown.
+      icon: mdi:power-plug
+      input:
+        power_switch:
+          name: Smart Switch / Plug
+          description: The smart switch or light controlling the charger.
+          selector:
+            entity:
+              domain:
+                - switch
+                - light
+              multiple: false
+              reorder: false
+        charging_timer:
+          name: Helper Timer
+          description: A helper timer (timer.*) used to track the active countdown window.
+          selector:
+            entity:
+              domain:
+                - timer
+              multiple: false
+              reorder: false
+
+    manual_override:
+      name: Manual Start & NFC Tag
+      description: Configure a manual start button helper, an NFC tag ID input, and an informational note for tag identification.
+      icon: mdi:gesture-tap-button
+      input:
+        manual_button:
+          name: Manual Start Button / Helper
+          description: Optional button entity to manually initiate charging and start the safety timer.
+          default: []
+          selector:
+            entity:
+              domain:
+                - input_button
+                - button
+              multiple: false
+              reorder: false
+        nfc_tag_id:
+          name: NFC Tag ID
+          description: Optional NFC Tag ID/Code from Home Assistant (Settings -> Tags) to trigger power and start the timer.
+          default: ""
+          selector:
+            text:
+              multiline: false
+        nfc_tag_note:
+          name: NFC Tag Description / Note
+          description: Informational description recording where this NFC tag is placed (e.g., "Nightstand Tag").
+          default: "None"
+          selector:
+            text:
+              multiline: false
+
+    thresholds:
+      name: Battery Thresholds
+      description: Configure the low and high battery percentage boundaries that trigger charging on and off.
+      icon: mdi:tune
+      input:
+        low_threshold:
+          name: Low Battery Threshold
+          description: Turn on the switch when the battery falls below this percentage.
+          default: 22
+          selector:
+            number:
+              min: 0.0
+              max: 100.0
+              unit_of_measurement: '%'
+              mode: slider
+              step: 1.0
+        high_threshold:
+          name: High Battery Threshold
+          description: Turn off the switch when the battery rises above this percentage.
+          default: 79
+          selector:
+            number:
+              min: 0.0
+              max: 100.0
+              unit_of_measurement: '%'
+              mode: slider
+              step: 1.0
+
+    durations:
+      name: Duration & Grace Period
+      description: Configure safety limits, including the maximum continuous charging time and the grace period for accidental unplugs.
+      icon: mdi:timer-outline
+      input:
+        max_charge_duration:
+          name: Maximum Charge Duration
+          description: How long the device is allowed to actively charge before a hard shutdown is forced.
+          default: 03:00:00
+          selector:
+            duration:
+              enable_second: true
+        discharge_grace_minutes:
+          name: Discharge Grace Period
+          description: How many minutes the device can be discharging before the session is aborted.
+          default: 5
+          selector:
+            number:
+              min: 1.0
+              max: 60.0
+              unit_of_measurement: minutes
+              mode: slider
+              step: 1.0
+
+triggers:
+  # Blueprint 1 Triggers (Percentage & State Recovery)
+  - trigger: numeric_state
+    entity_id: !input battery_sensor
+    below: !input low_threshold
+    id: low_battery
+  - trigger: numeric_state
+    entity_id: !input battery_sensor
+    above: !input high_threshold
+    id: high_battery
+  - trigger: state
+    entity_id: !input battery_sensor
+    from:
+      - unavailable
+      - unknown
+    id: sensor_reconnected
+  - trigger: homeassistant
+    event: start
+    id: ha_restart
+
+  # Blueprint 2 Triggers (Status & Failsafes)
+  - trigger: state
+    entity_id: !input battery_status
+    to: charging
+    id: phone_charging
+  - trigger: state
+    entity_id: !input power_switch
+    to: 'off'
+    id: plug_off
+  - trigger: event
+    event_type: timer.finished
+    event_data:
+      entity_id: !input charging_timer
+    id: timer_done
+  - trigger: state
+    entity_id: !input battery_status
+    to: discharging
+    id: phone_discharging
+
+  # Optional Manual Triggers (Button or NFC Tag)
+  - trigger: state
+    entity_id: !input manual_button
+    id: manual_start
+  - trigger: event
+    event_type: tag_scanned
+    event_data:
+      tag_id: !input nfc_tag_id
+    id: manual_start
+
+mode: restart
+
+actions:
+  - choose:
+      # --- Manual Start Logic (Button or NFC Tag Scan) ---
+      - conditions:
+          - condition: trigger
+            id: manual_start
+        sequence:
+          - action: homeassistant.turn_on
+            target:
+              entity_id: !input power_switch
+          - action: timer.start
+            target:
+              entity_id: !input charging_timer
+            data:
+              duration: !input max_charge_duration
+
+      # --- Blueprint 1 Logic: Turn On / Off based on Percentages & Startup ---
+      - conditions:
+          - condition: trigger
+            id: ["low_battery", "sensor_reconnected", "ha_restart"]
+          - condition: numeric_state
+            entity_id: !input battery_sensor
+            below: !input low_threshold
+        sequence:
+          - action: homeassistant.turn_on
+            target:
+              entity_id: !input power_switch
+
+      - conditions:
+          - condition: trigger
+            id: ["high_battery", "sensor_reconnected", "ha_restart"]
+          - condition: numeric_state
+            entity_id: !input battery_sensor
+            above: !input high_threshold
+        sequence:
+          - action: homeassistant.turn_off
+            target:
+              entity_id: !input power_switch
+
+      # --- Blueprint 2 Logic: Timer and Failsafe Management ---
+      - conditions:
+          - condition: trigger
+            id: phone_charging
+          - condition: state
+            entity_id: !input power_switch
+            state: 'on'
+        sequence:
+          - action: timer.start
+            target:
+              entity_id: !input charging_timer
+            data:
+              duration: !input max_charge_duration
+
+      - conditions:
+          - condition: trigger
+            id: timer_done
+        sequence:
+          - action: homeassistant.turn_off
+            target:
+              entity_id: !input power_switch
+
+      - conditions:
+          - condition: trigger
+            id: plug_off
+        sequence:
+          - action: timer.cancel
+            target:
+              entity_id: !input charging_timer
+
+      - conditions:
+          - condition: trigger
+            id: phone_discharging
+        sequence:
+          - delay:
+              minutes: !input discharge_grace_minutes
+          - condition: state
+            entity_id: !input battery_status
+            state: discharging
+          - action: timer.cancel
+            target:
+              entity_id: !input charging_timer
+          - action: homeassistant.turn_off
+            target:
+              entity_id: !input power_switch
