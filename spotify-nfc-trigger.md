@@ -6,10 +6,19 @@
 
 An intelligent, feature-rich Spotify automation blueprint for Home Assistant NFC tags. Designed with smart state management to handle playback seamlessly—resuming if rescanned, pausing if currently playing, and instantly switching or restarting when a different tag is scanned.
 
+## Prerequisites
+
+Before setting up this blueprint, make sure you have the following ready:
+- **Spotify Integration:** The official [Spotify Integration](https://www.home-assistant.io/integrations/spotify/) must be successfully integrated into Home Assistant, with your Spotify account linked and media player entities available.
+- **NFC Tags:** Physical NFC tags (NTAG215 or similar) capable of being scanned by your phone or a dedicated Home Assistant NFC reader.
+
+---
+
 ## Features
 
 - **Smart State Management:** Automatically handles playback states—resumes if rescanned, pauses if currently playing, and switches or restarts immediately if a different tag is scanned.
 - **Multi-Instance Zone Tracking:** Optional shared `input_text` helpers allow multiple NFC tags across a shared area to track active sources and coordinate playback.
+- **Auto-Clear Idle Timeout:** Optionally configure a slider threshold (1 to 15 minutes) so that if your speaker stays paused for too long, the tracking helper clears itself automatically to prevent stale session locking.
 - **Flexible Fallback Mode:** Leave the tracker fields blank to effortlessly drop back to a standard standalone play/pause toggle mode.
 - **Clean UI Layout:** Grouped configuration sections (`NFC Tag Configuration`, `Jukebox Configuration`, and `Smart Jukebox Tracker`) complete with comprehensive inline tooltips and explicit user guidance.
 - **Behavior Mapping:**
@@ -17,7 +26,7 @@ An intelligent, feature-rich Spotify automation blueprint for Home Assistant NFC
   | Event / Scanned State | Action Taken |
   | :--- | :--- |
   | **Same Tag Rescanned (Playing)** | Pauses playback. |
-  | **Same Tag Rescanned (Paused)** | Resumes playback. |
+  | **Same Tag Rescanned (Paused)** | Resumes playback (unless the idle timeout clears the helper first). |
   | **Different Tag Scanned (Smart Tracker Paired)** | Forces a fresh play of the new playlist and updates the tracking helper. |
   | **Tag Scanned (Standalone Mode / Blank Tracker)** | Toggles play/pause or initiates playback if stopped. |
 
@@ -33,6 +42,7 @@ An intelligent, feature-rich Spotify automation blueprint for Home Assistant NFC
 | **Spotify Playlist Link / URI** | The Spotify URL or URI to play (browse via [open.spotify.com](https://open.spotify.com)). Supports trimming query parameters like `?si=...` or native `spotify:playlist:...` URIs. | **Yes** | N/A |
 | **Playlist ID (Smart Jukebox)** | Unique identifier string for this specific playlist/tag (e.g., `jazz` or `rock`). Required if using a tracking helper. | No | `""` |
 | **Tracking Helper Entity** | Optional shared `input_text` helper entity used to track the active source across the zone (e.g., `input_text.jukebox_kitchen`). Must be paired with a Playlist ID. | No | `""` |
+| **Auto-Clear Idle Timeout** | If the speaker remains paused longer than this duration (1 to 15 minutes), the tracking helper automatically clears itself. | No | `5` |
 
 ---
 
