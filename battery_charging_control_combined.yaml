@@ -11,7 +11,7 @@ blueprint:
     **Version:** v1.0
   domain: automation
   source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/battery_charging_control_combined.yaml
-  author: Ufans123 (Combined)
+  author: Ufans123
   input:
     sensors:
       name: Sensors
