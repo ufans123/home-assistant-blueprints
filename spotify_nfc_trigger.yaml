@@ -1,0 +1,179 @@
+blueprint:
+  name: Spotify NFC Jukebox with Smart Tracker
+  description: >
+    ### Intelligent Spotify jukebox automation for NFC tags
+
+    * Supports smart state management: resumes if rescanned, pauses if playing, and restarts/switches immediately if a different tag is scanned.
+    
+    ### Requirements for Smart Tracking
+
+    * Both **Playlist ID** and **Tracking Helper** must be configured together to enable multi-instance switching.
+
+    * Leave them blank to fall back to standard standalone play/pause toggle mode.
+
+
+    **Version:** v1.0
+  domain: automation
+  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/spotify_nfc_trigger.yaml
+  input:
+    nfc_settings:
+      name: NFC Tag Configuration
+      description: Scan and label your physical NFC tag.
+      icon: mdi:nfc
+      input:
+        nfc_tag:
+          name: NFC Tag ID
+          description: The ID string of the scanned NFC tag.
+          selector:
+            text: {}
+        tag_descriptor:
+          name: Tag Label / Descriptor (Optional)
+          description: >
+            A friendly human-readable name or description for this physical NFC tag 
+            (e.g., 'Living Room - Jazz Tag' or 'Kitchen Vinyl Sticker'). Non-functional; purely for identification.
+          default: ""
+          selector:
+            text: {}
+
+    general_settings:
+      name: Jukebox Configuration
+      description: Target speaker and Spotify media playback settings.
+      icon: mdi:music-box
+      input:
+        target_speaker:
+          name: Target Speaker
+          description: >
+            The media player entity to output playback. 
+            **Note:** Please select only a single speaker or a single synchronized speaker group. Selecting multiple independent speakers can cause playback control or state-tracking issues.
+          selector:
+            target:
+              entity:
+                domain: media_player
+        spotify_url:
+          name: Spotify Playlist Link / URI
+          description: >
+            The Spotify URL or URI of the playlist you want to play. You can browse and find playlists at [open.spotify.com](https://open.spotify.com).
+            
+            * **Web URL:** Copy the link from your browser. (Tip: You can safely remove any query parameters starting from the `?` mark onward, e.g., `?si=...`).
+            
+            * **Spotify URI:** Right-click the playlist in Spotify → Share → Copy Spotify URI (e.g., `spotify:playlist:...`).
+          selector:
+            text: {}
+
+    smart_tracker:
+      name: Smart Jukebox Tracker (Optional)
+      description: >
+        Optional multi-instance tracking configuration. Both fields must be paired together 
+        to enable smart switching and state tracking.
+      icon: mdi:source-branch
+      input:
+        playlist_id:
+          name: Playlist ID (Smart Jukebox)
+          description: >
+            Unique identifier string for this specific playlist/tag (e.g., 'jazz' or 'rock'). 
+            Required if using a tracking helper to detect switches.
+          default: ""
+          selector:
+            text: {}
+        tracking_helper:
+          name: Tracking Helper Entity (Smart Jukebox)
+          description: >
+            Optional shared input_text helper entity used to track the active source across the zone 
+            (e.g., input_text.jukebox_kitchen). Must be paired with a Playlist ID.
+          default: ""
+          selector:
+            entity:
+              filter:
+                domain: input_text
+
+triggers:
+  - trigger: tag
+    tag_id: !input nfc_tag
+
+conditions: []
+
+actions:
+  # Define variables first so templates can safely read inputs
+  - variables:
+      helper: !input tracking_helper
+      pid: !input playlist_id
+
+  # If a helper and PID are configured, check if this is a mismatch (switch/restart)
+  - choose:
+      - conditions:
+          - condition: template
+            value_template: "{{ helper != '' and pid != '' }}"
+        sequence:
+          # If helper does NOT match scanned PID, force a fresh play and update helper
+          - if:
+              - condition: template
+                value_template: "{{ states(helper) != pid }}"
+            then:
+              - action: input_text.set_value
+                target:
+                  entity_id: !input tracking_helper
+                data:
+                  value: !input playlist_id
+              - action: media_player.volume_set
+                metadata: {}
+                target: !input target_speaker
+                data:
+                  volume_level: 0.5
+              - action: media_player.play_media
+                target: !input target_speaker
+                data:
+                  media:
+                    media_content_id: !input spotify_url
+                    media_content_type: playlist
+                    metadata: {}
+              # Stop execution here so it doesn't fall through to the toggle logic
+              - stop: "Mismatch handled: started new playlist."
+
+      # Fallback if only helper is provided without a PID
+      - conditions:
+          - condition: template
+            value_template: "{{ helper != '' }}"
+        sequence:
+          - action: input_text.set_value
+            target:
+              entity_id: !input tracking_helper
+            data:
+              value: !input playlist_id
+
+  # Standard toggle or play logic (runs if it's a match, or if no helper is configured)
+  - if:
+      - condition: media_player.is_playing
+        target: !input target_speaker
+        options:
+          for: "00:00:00"
+    then:
+      - action: media_player.media_play_pause
+        metadata: {}
+        target: !input target_speaker
+        data: {}
+    else:
+      - if:
+          - condition: media_player.is_paused
+            target: !input target_speaker
+            options:
+              for: "00:00:00"
+        then:
+          - action: media_player.media_play_pause
+            metadata: {}
+            target: !input target_speaker
+            data: {}
+        else:
+          - action: media_player.volume_set
+            metadata: {}
+            target: !input target_speaker
+            data:
+              volume_level: 0.5
+          - action: media_player.play_media
+            target: !input target_speaker
+            data:
+              media:
+                media_content_id: !input spotify_url
+                media_content_type: playlist
+                metadata: {}
+
+mode: single
