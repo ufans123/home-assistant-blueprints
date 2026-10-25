@@ -15,6 +15,7 @@ blueprint:
     **Version:** v1.0
   domain: automation
   source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/spotify_nfc_trigger.yaml
+  author: Ufans123
   input:
     nfc_settings:
       name: NFC Tag Configuration
