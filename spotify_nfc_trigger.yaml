@@ -85,19 +85,6 @@ blueprint:
             entity:
               filter:
                 domain: input_text
-        clear_timeout_minutes:
-          name: Auto-Clear Idle Timeout (Minutes, Optional)
-          description: >
-            If the speaker remains paused longer than this duration, the tracking helper 
-            automatically clears itself to prevent stale session locking. Leave blank to disable.
-          default: 5
-          selector:
-            number:
-              min: 1
-              max: 15
-              step: 1
-              unit_of_measurement: minutes
-              mode: slider
 
 triggers:
   - trigger: tag
@@ -106,26 +93,26 @@ triggers:
 conditions: []
 
 actions:
-  # Define variables first so templates can safely read inputs
+  # Define variables first and unpack target selector safely
   - variables:
       helper: !input tracking_helper
       pid: !input playlist_id
-      speaker: !input target_speaker
-      timeout_mins: !input clear_timeout_minutes
+      raw_speaker: !input target_speaker
+      speaker: "{{ raw_speaker.entity_id[0] if raw_speaker.entity_id is iterable and raw_speaker.entity_id is not string else raw_speaker.entity_id }}"
 
-  # Optional Idle Check: If paused longer than the configured timeout, clear the helper
+  # --- OFFLINE / DISCONNECTED SAFETY CHECK ---
+  # If the speaker has lost connection (unavailable/unknown), automatically clear 
+  # the tracking helper so the session doesn't get permanently locked.
   - if:
       - condition: template
-        value_template: >
-          {{ timeout_mins != '' and helper != '' and states(helper) != '' 
-             and is_state(speaker, 'paused') 
-             and as_timestamp(now()) - as_timestamp(state_attr(speaker, 'last_changed')) > (timeout_mins | int * 60) }}
+        value_template: "{{ helper != '' and is_state(speaker, ['unavailable', 'unknown']) }}"
     then:
       - action: input_text.set_value
         target:
           entity_id: !input tracking_helper
         data:
           value: ""
+  # -------------------------------------------
 
   # If a helper and PID are configured, check if this is a mismatch (switch/restart)
   - choose:
