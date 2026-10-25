@@ -4,18 +4,18 @@
 
 [← Back to Main Blueprints Repository](README.md)
 
-This blueprint provides a complete, all-in-one solution for managing smart switch battery charging. It unifies percentage-based threshold charging with an active safety time-failsafe companion, network disconnect recovery, and manual override capabilities via buttons or NFC tags.
+This blueprint provides a complete, all-in-one solution for managing smart switch battery charging. It unifies percentage-based threshold charging with an active safety time-failsafe companion, network disconnect recovery, and manual override capabilities via `input_boolean` helper switches or NFC tags.
 
 The system is explicitly designed so that **the device reporting an active `charging` status automatically kicks off the safety countdown timer**, ensuring the timer tracks actual active power flow. Whether your device charges automatically based on battery levels or is docked manually at night before hitting your low threshold, this automation ensures your plug turns on reliably and cuts power safely before overcharging occurs.
 
-> **Disclaimer:** If a phone or tablet is already powered completely off or disconnected from Wi-Fi, it cannot scan an NFC tag or report its `charging` status to Home Assistant (meaning the safety timer will not auto-start). Using a nightstand NFC tag or manual button allows you to proactively turn on the plug and launch the safety timer before placing your device on the charger, guaranteeing a controlled charging session even if the battery hasn't met the low threshold yet or the device drops offline overnight.
+> **Disclaimer:** If a phone or tablet is already powered completely off or disconnected from Wi-Fi, it cannot scan an NFC tag or report its `charging` status to Home Assistant (meaning the safety timer will not auto-start). Using a nightstand NFC tag or manual trigger switch allows you to proactively turn on the plug and launch the safety timer before placing your device on the charger, guaranteeing a controlled charging session even if the battery hasn't met the low threshold yet or the device drops offline overnight.
 
 ## Features
 
 - **All-in-One Architecture:** Combines percentage boundary controls, time-based safety limits, and manual overrides into a single, streamlined automation.
 - **Charge-Activated Timer:** The helper timer is specifically designed to start as soon as the device detects and reports an active `charging` state, providing precise active-charging limit tracking.
 - **Sectioned UI Schema:** Organized using Home Assistant section grouping for clean configuration of sensors, plugs, thresholds, safety durations, and manual triggers.
-- **Manual Start & NFC Support:** Allows launching a charging session on demand via physical/virtual buttons or scanning an NFC tag (ideal for starting a nightstand charge before a device drops Wi-Fi or hits the threshold).
+- **Manual Start & NFC Support:** Allows launching a charging session on demand via an `input_boolean` helper switch (which automatically resets itself to `off` after use) or by scanning an NFC tag (ideal for starting a nightstand charge before a device drops Wi-Fi or hits the threshold).
 - **Network Dropout & HA Restart Resilience:** Retains state and safely evaluates battery levels during Wi-Fi drops or Home Assistant reboots without interrupting ongoing sessions.
 - **Sustained Discharge Grace Period:** Allows you to pick up and briefly use your device without resetting or aborting the active countdown tracker.
 - **Multi-Domain Compatibility:** Compatible with smart switches registered as either `switch` or `light` entities.
@@ -38,7 +38,7 @@ Before configuring this blueprint, you must create a standard **Timer Helper** i
 | | `Battery Status Sensor` | Entity (`sensor`) | The device sensor reporting state like `charging`, `discharging`, etc. |
 | **Plug & Timer** | `Smart Switch / Plug` | Entity (`switch` / `light`) | The smart plug or converted light entity controlling power to the charger. |
 | | `Helper Timer` | Entity (`timer`) | The Home Assistant tracking timer helper created in the prerequisites. |
-| **Manual Start & NFC Tag** | `Manual Start Button / Helper` | Entity (`input_button` / `button`) | Optional button entity to manually trigger charging power and start the countdown timer. |
+| **Manual Start & NFC Tag** | `Manual Start Trigger Switch` | Entity (`input_boolean`) | Optional `input_boolean` helper to manually initiate charging (automatically resets to `off` after triggering). |
 | | `NFC Tag ID` | Text Selector | Optional Home Assistant Tag ID/Code used to trigger power and launch the session. |
 | | `NFC Tag Description / Note` | Text Selector | Optional text note to record tag details or physical placement (e.g., "Nightstand Tag"). |
 | **Battery Thresholds** | `Low Battery Threshold` | Slider (%) | Percentage below which the smart plug automatically turns on. |
@@ -49,7 +49,7 @@ Before configuring this blueprint, you must create a standard **Timer Helper** i
 ## How the Blueprint Lifecycle Works
 
 1. **Automated Start & Timer Trigger:** When your device drops below the **Low Battery Threshold**, the smart plug turns on. Once power flows and the device's status sensor switches to `charging`, the automation immediately triggers and starts the **Helper Timer** countdown.
-2. **Manual / NFC Override:** Pressing your configured manual button or scanning your nightstand NFC tag before going to sleep turns on the plug and starts the timer immediately—bypassing the battery threshold and protecting against overnight Wi-Fi disconnects.
+2. **Manual / NFC Override:** Toggling your configured `input_boolean` helper or scanning your nightstand NFC tag before going to sleep turns on the plug, starts the timer immediately, and resets the helper switch back to `off`—bypassing the battery threshold and protecting against overnight Wi-Fi disconnects.
 3. **Grace Period Protection:** Unplugging your device to send a quick text enters a grace window. If plugged back in before the **Discharge Grace Period** expires, tracking safely resumes.
 4. **Safe Termination:** When the battery reaches the **High Battery Threshold**, the smart plug turns off and cancels the active timer. If the device fails to stop charging or stays plugged in too long, the **Helper Timer** finishes and forcefully shuts off power.
 
