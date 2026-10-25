@@ -65,7 +65,7 @@ Always review the automation YAML and test changes safely before deploying them 
 | **[Reset Dropdown Helper on Light Turn Off](reset-select-helper.md)** | Quickly reset any select input helper back to a designated default or unselected state based on triggers or automation events. | `v1.0` | — |
 | **[Sync Device and Timer](device-timer-sync.md)** | Keep lights, switches, or fans synchronized with a Home Assistant timer helper. | `v1.0` | `2026-10-08` |
 | **[Sync Device and Scheduled Off-Time](device-sync-scheduled-time-off.md)** | Sync switches, lights, or fans with a scheduled off-time picker, dynamically computing countdown durations with optional timer helper tracking. | `v1.0` | `2026-10-16` |
-| **[Two-Way Device Sync](device-sync.md)** | Synchronize the state of any two binary entities (lights, switches, fans, input booleans) mutually in both directions without infinite loops. | `v1.0` | ` — ` |
+| **[Two-Way Device Sync](device-sync.md)** | Synchronize the state of any two binary entities (lights, switches, fans, input booleans) mutually in both directions without infinite loops. | `v1.0` | ` 2026-10-25 ` |
 
 [⬆ Back to top](#top)
 
