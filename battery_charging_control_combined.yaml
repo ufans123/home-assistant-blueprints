@@ -8,7 +8,7 @@ blueprint:
     
     **Disclaimer:** If the device is offline before it indicates it is charging, the timer will not start automatically and should be started manually or via NFC tag.
     
-    **Version:** v1.0
+    **Version:** v1.1
   domain: automation
   source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/battery_charging_control_combined.yaml
   author: Ufans123
@@ -64,18 +64,17 @@ blueprint:
 
     manual_override:
       name: Manual Start & NFC Tag
-      description: Configure a manual start button helper, an NFC tag ID input, and an informational note for tag identification.
+      description: Configure a manual start input boolean helper, an NFC tag ID input, and an informational note for tag identification.
       icon: mdi:gesture-tap-button
       input:
         manual_button:
-          name: Manual Start Button / Helper
-          description: Optional button entity to manually initiate charging and start the safety timer.
+          name: Manual Start Trigger Switch
+          description: Select an Input Boolean helper to manually initiate charging and auto-reset.
           default: []
           selector:
             entity:
               domain:
-                - input_button
-                - button
+                - input_boolean
               multiple: false
               reorder: false
         nfc_tag_id:
@@ -184,9 +183,11 @@ triggers:
     to: discharging
     id: phone_discharging
 
-  # Optional Manual Triggers (Button or NFC Tag)
+  # Optional Manual Triggers (Input Boolean or NFC Tag)
   - trigger: state
     entity_id: !input manual_button
+    from: "off"
+    to: "on"
     id: manual_start
   - trigger: event
     event_type: tag_scanned
@@ -211,6 +212,10 @@ actions:
               entity_id: !input charging_timer
             data:
               duration: !input max_charge_duration
+          - action: input_boolean.turn_off
+            target:
+              entity_id: !input manual_button
+            continue_on_error: true
 
       # --- Blueprint 1 Logic: Turn On / Off based on Percentages & Startup ---
       - conditions:
