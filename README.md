@@ -16,6 +16,7 @@ Welcome! This repository features my collection of custom Home Assistant bluepri
 - 🔘[Buttons, Triggers & Scene Control](#-buttons-triggers--scene-control)
 - 🔋[Power, Hardware & Notifications](#-power-hardware--notifications)
 - ☀️[Weather & Information](#️-weather--information)
+- ♣️ [About Me](https://about.me/andylund)
 
 ---
 
