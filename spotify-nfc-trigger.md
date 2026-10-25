@@ -2,7 +2,7 @@
 
 [![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fufans123%2Fhome-assistant-blueprints%2Fblob%2Fmain%2Fspotify_nfc_trigger.yaml)
 
-> **Version:** 1.0 | **Initial Release:** 2026-10-24 | [← Back to Main Blueprints Repository](README.md)
+> **Version:** 1.0 | **Updated:** 2026-10-24 | [← Back to Main Blueprints Repository](README.md)
 
 An intelligent, feature-rich Spotify automation blueprint for Home Assistant NFC tags. Designed with smart state management to handle playback seamlessly—resuming if rescanned, pausing if currently playing, and instantly switching or restarting when a different tag is scanned.
 
@@ -18,7 +18,7 @@ Before setting up this blueprint, make sure you have the following ready:
 
 - **Smart State Management:** Automatically handles playback states—resumes if rescanned, pauses if currently playing, and switches or restarts immediately if a different tag is scanned.
 - **Multi-Instance Zone Tracking:** Optional shared `input_text` helpers allow multiple NFC tags across a shared area to track active sources and coordinate playback.
-- **Auto-Clear Idle Timeout:** Optionally configure a slider threshold (1 to 15 minutes) so that if your speaker stays paused for too long, the tracking helper clears itself automatically to prevent stale session locking.
+- **Offline / Disconnected Safety Reset:** Automatically clears the tracking helper if the target speaker becomes `unavailable` or `unknown`, preventing stale session locking when a speaker drops off Wi-Fi or powers down.
 - **Flexible Fallback Mode:** Leave the tracker fields blank to effortlessly drop back to a standard standalone play/pause toggle mode.
 - **Clean UI Layout:** Grouped configuration sections (`NFC Tag Configuration`, `Jukebox Configuration`, and `Smart Jukebox Tracker`) complete with comprehensive inline tooltips and explicit user guidance.
 - **Behavior Mapping:**
@@ -26,8 +26,9 @@ Before setting up this blueprint, make sure you have the following ready:
   | Event / Scanned State | Action Taken |
   | :--- | :--- |
   | **Same Tag Rescanned (Playing)** | Pauses playback. |
-  | **Same Tag Rescanned (Paused)** | Resumes playback (unless the idle timeout clears the helper first). |
+  | **Same Tag Rescanned (Paused)** | Resumes playback. |
   | **Different Tag Scanned (Smart Tracker Paired)** | Forces a fresh play of the new playlist and updates the tracking helper. |
+  | **Tag Scanned (Speaker Offline/Unavailable)** | Automatically clears the tracking helper so a new session can start cleanly. |
   | **Tag Scanned (Standalone Mode / Blank Tracker)** | Toggles play/pause or initiates playback if stopped. |
 
 ---
@@ -42,7 +43,6 @@ Before setting up this blueprint, make sure you have the following ready:
 | **Spotify Playlist Link / URI** | The Spotify URL or URI to play (browse via [open.spotify.com](https://open.spotify.com)). Supports trimming query parameters like `?si=...` or native `spotify:playlist:...` URIs. | **Yes** | N/A |
 | **Playlist ID (Smart Jukebox)** | Unique identifier string for this specific playlist/tag (e.g., `jazz` or `rock`). Required if using a tracking helper. | No | `""` |
 | **Tracking Helper Entity** | Optional shared `input_text` helper entity used to track the active source across the zone (e.g., `input_text.jukebox_kitchen`). Must be paired with a Playlist ID. | No | `""` |
-| **Auto-Clear Idle Timeout** | If the speaker remains paused longer than this duration (1 to 15 minutes), the tracking helper automatically clears itself. | No | `5` |
 
 ---
 
@@ -50,6 +50,7 @@ Before setting up this blueprint, make sure you have the following ready:
 
 - **Requirements for Smart Tracking:** Both **Playlist ID** and **Tracking Helper** must be configured together to enable multi-instance zone switching. Leave them blank to fall back to standard standalone play/pause toggle mode.
 - **Speaker Selection:** Please select only a single media player speaker or a single synchronized speaker group. Selecting multiple independent speakers can cause playback control or state-tracking issues.
+- **Tracking Helper Scope:** Assign a dedicated `input_text` helper entity per target speaker or synchronized group (e.g., `input_text.jukebox_kitchen` for Kitchen, `input_text.jukebox_patio` for Patio). Reusing the same tracking helper across separate physical locations will cause playback switching to cross-talk between zones.
 
 ---
 
