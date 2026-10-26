@@ -1,0 +1,77 @@
+blueprint:
+  name: Turn On to Default Scene (Companion Blueprint)
+  description: >-
+    Automatically sets a light or switch to a default scene whenever it turns on from 
+    an external source (app, physical switch, or voice command).
+
+    Optionally resets a cycle counter when used as a companion to the "Button Scene Cycling and Off Control" blueprint.
+  domain: automation
+  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/target_turn_on_synchronizer.yaml
+  author: Ufans123
+  input:
+    target_section:
+      name: Target Device Settings
+      icon: mdi:lightbulb-auto
+      description: Choose the device to monitor and the default scene to apply.
+      input:
+        target_entity:
+          name: Target Device
+          description: The switch, light, or input boolean to monitor.
+          selector:
+            entity:
+              domain:
+                - switch
+                - light
+                - input_boolean
+              multiple: false
+        default_scene:
+          name: Default Scene
+          description: Select the scene to activate when the device turns on.
+          selector:
+            entity:
+              domain: scene
+              multiple: false
+
+    companion_section:
+      name: Companion Options (Optional)
+      icon: mdi:sync
+      description: Sync settings for the "Button Scene Cycling and Off Control" blueprint.
+      collapsed: true
+      input:
+        counter_entity:
+          name: Counter Helper (Optional)
+          description: Select your Counter helper to reset to 0. Leave blank if using standalone.
+          default: ""
+          selector:
+            entity:
+              domain: counter
+
+mode: single
+max_exceeded: silent
+
+triggers:
+  - trigger: state
+    entity_id: !input target_entity
+    from: 'off'
+    to: 'on'
+
+conditions: []
+
+actions:
+  - action: scene.turn_on
+    target:
+      entity_id: !input default_scene
+
+  - variables:
+      counter: !input counter_entity
+
+  - choose:
+      - conditions:
+          - condition: template
+            value_template: "{{ counter is defined and counter != none and counter | string | trim != '' }}"
+        sequence:
+          - action: counter.set_value
+            target:
+              entity_id: "{{ counter }}"
+            data:
+              value: 0
