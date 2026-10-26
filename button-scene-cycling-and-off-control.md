@@ -52,6 +52,12 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/button_scene_cyc
 4. Paste in the URL and follow the prompts.
 
 ---
+### 🔗 Related Blueprint
+
+* 🔄 **Companion Blueprint:** [Turn On to Default Scene](https://github.com/ufans123/home-assistant-blueprints/blob/main/target-turn-on-synchronizer.md)
+
+> **Note:** This blueprint shares an optional counter helper to keep scene cycles in sync across physical buttons and external triggers (apps, voice commands, or wall switches).
+---
 ## Changelog
 
 | Version | Date | Summary of Changes |
