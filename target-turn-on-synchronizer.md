@@ -2,7 +2,7 @@
 
 [![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fufans123%2Fhome-assistant-blueprints%2Fblob%2Fmain%2Ftarget_turn_on_synchronizer.yaml)
 
-[← Back to Main Blueprints Repository](README.md)
+> **Version:** 1.0 | **Last Updated:** 2026-10-25 | [← Back to Main Blueprints Repository](README.md)
 
 This blueprint automatically activates a preferred default scene whenever a light, switch, or input boolean turns on from an external source (such as an app, a physical wall switch, or a voice command). 
 
@@ -60,3 +60,17 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/target_turn_on_s
 2. Navigate to your Home Assistant Blueprints Dashboard UI (Settings > Automations & Scenes > Blueprints).
 3. In the bottom right corner, click on the **Import blueprint** button.
 4. Paste in the URL and follow the prompts.
+
+---
+### 🔗 Related Blueprint
+
+* 🔘 **Primary Blueprint:** [Button Scene Cycling and Off Control](https://github.com/ufans123/home-assistant-blueprints/blob/main/button-scene-cycling-and-off-control.md)
+
+> **Note:** This blueprint shares an optional counter helper to keep scene cycles in sync across physical buttons and external triggers (apps, voice commands, or wall switches).
+---
+
+## Changelog
+
+| Version | Date | Summary of Changes |
+| :--- | :--- | :--- |
+| **v1.0** | 2026-10-25 | Initial release |
