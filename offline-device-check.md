@@ -2,7 +2,7 @@
 
 [![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fufans123%2Fhome-assistant-blueprints%2Fblob%2Fmain%2foffline_device_check.yaml)
 
-> **Version:** 1.1 | **Initial Release:** 2026-10-19 |[← Back to Main Blueprints Repository](README.md)
+> **Version:** 1.0 | **Initial Release:** 2026-10-19 |[← Back to Main Blueprints Repository](README.md)
 
 A clean, optimized Home Assistant blueprint designed to monitor critical devices and sensors for offline (`unavailable` or `unknown`) states using a flexible hybrid approach of whitelist labeling, domain filtering, and blacklist exclusion **controlled via flexible triggers (Schedule, NFC, or Manual Helper Switch)**.
 
