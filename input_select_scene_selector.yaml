@@ -1,0 +1,89 @@
+blueprint:
+  name: "Scene Selector with Light Effect Support (Hue & Govee)"
+  description: >
+    Triggers Home Assistant scene changes or applies native light effects (such as Govee hardware dynamic scenes), 
+    or turns off a target light when reset.
+
+    ### Prerequisites:
+
+    1. **Input Select Helpers:** Create an `input_select` dropdown helper (e.g., `input_select.living_room_scenes`).
+    
+    2. **Startup Automation:** Use a startup automation (`homeassistant.start`) to dynamically populate options into your `input_select` helpers from HA area scenes or light `effect_list` attributes (See Documentation).
+
+    ### Usage & Dashboard Tip:
+    
+    - Selecting any active scene or effect name in the dropdown will activate it.
+    
+    - Selecting the **Default / Reset Option** turns off the target light.
+    
+    - **Dashboard Cards:** Use standard dropdown cards, or trigger option selection using custom dashboard cards (such as Bubble Card popups or button cards calling `input_select.select_option`).
+  domain: automation
+  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/input_select_scene_selector.yaml
+  author: Ufans123
+  input:
+    input_select_entity:
+      name: Scene Input Select
+      description: The input_select entity used to choose scenes or effects.
+      selector:
+        entity:
+          domain: input_select
+    target_light:
+      name: Target Light
+      description: The light entity to control or turn off when the default option is selected.
+      selector:
+        entity:
+          domain: light
+    default_option:
+      name: Default / Reset Option
+      description: The text in the dropdown that represents no active scene (turns off the light).
+      default: "Select an option"
+      selector:
+        text: {}
+
+variables:
+  input_select: !input input_select_entity
+  target_light_entity: !input target_light
+  selected_value: "{{ states(input_select) }}"
+
+trigger:
+  - platform: state
+    entity_id: !input input_select_entity
+    id: update_scene
+
+action:
+  - alias: Conditionally Turn Off Light or Activate Scene/Effect
+    if:
+      - condition: state
+        entity_id: !input input_select_entity
+        state: !input default_option
+    then:
+      - alias: If Light is On then Turn Off
+        if:
+          - condition: state
+            entity_id: !input target_light
+            state: "on"
+        then:
+          - action: light.turn_off
+            target:
+              entity_id: !input target_light
+    else:
+      # 1. First, attempt to trigger standard Home Assistant scene (Hue, etc.)
+      - action: scene.turn_on
+        target:
+          entity_id: >-
+            scene.{{ selected_value | replace(" ", "_") | lower }}
+        continue_on_error: true
+
+      # 2. Next, check if the dropdown selection matches an effect name on the target light (Govee, WLED, etc.)
+      - if:
+          - condition: template
+            value_template: >-
+              {{ state_attr(target_light_entity, 'effect_list') is not none 
+                 and selected_value in state_attr(target_light_entity, 'effect_list') }}
+        then:
+          - action: light.turn_on
+            target:
+              entity_id: !input target_light
+            data:
+              effect: "{{ selected_value }}"
+mode: single
