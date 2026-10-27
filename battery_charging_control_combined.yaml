@@ -1,5 +1,5 @@
 blueprint:
-  name: Safe Battery-Controlled Charging & Failsafe Manager
+  name: Safer Battery-Controlled Charging & Timed Failsafe Manager
   description: >
     Turns a smart switch on when a battery drops below a low threshold, and turns it 
     off when it exceeds a high threshold or hits a safety timer/discharge limit. 
