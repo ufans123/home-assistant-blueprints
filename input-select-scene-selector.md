@@ -28,8 +28,8 @@ This automation blueprint allows you to trigger **Home Assistant scenes** or exe
 
 ### Prerequisites
 1. **Scene & Effect Availability:**
-   - **Philips Hue:** Scenes must first be created in the Hue App (or natively in Home Assistant) and assigned to their respective Home Assistant Areas.
-   - **Govee / Hardware Effects:** Built-in hardware effects are automatically exposed out-of-the-box by the Govee integration via the light entity's `effect_list` attribute.
+  - **Philips Hue:** Scenes must first be created in the Hue App (or natively in Home Assistant) and assigned to their respective Home Assistant Areas.
+  - **Govee / Hardware Effects:** Built-in hardware effects are automatically exposed out-of-the-box by the Govee integration via the light entity's `effect_list` attribute.
 2. **Input Select Helpers:** You must create an `input_select` dropdown helper for each light or target area (e.g., `input_select.living_room_scenes`).
 3. **Startup Automation:** A startup automation (`homeassistant.start`) must be configured to dynamically harvest those pre-existing area scenes and light effects, populating your `input_select` options on boot.
 
