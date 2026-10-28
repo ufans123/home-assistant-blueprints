@@ -3,7 +3,7 @@ blueprint:
   description: Turns a device on/off based on dashboard input_datetime helpers, selected
     days, an optional enable/disable toggle, and optional timer synchronization.
   domain: automation
-  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/daily_dynamic_time_based_device_scheduler.yaml
+  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/dashboard_controlled_daily_device_scheduler.yaml
   author: Ufans123
   input:
     target_device:
