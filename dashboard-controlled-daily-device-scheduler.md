@@ -103,5 +103,4 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/dashboard_contro
 
 | Version | Date | Summary of Changes |
 | :--- | :--- | :--- |
-| **v2.1** | 2026-10-28 | Added optional `input_boolean` master enable switch; expanded trigger-level variables for invalid Jinja `!input` parsing fixes; added dynamic timer duration calculations for `input_datetime` helpers. |
-| **v2.0** | 2026-10-27 | Initial release of dashboard-controlled companion blueprint. |
+| **v1.0** | 2026-10-28 | Initial release of dashboard-controlled companion blueprint. |
