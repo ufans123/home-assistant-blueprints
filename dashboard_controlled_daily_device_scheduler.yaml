@@ -1,5 +1,5 @@
 blueprint:
-  name: Dashboard-Controlled Daily Device Scheduler
+  name: Daily Dashboard-Controlled Device Scheduler
   description: >-
     Turns a device on/off based on dashboard input_datetime helpers, selected
     days, an optional enable/disable toggle, and optional timer synchronization.
