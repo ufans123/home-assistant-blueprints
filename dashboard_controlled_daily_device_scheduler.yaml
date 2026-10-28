@@ -107,20 +107,11 @@ blueprint:
 alias: 'Dashboard-Controlled Daily Device Scheduler'
 description: Turns a device on/off based on dashboard input_datetime helpers and selected days.
 trigger:
-- trigger: template
-  value_template: >-
-    {% set helper = states('%s' | format(states('input_datetime.dummy') if false else '')) %}
-    {% set on_h = '%s' | format(states(on_input_ent)) %}
-    {{ on_h != 'unknown' and on_h != 'unavailable' and now().strftime('%H:%M:%S') == on_h }}
-  variables:
-    on_input_ent: !input on_time_helper
+- trigger: time
+  at: !input on_time_helper
   id: turn_on
-- trigger: template
-  value_template: >-
-    {% set off_h = '%s' | format(states(off_input_ent)) %}
-    {{ off_h != 'unknown' and off_h != 'unavailable' and now().strftime('%H:%M:%S') == off_h }}
-  variables:
-    off_input_ent: !input off_time_helper
+- trigger: time
+  at: !input off_time_helper
   id: turn_off
 - trigger: event
   event_type: timer.finished
