@@ -4,7 +4,9 @@
 
 > **Version:** 2.1 | **Initial Release:** 2026-10-28 | [← Back to Main Blueprints Repository](README.md)
 
-A dynamic Home Assistant blueprint for managing device schedules directly from your dashboard using `input_datetime` helpers. Avoid hardcoded values, edit schedule times on the fly without entering the automation configuration, and optionally link a **master enable switch** or **timer synchronization helper** for live tracking and override control.
+A dynamic Home Assistant companion blueprint based on the **[Daily Time-Based Device Scheduler](daily-time-based-device-scheduler.md)**. 
+
+While the original blueprint uses hardcoded times set directly within the automation UI, this companion version shifts time management to dashboard-based `input_datetime` helpers. This allows you to adjust scheduled "Turn On" and "Turn Off" times on the fly directly from your dashboard—without ever editing the automation configuration—while retaining full day-of-week filtering, an optional master enable toggle, and smart bidirectional timer synchronization.
 
 ## Features
 
