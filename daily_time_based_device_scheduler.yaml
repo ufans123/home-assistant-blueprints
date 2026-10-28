@@ -2,13 +2,15 @@ blueprint:
   name: Daily Time-Based Device Scheduler with Optional Timer
   description: Turns a device on/off based on times and days, with fully optional
     bidirectional timer synchronization.
+
+    **Version:** v1.1
   domain: automation
   source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/daily_time_based_device_scheduler.yaml
   author: Ufans123
   input:
     target_device:
       name: Device to Control
-      description: The switch, light, or fan entity to turn on and off.
+      description: The switch, light, or fan entity to be controlled by this schedule.
       selector:
         entity:
           domain:
@@ -20,13 +22,13 @@ blueprint:
     on_time:
       name: Turn On Time
       description: Enter a fixed time (e.g., 08:00:00) or select an input_datetime
-        helper.
+        helper to determine when the device turns on.
       selector:
         time: {}
     off_time:
       name: Turn Off Time
       description: Enter a fixed time (e.g., 20:00:00) or select an input_datetime
-        helper.
+        helper to determine when the device turns off.
       selector:
         time: {}
     timer_entity:
@@ -40,41 +42,54 @@ blueprint:
           multiple: false
           reorder: false
       default: ''
-    day_mon:
-      name: Monday
-      selector:
-        boolean: {}
-      default: true
-    day_tue:
-      name: Tuesday
-      selector:
-        boolean: {}
-      default: true
-    day_wed:
-      name: Wednesday
-      selector:
-        boolean: {}
-      default: true
-    day_thu:
-      name: Thursday
-      selector:
-        boolean: {}
-      default: true
-    day_fri:
-      name: Friday
-      selector:
-        boolean: {}
-      default: true
-    day_sat:
-      name: Saturday
-      selector:
-        boolean: {}
-      default: true
-    day_sun:
-      name: Sunday
-      selector:
-        boolean: {}
-      default: true
+    days_section:
+      name: Active Days of the Week
+      icon: mdi:calendar-week
+      collapsed: true
+      description: Defaults to every day. Expand to customize specific active days.
+      input:
+        day_mon:
+          name: Monday
+          description: Enable or disable the schedule for Mondays.
+          selector:
+            boolean: {}
+          default: true
+        day_tue:
+          name: Tuesday
+          description: Enable or disable the schedule for Tuesdays.
+          selector:
+            boolean: {}
+          default: true
+        day_wed:
+          name: Wednesday
+          description: Enable or disable the schedule for Wednesdays.
+          selector:
+            boolean: {}
+          default: true
+        day_thu:
+          name: Thursday
+          description: Enable or disable the schedule for Thursdays.
+          selector:
+            boolean: {}
+          default: true
+        day_fri:
+          name: Friday
+          description: Enable or disable the schedule for Fridays.
+          selector:
+            boolean: {}
+          default: true
+        day_sat:
+          name: Saturday
+          description: Enable or disable the schedule for Saturdays.
+          selector:
+            boolean: {}
+          default: true
+        day_sun:
+          name: Sunday
+          description: Enable or disable the schedule for Sundays.
+          selector:
+            boolean: {}
+          default: true
 alias: 'Daily Schedule: Device Control with Optional Timer & Days'
 description: Turns a device on/off based on specified times and selected days, with
   optional bidirectional timer sync.
