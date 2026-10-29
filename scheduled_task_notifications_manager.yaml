@@ -1,7 +1,9 @@
 blueprint:
-  name: Scheduled Task Notifications Manager
-  description: Creates standalone task lists bound to an optional specific calendar
-    day, featuring an advanced bulleted message body digest with clean line breaks.
+  name: Scheduled Notifications To Do List
+  description: >
+    Creates standalone task lists bound to a calendar day, with modular options for persistent notifications, persistent dashboard To-Do lists, or both.
+
+    **Version:** 2.0
   domain: automation
   source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/scheduled_task_notifications_manager.yaml
   author: Ufans123
@@ -10,15 +12,13 @@ blueprint:
   input:
     enable_schedule:
       name: Enable Daily Time Schedule
-      description: Uncheck this box to disable the time schedule entirely. The automation
-        will then only run via helpers or manual triggers.
+      description: Uncheck this box to disable the time schedule entirely. The automation will then only run via helpers or manual triggers.
       default: true
       selector:
         boolean: {}
     target_day:
       name: Target Calendar Day
-      description: Which day of the month should this specific automation run? (Only
-        applies if time schedule is enabled above).
+      description: Which day of the month should this specific automation run? (Only applies if time schedule is enabled above).
       default: 1
       selector:
         number:
@@ -28,8 +28,7 @@ blueprint:
           step: 1.0
     master_trigger_time:
       name: Scheduled Execution Time
-      description: What time each day should this specific automation run? (Only applies
-        if time schedule is enabled above).
+      description: What time each day should this specific automation run? (Only applies if time schedule is enabled above).
       default: 09:00:00
       selector:
         time: {}
@@ -43,18 +42,38 @@ blueprint:
           - input_boolean
           multiple: false
           reorder: false
+    enable_notifications:
+      name: Enable Persistent Notifications
+      description: Check this box to generate dismissible Home Assistant persistent notification cards for each task.
+      default: true
+      selector:
+        boolean: {}
+    enable_todo:
+      name: Enable To-Do List Integration
+      description: Check this box to push tasks to a persistent dashboard To-Do list entity.
+      default: false
+      selector:
+        boolean: {}
+    target_todo_list:
+      name: Dashboard To-Do List Entity (Optional)
+      description: Select a To-Do list entity (e.g., todo.monthly_chores) if To-Do integration is enabled above.
+      default: []
+      selector:
+        entity:
+          domain:
+          - todo
+          multiple: false
+          reorder: false
     enable_digest:
       name: Enable Summary Digest Card
-      description: Check this box to generate a master overview notification stacking
-        below your individual task items.
+      description: Check this box to generate a master overview notification stacking below your individual task items.
       default: true
       selector:
         boolean: {}
     overview_title:
       name: Overview Card Title
-      description: Title for the Digest Card (Only applies if Summary Digest Card
-        is enabled above)
-      default: "\U0001F4CB Active Tasks Overview"
+      description: Title for the Digest Card (Only applies if Summary Digest Card is enabled above)
+      default: "📋 Active Tasks Overview"
       selector:
         text:
           multiline: false
@@ -213,6 +232,9 @@ variables:
   schedule_enabled: !input enable_schedule
   target_day_var: !input target_day
   helper_entity: !input master_trigger_helper
+  notifications_enabled: !input enable_notifications
+  todo_enabled: !input enable_todo
+  todo_entity: !input target_todo_list
   digest_enabled: !input enable_digest
   t1_t: !input task_1_title
   t1_m: !input task_1_msg
@@ -258,107 +280,227 @@ action:
   then:
   - if:
     - condition: template
-      value_template: '{{ t10_t | string | length > 0 }}'
+      value_template: '{{ notifications_enabled | bool == true }}'
     then:
-    - action: persistent_notification.create
-      data:
-        notification_id: '{{ this.entity_id }}_task_10'
-        title: '{{ t10_t }}'
-        message: '{{ t10_m }}'
-    - delay: 00:00:01
+    - if:
+      - condition: template
+        value_template: '{{ t10_t | string | length > 0 }}'
+      then:
+      - action: persistent_notification.create
+        data:
+          notification_id: '{{ this.entity_id }}_task_10'
+          title: '{{ t10_t }}'
+          message: '{{ t10_m }}'
+      - delay: 00:00:01
+    - if:
+      - condition: template
+        value_template: '{{ t9_t | string | length > 0 }}'
+      then:
+      - action: persistent_notification.create
+        data:
+          notification_id: '{{ this.entity_id }}_task_9'
+          title: '{{ t9_t }}'
+          message: '{{ t9_m }}'
+      - delay: 00:00:01
+    - if:
+      - condition: template
+        value_template: '{{ t8_t | string | length > 0 }}'
+      then:
+      - action: persistent_notification.create
+        data:
+          notification_id: '{{ this.entity_id }}_task_8'
+          title: '{{ t8_t }}'
+          message: '{{ t8_m }}'
+      - delay: 00:00:01
+    - if:
+      - condition: template
+        value_template: '{{ t7_t | string | length > 0 }}'
+      then:
+      - action: persistent_notification.create
+        data:
+          notification_id: '{{ this.entity_id }}_task_7'
+          title: '{{ t7_t }}'
+          message: '{{ t7_m }}'
+      - delay: 00:00:01
+    - if:
+      - condition: template
+        value_template: '{{ t6_t | string | length > 0 }}'
+      then:
+      - action: persistent_notification.create
+        data:
+          notification_id: '{{ this.entity_id }}_task_6'
+          title: '{{ t6_t }}'
+          message: '{{ t6_m }}'
+      - delay: 00:00:01
+    - if:
+      - condition: template
+        value_template: '{{ t5_t | string | length > 0 }}'
+      then:
+      - action: persistent_notification.create
+        data:
+          notification_id: '{{ this.entity_id }}_task_5'
+          title: '{{ t5_t }}'
+          message: '{{ t5_m }}'
+      - delay: 00:00:01
+    - if:
+      - condition: template
+        value_template: '{{ t4_t | string | length > 0 }}'
+      then:
+      - action: persistent_notification.create
+        data:
+          notification_id: '{{ this.entity_id }}_task_4'
+          title: '{{ t4_t }}'
+          message: '{{ t4_m }}'
+      - delay: 00:00:01
+    - if:
+      - condition: template
+        value_template: '{{ t3_t | string | length > 0 }}'
+      then:
+      - action: persistent_notification.create
+        data:
+          notification_id: '{{ this.entity_id }}_task_3'
+          title: '{{ t3_t }}'
+          message: '{{ t3_m }}'
+      - delay: 00:00:01
+    - if:
+      - condition: template
+        value_template: '{{ t2_t | string | length > 0 }}'
+      then:
+      - action: persistent_notification.create
+        data:
+          notification_id: '{{ this.entity_id }}_task_2'
+          title: '{{ t2_t }}'
+          message: '{{ t2_m }}'
+      - delay: 00:00:01
+    - if:
+      - condition: template
+        value_template: '{{ t1_t | string | length > 0 }}'
+      then:
+      - action: persistent_notification.create
+        data:
+          notification_id: '{{ this.entity_id }}_task_1'
+          title: '{{ t1_t }}'
+          message: '{{ t1_m }}'
+      - delay: 00:00:01
+
   - if:
     - condition: template
-      value_template: '{{ t9_t | string | length > 0 }}'
+      value_template: '{{ todo_enabled | bool == true and todo_entity | string | length > 0 and todo_entity != ''none'' }}'
     then:
-    - action: persistent_notification.create
-      data:
-        notification_id: '{{ this.entity_id }}_task_9'
-        title: '{{ t9_t }}'
-        message: '{{ t9_m }}'
-    - delay: 00:00:01
+    - if:
+      - condition: template
+        value_template: '{{ t1_t | string | length > 0 }}'
+      then:
+      - action: todo.add_item
+        target:
+          entity_id: '{{ todo_entity }}'
+        data:
+          item: '{{ t1_t }}'
+          description: '{{ t1_m }}'
+      - delay: 00:00:01
+    - if:
+      - condition: template
+        value_template: '{{ t2_t | string | length > 0 }}'
+      then:
+      - action: todo.add_item
+        target:
+          entity_id: '{{ todo_entity }}'
+        data:
+          item: '{{ t2_t }}'
+          description: '{{ t2_m }}'
+      - delay: 00:00:01
+    - if:
+      - condition: template
+        value_template: '{{ t3_t | string | length > 0 }}'
+      then:
+      - action: todo.add_item
+        target:
+          entity_id: '{{ todo_entity }}'
+        data:
+          item: '{{ t3_t }}'
+          description: '{{ t3_m }}'
+      - delay: 00:00:01
+    - if:
+      - condition: template
+        value_template: '{{ t4_t | string | length > 0 }}'
+      then:
+      - action: todo.add_item
+        target:
+          entity_id: '{{ todo_entity }}'
+        data:
+          item: '{{ t4_t }}'
+          description: '{{ t4_m }}'
+      - delay: 00:00:01
+    - if:
+      - condition: template
+        value_template: '{{ t5_t | string | length > 0 }}'
+      then:
+      - action: todo.add_item
+        target:
+          entity_id: '{{ todo_entity }}'
+        data:
+          item: '{{ t5_t }}'
+          description: '{{ t5_m }}'
+      - delay: 00:00:01
+    - if:
+      - condition: template
+        value_template: '{{ t6_t | string | length > 0 }}'
+      then:
+      - action: todo.add_item
+        target:
+          entity_id: '{{ todo_entity }}'
+        data:
+          item: '{{ t6_t }}'
+          description: '{{ t6_m }}'
+      - delay: 00:00:01
+    - if:
+      - condition: template
+        value_template: '{{ t7_t | string | length > 0 }}'
+      then:
+      - action: todo.add_item
+        target:
+          entity_id: '{{ todo_entity }}'
+        data:
+          item: '{{ t7_t }}'
+          description: '{{ t7_m }}'
+      - delay: 00:00:01
+    - if:
+      - condition: template
+        value_template: '{{ t8_t | string | length > 0 }}'
+      then:
+      - action: todo.add_item
+        target:
+          entity_id: '{{ todo_entity }}'
+        data:
+          item: '{{ t8_t }}'
+          description: '{{ t8_m }}'
+      - delay: 00:00:01
+    - if:
+      - condition: template
+        value_template: '{{ t9_t | string | length > 0 }}'
+      then:
+      - action: todo.add_item
+        target:
+          entity_id: '{{ todo_entity }}'
+        data:
+          item: '{{ t9_t }}'
+          description: '{{ t9_m }}'
+      - delay: 00:00:01
+    - if:
+      - condition: template
+        value_template: '{{ t10_t | string | length > 0 }}'
+      then:
+      - action: todo.add_item
+        target:
+          entity_id: '{{ todo_entity }}'
+        data:
+          item: '{{ t10_t }}'
+          description: '{{ t10_m }}'
+      - delay: 00:00:01
+
   - if:
     - condition: template
-      value_template: '{{ t8_t | string | length > 0 }}'
-    then:
-    - action: persistent_notification.create
-      data:
-        notification_id: '{{ this.entity_id }}_task_8'
-        title: '{{ t8_t }}'
-        message: '{{ t8_m }}'
-    - delay: 00:00:01
-  - if:
-    - condition: template
-      value_template: '{{ t7_t | string | length > 0 }}'
-    then:
-    - action: persistent_notification.create
-      data:
-        notification_id: '{{ this.entity_id }}_task_7'
-        title: '{{ t7_t }}'
-        message: '{{ t7_m }}'
-    - delay: 00:00:01
-  - if:
-    - condition: template
-      value_template: '{{ t6_t | string | length > 0 }}'
-    then:
-    - action: persistent_notification.create
-      data:
-        notification_id: '{{ this.entity_id }}_task_6'
-        title: '{{ t6_t }}'
-        message: '{{ t6_m }}'
-    - delay: 00:00:01
-  - if:
-    - condition: template
-      value_template: '{{ t5_t | string | length > 0 }}'
-    then:
-    - action: persistent_notification.create
-      data:
-        notification_id: '{{ this.entity_id }}_task_5'
-        title: '{{ t5_t }}'
-        message: '{{ t5_m }}'
-    - delay: 00:00:01
-  - if:
-    - condition: template
-      value_template: '{{ t4_t | string | length > 0 }}'
-    then:
-    - action: persistent_notification.create
-      data:
-        notification_id: '{{ this.entity_id }}_task_4'
-        title: '{{ t4_t }}'
-        message: '{{ t4_m }}'
-    - delay: 00:00:01
-  - if:
-    - condition: template
-      value_template: '{{ t3_t | string | length > 0 }}'
-    then:
-    - action: persistent_notification.create
-      data:
-        notification_id: '{{ this.entity_id }}_task_3'
-        title: '{{ t3_t }}'
-        message: '{{ t3_m }}'
-    - delay: 00:00:01
-  - if:
-    - condition: template
-      value_template: '{{ t2_t | string | length > 0 }}'
-    then:
-    - action: persistent_notification.create
-      data:
-        notification_id: '{{ this.entity_id }}_task_2'
-        title: '{{ t2_t }}'
-        message: '{{ t2_m }}'
-    - delay: 00:00:01
-  - if:
-    - condition: template
-      value_template: '{{ t1_t | string | length > 0 }}'
-    then:
-    - action: persistent_notification.create
-      data:
-        notification_id: '{{ this.entity_id }}_task_1'
-        title: '{{ t1_t }}'
-        message: '{{ t1_m }}'
-    - delay: 00:00:01
-  - if:
-    - condition: template
-      value_template: '{{ digest_enabled | bool == true }}'
+      value_template: '{{ digest_enabled | bool == true and notifications_enabled | bool == true }}'
     then:
     - action: persistent_notification.create
       data:
