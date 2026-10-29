@@ -4,6 +4,8 @@
 
 > **Version:** 2.0 | **Latest update:** 2026-10-29 | [← Back to Main Blueprints Repository](README.md)
 
+(Previously: Scheduled Task Notifications Manager v1.0 )
+
 An advanced, highly flexible scheduling blueprint engine that generates up to 10 sequential persistent notification cards and/or pushes tasks to a persistent dashboard To-Do list, bound to an optional day of the month, an input helper switch, or custom system events.
 
 ## Key Architectural Features
@@ -54,12 +56,9 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/scheduled_task_n
 3. In the bottom right corner click on the *'Import blueprint'* button
 4. Paste in the URL and follow the prompts
 
-> **Version:** 2.0 | **Updated:** 2026-10-29 - added functionality for dashboard To-Do list |
-> **Version:** 1.1 | **Initial Release:** 2026-10-05 |
->
 ## Changelog
 
 | Version | Date | Summary of Changes |
 | :--- | :--- | :--- |
-| **Version** 2.0 | 2026-10-29 | Added dashboard To-Do list option |
-| **Version** 1.0 | 2026-10-05 | Initial release |
+| **Version** 2.0 | 2026-10-29 | Added dashboard **To-Do List** and renamed **Scheduled Notifications To Do List** |
+| **Version** 1.0 | 2026-10-05 | Initial release of **Scheduled Task Notifications Manager** |
