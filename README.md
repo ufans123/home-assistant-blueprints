@@ -52,7 +52,7 @@ Always review the automation YAML and test changes safely before deploying them 
 | **[Daily Sun-Based Device Scheduler](daily-sun-based-device-scheduler.md)** | Schedule switches, lights, or fans using sunset and day-of-week rules with optional bidirectional timer synchronization and smart remaining-time recovery. | `v1.0` | `2026-10-12` |
 | **[Daily Sun-Based Multi-Device & Multi-Scene Scheduler with Timer](daily-sun-based-multi-device-scheduler-with-scenes.md)** | Schedule multiple switches, lights, fans, and scenes using sunset rules and day-of-week filtering, featuring bidirectional timer synchronization and smart remaining-time recovery. | `v1.0` | `2026-10-13` |
 | **[Daily Time-Based Device Scheduler](daily-time-based-device-scheduler.md)** | Schedule switches, lights, or fans using time and day-of-week rules with optional bidirectional timer synchronization and smart remaining-time recovery. | `v1.0` | `2026-10-10` |
-| **[Scheduled Task Notifications Manager](scheduled-task-notifications-manager.md)** | Advanced scheduling engine that generates up to 10 sequential persistent notification cards bound to calendar days, helper switches, or custom events. | `v1.0` | `2026-10-05` |
+| **[Scheduled Notifications To Do List](scheduled-task-notifications-manager.md)** | Advanced scheduling engine that generates up to 10 sequential persistent notification cards bound to calendar days, helper switches, or custom events. | `v1.0` | `2026-10-05` |
 
 [⬆ Back to top](#top)
 
