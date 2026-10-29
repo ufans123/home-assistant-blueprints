@@ -4,7 +4,7 @@
 
 > **Version:** 2.0 | **Latest update:** 2026-10-29 | [← Back to Main Blueprints Repository](README.md)
 
-(Previously: Scheduled Task Notifications Manager v1.0 )
+*(Previously: Scheduled Task Notifications Manager v1.0)*
 
 An advanced, highly flexible scheduling blueprint engine that generates up to 10 sequential persistent notification cards and/or pushes tasks to a persistent dashboard To-Do list, bound to an optional day of the month, an input helper switch, or custom system events.
 
@@ -34,6 +34,14 @@ This blueprint functions as a comprehensive software application model utilizing
 | **Overview Card Title** | Text String | Custom title for the summary digest card. |
 | **Task Slots (1 - 10)** | Text String Pairs | 10 independent input lanes allowing you to type distinct titles and body descriptions for your reminders. Empty slots are cleanly ignored. |
 
+## Setting Up a Local To-Do List (Prerequisite)
+
+If you plan to use the To-Do list integration and don't have a target list set up yet, create one quickly in Home Assistant:
+
+1. **Enable the Integration:** Go to **Settings > Devices & Services > Add Integration**, search for **Local To-Do**, and add it.
+2. **Create the Helper:** Go to **Settings > Devices & Services > Helpers**, click **+ Create Helper**, and select **Local To-Do**. 
+3. Name your list (e.g., `Monthly Chores`) and click **Submit**. You can then select this new entity in your blueprint configuration.
+
 ## How to Install
 
 ### Method 1: Click to Import (Easiest)
@@ -60,5 +68,5 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/scheduled_task_n
 
 | Version | Date | Summary of Changes |
 | :--- | :--- | :--- |
-| **Version** 2.0 | 2026-10-29 | Added dashboard **To-Do List** and renamed **Scheduled Notifications To Do List** |
-| **Version** 1.0 | 2026-10-05 | Initial release of **Scheduled Task Notifications Manager** |
+| **Version 2.0** | 2026-10-29 | Added dashboard **To-Do List** integration, top-down sequence handling, modular toggles, and renamed to **Scheduled Notifications To Do List** |
+| **Version 1.0** | 2026-10-05 | Initial release of **Scheduled Task Notifications Manager** |
