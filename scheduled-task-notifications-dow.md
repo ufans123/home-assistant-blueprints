@@ -68,9 +68,12 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/scheduled_task_n
 2. Navigate to your Home Assistant Blueprints Dashboard UI.
 3. In the bottom right corner click on the 'Import blueprint' button.
 4. Paste in the URL and follow the prompts.
-## Changelog
+
+## Related Blueprints
+[Scheduled Notifications To Do List (Day of the Month)](https://github.com/ufans123/home-assistant-blueprints/blob/main/scheduled-task-notifications-manager.md)
 
 ---
+## Changelog
 
 | Version | Date | Summary of Changes |
 | :--- | :--- | :--- |
