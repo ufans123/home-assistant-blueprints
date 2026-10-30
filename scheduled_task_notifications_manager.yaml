@@ -1,12 +1,12 @@
 blueprint:
   name: Scheduled Notifications To Do List
   description: >
-    Creates standalone task lists bound to a calendar day, with modular options for persistent notifications, persistent dashboard To-Do lists, or both.
+    Creates standalone task lists bound to a calendar day, with modular options for persistent notifications, persistent dashboard To-Do lists, or both. Includes smart To-Do task state recycling and deduplication.
 
-    **Version:** 2.0
+    **Version:** 2.1
   domain: automation
   source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/scheduled_task_notifications_manager.yaml
-  author: Ufans123
+  author: Ufans123 (Updated with Smart To-Do Updates)
   homeassistant:
     min_version: "2024.8.0"
   input:
@@ -39,7 +39,7 @@ blueprint:
       selector:
         entity:
           domain:
-          - input_boolean
+            - input_boolean
           multiple: false
           reorder: false
     enable_notifications:
@@ -50,7 +50,7 @@ blueprint:
         boolean: {}
     enable_todo:
       name: Enable To-Do List Integration
-      description: Check this box to push tasks to a persistent dashboard To-Do list entity.
+      description: Check this box to push and recycle tasks on a persistent dashboard To-Do list entity.
       default: false
       selector:
         boolean: {}
@@ -61,7 +61,7 @@ blueprint:
       selector:
         entity:
           domain:
-          - todo
+            - todo
           multiple: false
           reorder: false
     enable_digest:
@@ -387,116 +387,63 @@ action:
     - condition: template
       value_template: '{{ todo_enabled | bool == true and todo_entity | string | length > 0 and todo_entity != ''none'' }}'
     then:
-    - if:
-      - condition: template
-        value_template: '{{ t1_t | string | length > 0 }}'
-      then:
-      - action: todo.add_item
-        target:
-          entity_id: '{{ todo_entity }}'
-        data:
-          item: '{{ t1_t }}'
-          description: '{{ t1_m }}'
-      - delay: 00:00:01
-    - if:
-      - condition: template
-        value_template: '{{ t2_t | string | length > 0 }}'
-      then:
-      - action: todo.add_item
-        target:
-          entity_id: '{{ todo_entity }}'
-        data:
-          item: '{{ t2_t }}'
-          description: '{{ t2_m }}'
-      - delay: 00:00:01
-    - if:
-      - condition: template
-        value_template: '{{ t3_t | string | length > 0 }}'
-      then:
-      - action: todo.add_item
-        target:
-          entity_id: '{{ todo_entity }}'
-        data:
-          item: '{{ t3_t }}'
-          description: '{{ t3_m }}'
-      - delay: 00:00:01
-    - if:
-      - condition: template
-        value_template: '{{ t4_t | string | length > 0 }}'
-      then:
-      - action: todo.add_item
-        target:
-          entity_id: '{{ todo_entity }}'
-        data:
-          item: '{{ t4_t }}'
-          description: '{{ t4_m }}'
-      - delay: 00:00:01
-    - if:
-      - condition: template
-        value_template: '{{ t5_t | string | length > 0 }}'
-      then:
-      - action: todo.add_item
-        target:
-          entity_id: '{{ todo_entity }}'
-        data:
-          item: '{{ t5_t }}'
-          description: '{{ t5_m }}'
-      - delay: 00:00:01
-    - if:
-      - condition: template
-        value_template: '{{ t6_t | string | length > 0 }}'
-      then:
-      - action: todo.add_item
-        target:
-          entity_id: '{{ todo_entity }}'
-        data:
-          item: '{{ t6_t }}'
-          description: '{{ t6_m }}'
-      - delay: 00:00:01
-    - if:
-      - condition: template
-        value_template: '{{ t7_t | string | length > 0 }}'
-      then:
-      - action: todo.add_item
-        target:
-          entity_id: '{{ todo_entity }}'
-        data:
-          item: '{{ t7_t }}'
-          description: '{{ t7_m }}'
-      - delay: 00:00:01
-    - if:
-      - condition: template
-        value_template: '{{ t8_t | string | length > 0 }}'
-      then:
-      - action: todo.add_item
-        target:
-          entity_id: '{{ todo_entity }}'
-        data:
-          item: '{{ t8_t }}'
-          description: '{{ t8_m }}'
-      - delay: 00:00:01
-    - if:
-      - condition: template
-        value_template: '{{ t9_t | string | length > 0 }}'
-      then:
-      - action: todo.add_item
-        target:
-          entity_id: '{{ todo_entity }}'
-        data:
-          item: '{{ t9_t }}'
-          description: '{{ t9_m }}'
-      - delay: 00:00:01
-    - if:
-      - condition: template
-        value_template: '{{ t10_t | string | length > 0 }}'
-      then:
-      - action: todo.add_item
-        target:
-          entity_id: '{{ todo_entity }}'
-        data:
-          item: '{{ t10_t }}'
-          description: '{{ t10_m }}'
-      - delay: 00:00:01
+    - action: todo.get_items
+      target:
+        entity_id: '{{ todo_entity }}'
+      data:
+        status:
+          - needs_action
+          - completed
+      response_variable: existing_todo_items
+    - repeat:
+        for_each:
+          - title: '{{ t1_t }}'
+            msg: '{{ t1_m }}'
+          - title: '{{ t2_t }}'
+            msg: '{{ t2_m }}'
+          - title: '{{ t3_t }}'
+            msg: '{{ t3_m }}'
+          - title: '{{ t4_t }}'
+            msg: '{{ t4_m }}'
+          - title: '{{ t5_t }}'
+            msg: '{{ t5_m }}'
+          - title: '{{ t6_t }}'
+            msg: '{{ t6_m }}'
+          - title: '{{ t7_t }}'
+            msg: '{{ t7_m }}'
+          - title: '{{ t8_t }}'
+            msg: '{{ t8_m }}'
+          - title: '{{ t9_t }}'
+            msg: '{{ t9_m }}'
+          - title: '{{ t10_t }}'
+            msg: '{{ t10_m }}'
+        sequence:
+          - if:
+            - condition: template
+              value_template: '{{ repeat.item.title | string | length > 0 }}'
+            then:
+            - variables:
+                items_list: '{{ existing_todo_items[todo_entity]["items"] | default([]) }}'
+                matching_item: '{{ items_list | selectattr("summary", "eq", repeat.item.title) | list | first | default(none) }}'
+            - if:
+              - condition: template
+                value_template: '{{ matching_item is not none }}'
+              then:
+              - action: todo.update_item
+                target:
+                  entity_id: '{{ todo_entity }}'
+                data:
+                  item: '{{ repeat.item.title }}'
+                  description: '{{ repeat.item.msg }}'
+                  status: needs_action
+              else:
+              - action: todo.add_item
+                target:
+                  entity_id: '{{ todo_entity }}'
+                data:
+                  item: '{{ repeat.item.title }}'
+                  description: '{{ repeat.item.msg }}'
+            - delay: 00:00:01
 
   - if:
     - condition: template
