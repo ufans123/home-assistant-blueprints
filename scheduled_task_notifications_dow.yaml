@@ -1,0 +1,505 @@
+blueprint:
+  name: Scheduled Notifications To Do List (Day of Week)
+  description: >
+    Creates standalone task lists bound to a specific day of the week, with modular options for persistent notifications, persistent dashboard To-Do lists, or both. Re-uses and reactivates existing To-Do items to prevent duplication.
+
+    **Version:** 1.0
+  domain: automation
+  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/scheduled_task_notifications_dow.yaml
+  author: Ufans123
+  homeassistant:
+    min_version: "2024.8.0"
+  input:
+    enable_schedule:
+      name: Enable Daily Time Schedule
+      description: Uncheck this box to disable the time schedule entirely. The automation will then only run via helpers or manual triggers.
+      default: true
+      selector:
+        boolean: {}
+    target_day_of_week:
+      name: Target Day of the Week
+      description: Which day of the week should this specific automation run? (Only applies if time schedule is enabled above).
+      default: mon
+      selector:
+        select:
+          options:
+            - label: Monday
+              value: mon
+            - label: Tuesday
+              value: tue
+            - label: Wednesday
+              value: wed
+            - label: Thursday
+              value: thu
+            - label: Friday
+              value: fri
+            - label: Saturday
+              value: sat
+            - label: Sunday
+              value: sun
+    master_trigger_time:
+      name: Scheduled Execution Time
+      description: What time on that day should this specific automation run? (Only applies if time schedule is enabled above).
+      default: 09:00:00
+      selector:
+        time: {}
+    master_trigger_helper:
+      name: Manual Force Helper (Optional)
+      description: Optional helper toggle switch. Leave blank if not using.
+      default: []
+      selector:
+        entity:
+          domain:
+            - input_boolean
+          multiple: false
+          reorder: false
+    enable_notifications:
+      name: Enable Persistent Notifications
+      description: Check this box to generate dismissible Home Assistant persistent notification cards for each task.
+      default: true
+      selector:
+        boolean: {}
+    enable_todo:
+      name: Enable To-Do List Integration
+      description: Check this box to push tasks to a persistent dashboard To-Do list entity.
+      default: false
+      selector:
+        boolean: {}
+    target_todo_list:
+      name: Dashboard To-Do List Entity (Optional)
+      description: Select a To-Do list entity (e.g., todo.weekly_chores) if To-Do integration is enabled above.
+      default: []
+      selector:
+        entity:
+          domain:
+            - todo
+          multiple: false
+          reorder: false
+    enable_digest:
+      name: Enable Summary Digest Card
+      description: Check this box to generate a master overview notification stacking below your individual task items.
+      default: true
+      selector:
+        boolean: {}
+    overview_title:
+      name: Overview Card Title
+      description: Title for the Digest Card (Only applies if Summary Digest Card is enabled above)
+      default: "📋 Active Tasks Overview"
+      selector:
+        text:
+          multiline: false
+          multiple: false
+    task_1_title:
+      name: 'Task 1: Title'
+      description: (Required to display message)
+      default: ''
+      selector:
+        text:
+          multiline: false
+          multiple: false
+    task_1_msg:
+      name: 'Task 1: Message'
+      default: ''
+      selector:
+        text:
+          multiline: false
+          multiple: false
+    task_2_title:
+      name: 'Task 2: Title'
+      description: (Optional - message will be ignored if empty)
+      default: ''
+      selector:
+        text:
+          multiline: false
+          multiple: false
+    task_2_msg:
+      name: 'Task 2: Message'
+      default: ''
+      selector:
+        text:
+          multiline: false
+          multiple: false
+    task_3_title:
+      name: 'Task 3: Title'
+      description: (Optional - message will be ignored if empty)
+      default: ''
+      selector:
+        text:
+          multiline: false
+          multiple: false
+    task_3_msg:
+      name: 'Task 3: Message'
+      default: ''
+      selector:
+        text:
+          multiline: false
+          multiple: false
+    task_4_title:
+      name: 'Task 4: Title'
+      description: (Optional - message will be ignored if empty)
+      default: ''
+      selector:
+        text:
+          multiline: false
+          multiple: false
+    task_4_msg:
+      name: 'Task 4: Message'
+      default: ''
+      selector:
+        text:
+          multiline: false
+          multiple: false
+    task_5_title:
+      name: 'Task 5: Title'
+      description: (Optional - message will be ignored if empty)
+      default: ''
+      selector:
+        text:
+          multiline: false
+          multiple: false
+    task_5_msg:
+      name: 'Task 5: Message'
+      default: ''
+      selector:
+        text:
+          multiline: false
+          multiple: false
+    task_6_title:
+      name: 'Task 6: Title'
+      description: (Optional - message will be ignored if empty)
+      default: ''
+      selector:
+        text:
+          multiline: false
+          multiple: false
+    task_6_msg:
+      name: 'Task 6: Message'
+      default: ''
+      selector:
+        text:
+          multiline: false
+          multiple: false
+    task_7_title:
+      name: 'Task 7: Title'
+      description: (Optional - message will be ignored if empty)
+      default: ''
+      selector:
+        text:
+          multiline: false
+          multiple: false
+    task_7_msg:
+      name: 'Task 7: Message'
+      default: ''
+      selector:
+        text:
+          multiline: false
+          multiple: false
+    task_8_title:
+      name: 'Task 8: Title'
+      description: (Optional - message will be ignored if empty)
+      default: ''
+      selector:
+        text:
+          multiline: false
+          multiple: false
+    task_8_msg:
+      name: 'Task 8: Message'
+      default: ''
+      selector:
+        text:
+          multiline: false
+          multiple: false
+    task_9_title:
+      name: 'Task 9: Title'
+      description: (Optional - message will be ignored if empty)
+      default: ''
+      selector:
+        text:
+          multiline: false
+          multiple: false
+    task_9_msg:
+      name: 'Task 9: Message'
+      default: ''
+      selector:
+        text:
+          multiline: false
+          multiple: false
+    task_10_title:
+      name: 'Task 10: Title'
+      description: (Optional - message will be ignored if empty)
+      default: ''
+      selector:
+        text:
+          multiline: false
+          multiple: false
+    task_10_msg:
+      name: 'Task 10: Message'
+      default: ''
+      selector:
+        text:
+          multiline: false
+          multiple: false
+variables:
+  schedule_enabled: !input enable_schedule
+  target_dow_var: !input target_day_of_week
+  helper_entity: !input master_trigger_helper
+  notifications_enabled: !input enable_notifications
+  todo_enabled: !input enable_todo
+  todo_entity: !input target_todo_list
+  digest_enabled: !input enable_digest
+  t1_t: !input task_1_title
+  t1_m: !input task_1_msg
+  t2_t: !input task_2_title
+  t2_m: !input task_2_msg
+  t3_t: !input task_3_title
+  t3_m: !input task_3_msg
+  t4_t: !input task_4_title
+  t4_m: !input task_4_msg
+  t5_t: !input task_5_title
+  t5_m: !input task_5_msg
+  t6_t: !input task_6_title
+  t6_m: !input task_6_msg
+  t7_t: !input task_7_title
+  t7_m: !input task_7_msg
+  t8_t: !input task_8_title
+  t8_m: !input task_8_msg
+  t9_t: !input task_9_title
+  t9_m: !input task_9_msg
+  t10_t: !input task_10_title
+  t10_m: !input task_10_msg
+mode: single
+triggers:
+  - trigger: time
+    at: !input master_trigger_time
+    id: schedule
+  - trigger: state
+    entity_id: !input master_trigger_helper
+    to: 'on'
+    id: helper_toggled
+conditions: []
+action:
+  - variables:
+      should_run: >
+        {% set is_schedule = trigger.id | default('') == 'schedule' %}
+        {% set is_enabled = schedule_enabled | bool == true %}
+        {% set current_dow = now().strftime('%a').lower() %}
+        {% set dow_matches = current_dow == target_dow_var %}
+        {% if is_schedule and is_enabled and dow_matches %}
+          true
+        {% elif is_schedule and not is_enabled %}
+          false
+        {% elif trigger.id | default('') == 'helper_toggled' %}
+          true
+        {% elif trigger.id | default('') == '' %}
+          true
+        {% else %}
+          false
+        {% endif %}
+  - if:
+      - condition: template
+        value_template: '{{ should_run | bool == true }}'
+    then:
+      # Persistent Notifications Section
+      - if:
+          - condition: template
+            value_template: '{{ notifications_enabled | bool == true }}'
+        then:
+          - if:
+              - condition: template
+                value_template: '{{ t10_t | string | length > 0 }}'
+            then:
+              - action: persistent_notification.create
+                data:
+                  notification_id: '{{ this.entity_id }}_task_10'
+                  title: '{{ t10_t }}'
+                  message: '{{ t10_m }}'
+              - delay: 00:00:01
+          - if:
+              - condition: template
+                value_template: '{{ t9_t | string | length > 0 }}'
+            then:
+              - action: persistent_notification.create
+                data:
+                  notification_id: '{{ this.entity_id }}_task_9'
+                  title: '{{ t9_t }}'
+                  message: '{{ t9_m }}'
+              - delay: 00:00:01
+          - if:
+              - condition: template
+                value_template: '{{ t8_t | string | length > 0 }}'
+            then:
+              - action: persistent_notification.create
+                data:
+                  notification_id: '{{ this.entity_id }}_task_8'
+                  title: '{{ t8_t }}'
+                  message: '{{ t8_m }}'
+              - delay: 00:00:01
+          - if:
+              - condition: template
+                value_template: '{{ t7_t | string | length > 0 }}'
+            then:
+              - action: persistent_notification.create
+                data:
+                  notification_id: '{{ this.entity_id }}_task_7'
+                  title: '{{ t7_t }}'
+                  message: '{{ t7_m }}'
+              - delay: 00:00:01
+          - if:
+              - condition: template
+                value_template: '{{ t6_t | string | length > 0 }}'
+            then:
+              - action: persistent_notification.create
+                data:
+                  notification_id: '{{ this.entity_id }}_task_6'
+                  title: '{{ t6_t }}'
+                  message: '{{ t6_m }}'
+              - delay: 00:00:01
+          - if:
+              - condition: template
+                value_template: '{{ t5_t | string | length > 0 }}'
+            then:
+              - action: persistent_notification.create
+                data:
+                  notification_id: '{{ this.entity_id }}_task_5'
+                  title: '{{ t5_t }}'
+                  message: '{{ t5_m }}'
+              - delay: 00:00:01
+          - if:
+              - condition: template
+                value_template: '{{ t4_t | string | length > 0 }}'
+            then:
+              - action: persistent_notification.create
+                data:
+                  notification_id: '{{ this.entity_id }}_task_4'
+                  title: '{{ t4_t }}'
+                  message: '{{ t4_m }}'
+              - delay: 00:00:01
+          - if:
+              - condition: template
+                value_template: '{{ t3_t | string | length > 0 }}'
+            then:
+              - action: persistent_notification.create
+                data:
+                  notification_id: '{{ this.entity_id }}_task_3'
+                  title: '{{ t3_t }}'
+                  message: '{{ t3_m }}'
+              - delay: 00:00:01
+          - if:
+              - condition: template
+                value_template: '{{ t2_t | string | length > 0 }}'
+            then:
+              - action: persistent_notification.create
+                data:
+                  notification_id: '{{ this.entity_id }}_task_2'
+                  title: '{{ t2_t }}'
+                  message: '{{ t2_m }}'
+              - delay: 00:00:01
+          - if:
+              - condition: template
+                value_template: '{{ t1_t | string | length > 0 }}'
+            then:
+              - action: persistent_notification.create
+                data:
+                  notification_id: '{{ this.entity_id }}_task_1'
+                  title: '{{ t1_t }}'
+                  message: '{{ t1_m }}'
+              - delay: 00:00:01
+
+      # Smart To-Do List Integration Section
+      - if:
+          - condition: template
+            value_template: '{{ todo_enabled | bool == true and todo_entity | string | length > 0 and todo_entity != ''none'' }}'
+        then:
+          # Fetch all existing items from target To-Do list (both needs_action and completed)
+          - action: todo.get_items
+            target:
+              entity_id: '{{ todo_entity }}'
+            data:
+              status:
+                - needs_action
+                - completed
+            response_variable: existing_todo_items
+
+          # Process Tasks 1 through 10
+          - repeat:
+              for_each:
+                - title: '{{ t1_t }}'
+                  msg: '{{ t1_m }}'
+                - title: '{{ t2_t }}'
+                  msg: '{{ t2_m }}'
+                - title: '{{ t3_t }}'
+                  msg: '{{ t3_m }}'
+                - title: '{{ t4_t }}'
+                  msg: '{{ t4_m }}'
+                - title: '{{ t5_t }}'
+                  msg: '{{ t5_m }}'
+                - title: '{{ t6_t }}'
+                  msg: '{{ t6_m }}'
+                - title: '{{ t7_t }}'
+                  msg: '{{ t7_m }}'
+                - title: '{{ t8_t }}'
+                  msg: '{{ t8_m }}'
+                - title: '{{ t9_t }}'
+                  msg: '{{ t9_m }}'
+                - title: '{{ t10_t }}'
+                  msg: '{{ t10_m }}'
+              sequence:
+                - if:
+                    - condition: template
+                      value_template: '{{ repeat.item.title | string | length > 0 }}'
+                  then:
+                    - variables:
+                        items_list: '{{ existing_todo_items[todo_entity]["items"] | default([]) }}'
+                        matching_item: '{{ items_list | selectattr("summary", "eq", repeat.item.title) | list | first | default(none) }}'
+                    - if:
+                        - condition: template
+                          value_template: '{{ matching_item is not none }}'
+                      then:
+                        # Item exists: update message and mark status back to active (needs_action)
+                        - action: todo.update_item
+                          target:
+                            entity_id: '{{ todo_entity }}'
+                          data:
+                            item: '{{ repeat.item.title }}'
+                            description: '{{ repeat.item.msg }}'
+                            status: needs_action
+                      else:
+                        # Item does not exist yet: create brand new entry
+                        - action: todo.add_item
+                          target:
+                            entity_id: '{{ todo_entity }}'
+                          data:
+                            item: '{{ repeat.item.title }}'
+                            description: '{{ repeat.item.msg }}'
+                    - delay: 00:00:01
+
+      # Master Overview Digest Section
+      - if:
+          - condition: template
+            value_template: '{{ digest_enabled | bool == true and notifications_enabled | bool == true }}'
+        then:
+          - action: persistent_notification.create
+            data:
+              notification_id: '{{ this.entity_id }}_master_overview'
+              title: !input overview_title
+              message: >
+                Your list of scheduled items for today: {% if t1_t | string | length > 0 %}{{"\n"}}• {{ t1_m }}{% endif %}
+                {% if t2_t | string | length > 0 %}{{"\n"}}• {{ t2_m }}{% endif %}
+                {% if t3_t | string | length > 0 %}{{"\n"}}• {{ t3_m }}{% endif %}
+                {% if t4_t | string | length > 0 %}{{"\n"}}• {{ t4_m }}{% endif %}
+                {% if t5_t | string | length > 0 %}{{"\n"}}• {{ t5_m }}{% endif %}
+                {% if t6_t | string | length > 0 %}{{"\n"}}• {{ t6_m }}{% endif %}
+                {% if t7_t | string | length > 0 %}{{"\n"}}• {{ t7_m }}{% endif %}
+                {% if t8_t | string | length > 0 %}{{"\n"}}• {{ t8_m }}{% endif %}
+                {% if t9_t | string | length > 0 %}{{"\n"}}• {{ t9_m }}{% endif %}
+                {% if t10_t | string | length > 0 %}{{"\n"}}• {{ t10_m }}{% endif %}
+          - delay: 00:00:01
+
+  # Turn off manual helper switch if used
+  - if:
+      - condition: template
+        value_template: '{{ helper_entity | string | length > 0 and helper_entity != ''none'' }}'
+    then:
+      - action: input_boolean.turn_off
+        target:
+          entity_id: '{{ helper_entity }}'
