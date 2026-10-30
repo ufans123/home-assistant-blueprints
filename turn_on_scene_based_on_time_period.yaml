@@ -1,0 +1,228 @@
+blueprint:
+  name: Turn On to Time-Based Default Scene
+  description: >-
+    Automatically sets a light or switch to a time-dependent scene whenever 
+    it turns on from an external source (app, physical switch, or voice command).
+
+    ### How It Works:
+
+    - Optional Time Slots: Configure up to 4 optional time periods. If a time period's scene is left blank, that period is ignored without errors.
+
+    - Gaps in Schedule: If the device turns on during a time of day not covered by any configured period, no scene will be forced, and the device will retain its default turned-on state.
+
+    - Overlapping Slots: If two active time windows overlap, the automation operates on a "first match wins" order (Time Period 1 takes priority over Period 2, and so on).
+
+
+    **Version:** v1.0
+  domain: automation
+  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/turn_on_scene_based_on_time_period.yaml
+  author: Ufans123
+  input:
+    target_entity:
+      name: Target Device
+      description: The switch, light, or input boolean to monitor.
+      selector:
+        entity:
+          domain:
+            - switch
+            - light
+            - input_boolean
+          multiple: false
+
+    time_period_1:
+      name: Time Period 1 (e.g., Morning)
+      icon: mdi:weather-sunset-up
+      description: Optional first time window and scene.
+      collapsed: false
+      input:
+        scene_1:
+          name: Scene
+          description: Scene to activate during this period. Leave blank to disable.
+          default: ""
+          selector:
+            entity:
+              domain: scene
+              multiple: false
+        time_start_1:
+          name: Start Time
+          description: Time when this period begins.
+          default: "06:00:00"
+          selector:
+            time: {}
+        time_end_1:
+          name: End Time
+          description: Time when this period ends.
+          default: "12:00:00"
+          selector:
+            time: {}
+
+    time_period_2:
+      name: Time Period 2 (e.g., Afternoon)
+      icon: mdi:weather-sunny
+      description: Optional second time window and scene.
+      collapsed: true
+      input:
+        scene_2:
+          name: Scene
+          description: Scene to activate during this period. Leave blank to disable.
+          default: ""
+          selector:
+            entity:
+              domain: scene
+              multiple: false
+        time_start_2:
+          name: Start Time
+          description: Time when this period begins.
+          default: "12:00:00"
+          selector:
+            time: {}
+        time_end_2:
+          name: End Time
+          description: Time when this period ends.
+          default: "18:00:00"
+          selector:
+            time: {}
+
+    time_period_3:
+      name: Time Period 3 (e.g., Evening)
+      icon: mdi:weather-sunset-down
+      description: Optional third time window and scene.
+      collapsed: true
+      input:
+        scene_3:
+          name: Scene
+          description: Scene to activate during this period. Leave blank to disable.
+          default: ""
+          selector:
+            entity:
+              domain: scene
+              multiple: false
+        time_start_3:
+          name: Start Time
+          description: Time when this period begins.
+          default: "18:00:00"
+          selector:
+            time: {}
+        time_end_3:
+          name: End Time
+          description: Time when this period ends.
+          default: "23:00:00"
+          selector:
+            time: {}
+
+    time_period_4:
+      name: Time Period 4 (e.g., Night)
+      icon: mdi:weather-night
+      description: Optional fourth time window and scene.
+      collapsed: true
+      input:
+        scene_4:
+          name: Scene
+          description: Scene to activate during this period. Leave blank to disable.
+          default: ""
+          selector:
+            entity:
+              domain: scene
+              multiple: false
+        time_start_4:
+          name: Start Time
+          description: Time when this period begins.
+          default: "23:00:00"
+          selector:
+            time: {}
+        time_end_4:
+          name: End Time
+          description: Time when this period ends.
+          default: "06:00:00"
+          selector:
+            time: {}
+
+mode: single
+max_exceeded: silent
+
+triggers:
+  - trigger: state
+    entity_id: !input target_entity
+    from: 'off'
+    to: 'on'
+
+conditions: []
+
+actions:
+  - variables:
+      s1: !input scene_1
+      start1: !input time_start_1
+      end1: !input time_end_1
+      
+      s2: !input scene_2
+      start2: !input time_start_2
+      end2: !input time_end_2
+      
+      s3: !input scene_3
+      start3: !input time_start_3
+      end3: !input time_end_3
+      
+      s4: !input scene_4
+      start4: !input time_start_4
+      end4: !input time_end_4
+
+  - choose:
+      # Period 1 Check
+      - conditions:
+          - condition: template
+            value_template: >
+              {{ s1 is defined and s1 != none and s1 | string | trim != '' 
+                 and (
+                   (start1 < end1 and now().time().strftime('%H:%M:%S') >= start1 and now().time().strftime('%H:%M:%S') < end1)
+                   or
+                   (start1 > end1 and (now().time().strftime('%H:%M:%S') >= start1 or now().time().strftime('%H:%M:%S') < end1))
+                 ) }}
+        sequence:
+          - action: scene.turn_on
+            target:
+              entity_id: "{{ s1 }}"
+
+      # Period 2 Check
+      - conditions:
+          - condition: template
+            value_template: >
+              {{ s2 is defined and s2 != none and s2 | string | trim != '' 
+                 and (
+                   (start2 < end2 and now().time().strftime('%H:%M:%S') >= start2 and now().time().strftime('%H:%M:%S') < end2)
+                   or
+                   (start2 > end2 and (now().time().strftime('%H:%M:%S') >= start2 or now().time().strftime('%H:%M:%S') < end2))
+                 ) }}
+        sequence:
+          - action: scene.turn_on
+            target:
+              entity_id: "{{ s2 }}"
+
+      # Period 3 Check
+      - conditions:
+          - condition: template
+            value_template: >
+              {{ s3 is defined and s3 != none and s3 | string | trim != '' 
+                 and (
+                   (start3 < end3 and now().time().strftime('%H:%M:%S') >= start3 and now().time().strftime('%H:%M:%S') < end3)
+                   or
+                   (start3 > end3 and (now().time().strftime('%H:%M:%S') >= start3 or now().time().strftime('%H:%M:%S') < end3))
+                 ) }}
+        sequence:
+          - action: scene.turn_on
+            target:
+              entity_id: "{{ s3 }}"
+
+      # Period 4 Check
+      - conditions:
+          - condition: template
+            value_template: >
+              {{ s4 is defined and s4 != none and s4 | string | trim != '' 
+                 and (
+                   (start4 < end4 and now().time().strftime('%H:%M:%S') >= start4 and now().time().strftime('%H:%M:%S') < end4)
+                   or
+                   (start4 > end4 and (now().time().strftime('%H:%M:%S') >= start4 or now().time().strftime('%H:%M:%S') < end4))
+                 ) }}
+        sequence:
+          - action: scene.turn_on
+            target:
+              entity_id: "{{ s4 }}"
