@@ -74,4 +74,4 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/scheduled_task_n
 
 | Version | Date | Summary of Changes |
 | :--- | :--- | :--- |
-| **Version 1.0** | 2026-10-29 | Initial release of the **Day of Week** companion blueprint with weekday selection and Smart "Anti-Spam" To-Do item updating/reactivation. |
+| **Version 1.0** | 2026-10-29 | Initial release of the **Day of Week** companion blueprint with weekday selection. |
