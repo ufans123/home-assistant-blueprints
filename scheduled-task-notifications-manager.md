@@ -2,7 +2,7 @@
 
 [![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fufans123%2Fhome-assistant-blueprints%2Fblob%2Fmain%2Fscheduled_task_notifications_manager.yaml)
 
-> **Version:** 2.0 | **Latest update:** 2026-10-29 | [← Back to Main Blueprints Repository](README.md)
+> **Version:** 2.1 | **Latest update:** 2026-10-29 | [← Back to Main Blueprints Repository](README.md)
 
 *(Previously: Scheduled Task Notifications Manager v1.0)*
 
@@ -71,5 +71,6 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/scheduled_task_n
 
 | Version | Date | Summary of Changes |
 | :--- | :--- | :--- |
+| **Version 2.1** | 2026-10-29 | Added **Smart To-Do List Recycling**, enabling the blueprint to automatically find, update descriptions, and reactivate (`needs_action`) completed or existing tasks to prevent duplicate list spam. |
 | **Version 2.0** | 2026-10-29 | Added dashboard **To-Do List** integration, top-down sequence handling, modular toggles, and renamed to **Scheduled Notifications To Do List** |
 | **Version 1.0** | 2026-10-05 | Initial release of **Scheduled Task Notifications Manager** |
