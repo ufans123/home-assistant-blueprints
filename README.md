@@ -64,6 +64,7 @@ Always review the automation YAML and test changes safely before deploying them 
 
 | Blueprint | Description | Current Version | Exchange Release |
 | :--- | :--- | :---: | :---: |
+| **[Alarmo State Manager (Custom Actions)](alarmo-state-manager.md)** | A clean companion blueprint for Alarmo that triggers user-defined custom actions (lights, TTS, chimes, notifications) whenever Alarmo changes state without replacing core security logic. | `v1.0` | — |
 | **[Binary Sensor State Sync](binary-sensor-state-sync.md)** | Directly syncs the state of any binary sensor (such as a door or window) to an input boolean, switch, or light using explicit state mapping. | `v1.0` | `2026-10-16` |
 | **[Reset Dropdown Helper on Light Turn Off](reset-select-helper.md)** | Quickly reset any select input helper back to a designated default or unselected state based on triggers or automation events. | `v1.0` | — |
 | **[Sync Device and Timer](device-timer-sync.md)** | Keep lights, switches, or fans synchronized with a Home Assistant timer helper. | `v1.0` | `2026-10-08` |
