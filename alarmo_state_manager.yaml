@@ -1,0 +1,105 @@
+blueprint:
+  name: "Alarmo State Manager (Custom Actions)"
+  description: >-
+    A clean companion blueprint for Alarmo that does not replace Alarmo's core security logic,
+    but runs alongside it to trigger custom user-defined actions (lights, TTS, chimes, notifications,
+    or switches) whenever Alarmo changes state (Arming, Disarmed, Armed in any mode, or Triggered).
+  domain: automation
+  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/alarmo_state_manager.yaml
+  author: Ufans123
+  input:
+    alarm_panel:
+      name: Alarmo Control Panel
+      description: The Alarmo entity that triggers this automation.
+      selector:
+        entity:
+          integration: alarmo
+          domain: alarm_control_panel
+
+    # --- ACTION SLOTS FOR USERS TO DEFINE ---
+    action_arming:
+      name: Actions when Arming
+      description: Actions to run when the alarm starts the arming countdown.
+      default: []
+      selector:
+        action:
+
+    action_disarmed:
+      name: Actions when Disarmed
+      description: Actions to run when the alarm is disarmed.
+      default: []
+      selector:
+        action:
+
+    action_armed:
+      name: Actions when Armed (Away, Home, Night, Vacation, Custom)
+      description: Actions to run when the alarm successfully arms in any mode.
+      default: []
+      selector:
+        action:
+
+    action_triggered:
+      name: Actions when Triggered
+      description: Actions to run when the alarm is fully triggered.
+      default: []
+      selector:
+        action:
+
+trigger:
+  - trigger: state
+    entity_id: !input alarm_panel
+    to: arming
+    id: Arming
+  - trigger: state
+    entity_id: !input alarm_panel
+    to: disarmed
+    id: Disarmed
+  - trigger: state
+    entity_id: !input alarm_panel
+    to:
+      - armed_away
+      - armed_home
+      - armed_night
+      - armed_vacation
+      - armed_custom_bypass
+    id: Armed
+  - trigger: state
+    entity_id: !input alarm_panel
+    to: triggered
+    id: Triggered
+
+actions:
+  - choose:
+      - conditions:
+          - condition: trigger
+            id: Arming
+        sequence:
+          - choose:
+              - conditions: []
+                sequence: !input action_arming
+
+      - conditions:
+          - condition: trigger
+            id: Disarmed
+        sequence:
+          - choose:
+              - conditions: []
+                sequence: !input action_disarmed
+
+      - conditions:
+          - condition: trigger
+            id: Armed
+        sequence:
+          - choose:
+              - conditions: []
+                sequence: !input action_armed
+
+      - conditions:
+          - condition: trigger
+            id: Triggered
+        sequence:
+          - choose:
+              - conditions: []
+                sequence: !input action_triggered
+
+mode: restart
