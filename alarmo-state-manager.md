@@ -46,6 +46,7 @@ A clean companion blueprint for Alarmo that does not replace Alarmo's core secur
 
 - **Companion Design Principle:** This blueprint does **not** handle or store security PIN codes, nor does it override Alarmo's built-in settings. It listens strictly to state change events published by your Alarmo panel.
 - **Audio & Visual Alerts:** This blueprint is ideal for building custom exit countdown warnings (e.g., TTS announcements over smart speakers), ambient status cues, or emergency light-flashing sequences.
+- **Advanced Automation Logic inside Action Blocks:** Because each state input uses Home Assistant's native action selector, you are not limited to single device commands. You can build advanced internal logic using building block actions—such as adding `Delay` timers, running steps in `Parallel`, creating `Repeat` loops for flashing lights, or adding conditional checks (`If-Then` / `Choose`) to alter actions based on time of day, presence, or solar angles.
 - **Error Handling & Offline Devices:** By default, Home Assistant halts execution of an action sequence if a single step fails (such as an offline speaker or unresponsive light bulb). To ensure remaining steps continue running during device outages, enable **"Continue on Error"** on individual action steps within the Home Assistant automation UI editor.
 - **Safe Empty Execution:** If you leave any of the four action slots blank when instantiating an automation, Home Assistant gracefully skips that state event without logging errors.
 
