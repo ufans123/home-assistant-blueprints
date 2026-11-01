@@ -54,6 +54,7 @@ Always review the automation YAML and test changes safely before deploying them 
 | **[Daily Time-Based Device Scheduler](daily-time-based-device-scheduler.md)** | Schedule switches, lights, or fans using time and day-of-week rules with optional bidirectional timer synchronization and smart remaining-time recovery. | `v1.0` | `2026-10-10` |
 | **[Scheduled Notifications To Do List](scheduled-task-notifications-manager.md)** | Advanced scheduling engine that generates up to 10 sequential persistent notification cards and/or dashboard To-Do list items bound to calendar days, helper switches, or custom events. *(Renamed from: Scheduled Task Notifications Manager v1.0)* | `v2.0` | `2026-10-29` |
 | **[Scheduled Notifications To Do List (Day of Week)](scheduled-task-notifications-dow.md)** | Weekly companion blueprint generating up to 10 sequential persistent notification cards and/or dashboard To-Do list items bound to specific weekdays (`Monday`–`Sunday`) with smart task recycling and deduplication. | `v1.0` | `2026-10-29` |
+| **[Trigger on a Specific Date and Time](trigger-on-a-specific-date-time.md)** | Fires a one-time automation at a precisely defined calendar date and time for single-occurrence events, reminders, or seasonal actions. | `v1.0` | — |
 
 [⬆ Back to top](#top)
 
