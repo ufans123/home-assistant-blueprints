@@ -1,0 +1,38 @@
+blueprint:
+  name: "Trigger on a Specific Date and Time"
+  description: "Fires a one-time automation at a defined date and time."
+  domain: automation
+  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/trigger_on_a_specific_date_time.yaml
+  author: Ufans123
+  input:
+    target_date:
+      name: Target Date
+      description: "Pick the exact date for the automation to run."
+      selector:
+        text:
+          type: date
+    target_time:
+      name: Target Time
+      description: "What time should the actions run on that day?"
+      default: "08:00:00"
+      selector:
+        time: {}
+    actions:
+      name: Actions
+      description: "Define what should happen on this date?"
+      selector:
+        action: {}
+
+variables:
+  chosen_date: !input target_date
+
+trigger:
+  - platform: time
+    at: !input target_time
+
+condition:
+  - condition: template
+    value_template: "{{ now().strftime('%Y-%m-%d') == chosen_date }}"
+
+action: !input actions
+mode: single
