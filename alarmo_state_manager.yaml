@@ -16,34 +16,58 @@ blueprint:
           integration: alarmo
           domain: alarm_control_panel
 
-    # --- ACTION SLOTS FOR USERS TO DEFINE ---
-    action_arming:
-      name: Actions when Arming
-      description: Actions to run when the alarm starts the arming countdown.
-      default: []
-      selector:
-        action:
+    # --- SECTIONS FOR EACH STATE ACTION ---
+    sections_arming:
+      name: Arming Actions
+      description: Actions to execute when the exit countdown starts.
+      icon: mdi:shield-sync
+      collapsed: false
+      input:
+        action_arming:
+          name: Actions when Arming
+          description: Actions to run when the alarm starts the arming countdown.
+          default: []
+          selector:
+            action:
 
-    action_disarmed:
-      name: Actions when Disarmed
-      description: Actions to run when the alarm is disarmed.
-      default: []
-      selector:
-        action:
+    sections_disarmed:
+      name: Disarmed Actions
+      description: Actions to execute when the system is disarmed.
+      icon: mdi:shield-off-outline
+      collapsed: false
+      input:
+        action_disarmed:
+          name: Actions when Disarmed
+          description: Actions to run when the alarm is disarmed.
+          default: []
+          selector:
+            action:
 
-    action_armed:
-      name: Actions when Armed (Away, Home, Night, Vacation, Custom)
-      description: Actions to run when the alarm successfully arms in any mode.
-      default: []
-      selector:
-        action:
+    sections_armed:
+      name: Armed Actions
+      description: Actions to execute when fully armed in any mode.
+      icon: mdi:shield-check
+      collapsed: false
+      input:
+        action_armed:
+          name: Actions when Armed (Away, Home, Night, Vacation, Custom)
+          description: Actions to run when the alarm successfully arms in any mode.
+          default: []
+          selector:
+            action:
 
-    action_triggered:
-      name: Actions when Triggered
-      description: Actions to run when the alarm is fully triggered.
-      default: []
-      selector:
-        action:
+    sections_triggered:
+      name: Triggered Actions
+      description: Actions to execute when an alarm or intrusion event is triggered.
+      icon: mdi:shield-alert
+      collapsed: false
+      input:
+        action_triggered:
+          name: Actions when Triggered
+          description: Actions to run when the alarm is fully triggered.
+          default: []
+          selector:
+            action:
 
 trigger:
   - trigger: state
