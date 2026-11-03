@@ -2,7 +2,7 @@
 
 [![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fufans123%2Fhome-assistant-blueprints%2Fblob%2Fmain%2Fbinary_sensor_state_sync.yaml)
 
-> **Version:** 1.1 | **Initial Release:** 2026-10-16 | [← Back to Main Blueprints Repository](README.md)
+> **Version:** 1.0 | **Initial Release:** 2026-10-16 | [← Back to Main Blueprints Repository](README.md)
 
 A clean, bulletproof Home Assistant blueprint for directly syncing the state of any binary sensor (such as a door, window, or motion sensor) to an input boolean, switch, or light. This blueprint uses explicit state mapping to eliminate toggle out-of-sync issues, making it ideal for climate automations (like pausing your AC when a door opens).
 
