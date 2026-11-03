@@ -16,14 +16,14 @@ Welcome! This repository features my collection of custom Home Assistant bluepri
 ## 📌 Table of Contents
 
 - ⚠️ [Disclaimer & Usage Notice](#disclaimer)
-- ⏱️ [Schedulers & Time-Based Automation](#-schedulers--time-based-automation)
+- ⏱️ [Schedulers & Time-Based Automation](#-schedulers-time-based-automation)
 - 🔄 [State Synchronization & Helpers](#-state-synchronization--helpers)
-- 🎨 [Lighting, Scenes & Dynamic Modes](#-lighting-scenes--dynamic-modes)
+- 🎨 [Lighting, Scenes & Dynamic Modes](#-lighting-scenes-dynamic-modes)
 - 🔘 [Physical Controls, Buttons & NFC](#-physical-controls-buttons--nfc)
-- 🔔 [Notifications, Alerts & Tasks](#-notifications-alerts--tasks)
-- 🔋 [Power, Hardware & Network Management](#-power-hardware--network-management)
-- 🛡️ [Security & Keypads](#-security--keypads)
-- 🌤️ [Weather & Environment](#-weather--environment)
+- 🔔 [Notifications, Alerts & Tasks](#-notifications-alerts-tasks)
+- 🔋 [Power, Hardware & Network Management](#-power-hardware-network-management)
+- 🛡️ [Security & Keypads](#-security-keypads)
+- 🌤️ [Weather & Environment](#-weather-environment)
 - ♣️ [About the Author](https://about.me/andylund)
 
 ---
