@@ -1,0 +1,115 @@
+blueprint:
+  name: Simple TTS Weather Announcement (multi-trigger)
+  description: >-
+    Reads a detailed weather forecast over text-to-speech with a dynamic time-of-day greeting, 
+    current conditions, high/low temperatures, rain chance, humidity, and custom volume control.
+
+    **Version:** v1.0
+  domain: automation
+  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/tts_weather_announcement.yaml
+  author: Ufans123
+  input:
+    weather_entity:
+      name: Weather Integration Entity
+      description: Select your Home Assistant weather entity (e.g. weather.home, weather.forecast_home).
+      selector:
+        entity:
+          domain: weather
+
+    tts_engine:
+      name: TTS Engine
+      description: The Text-to-Speech engine entity to use (e.g. tts.google_translate_en_com or tts.piper).
+      selector:
+        entity:
+          domain: tts
+
+    target_media_player:
+      name: Target Media Player
+      description: Select the media player to play the announcement on.
+      selector:
+        entity:
+          domain: media_player
+
+    announcement_volume:
+      name: Announcement Volume
+      description: Set the volume level for the media player before speaking (0% to 100%).
+      default: 50
+      selector:
+        number:
+          min: 0
+          max: 100
+          step: 5
+          unit_of_measurement: "%"
+
+    automation_trigger:
+      name: Automation Triggers
+      description: Add triggers that cause this announcement to run (e.g. motion sensor, morning alarm, button press).
+      default: []
+      selector:
+        trigger: {}
+
+mode: queued
+
+trigger: !input automation_trigger
+
+action:
+  # 1. Map the blueprint input to a local variable, then set the volume
+  - variables:
+      vol_setting: !input announcement_volume
+
+  - action: media_player.volume_set
+    target:
+      entity_id: !input target_media_player
+    data:
+      volume_level: "{{ (vol_setting | int) / 100 }}"
+
+  # 2. Fetch daily forecast data into a response variable
+  - action: weather.get_forecasts
+    target:
+      entity_id: !input weather_entity
+    data:
+      type: daily
+    response_variable: forecast_data
+
+  # 3. Process greeting, current weather attributes, and forecast details
+  - variables:
+      weather_id: !input weather_entity
+      
+      # Dynamic time-of-day greeting
+      current_hour: "{{ now().hour }}"
+      greeting: >-
+        {% if current_hour < 12 %}
+          Good morning!
+        {% elif current_hour < 17 %}
+          Good afternoon!
+        {% else %}
+          Good evening!
+        {% endif %}
+
+      # Current conditions from entity state
+      current_state: "{{ states(weather_id) | replace('_', ' ') }}"
+      current_temp: "{{ state_attr(weather_id, 'temperature') }}"
+      current_humidity: "{{ state_attr(weather_id, 'humidity') }}"
+
+      # Daily forecast details extracted from response variable
+      today_forecast: "{{ forecast_data[weather_id].forecast[0] }}"
+      temp_high: "{{ today_forecast.temperature }}"
+      temp_low: "{{ today_forecast.templow }}"
+      condition: "{{ today_forecast.condition | replace('_', ' ') }}"
+      pop: "{{ today_forecast.precipitation_probability | default(0) }}"
+
+  # 4. Speak the announcement
+  - action: tts.speak
+    target:
+      entity_id: !input tts_engine
+    data:
+      cache: true
+      media_player_entity_id: !input target_media_player
+      message: >-
+        {{ greeting }} Currently, it is {{ current_state }} and {{ current_temp }} degrees outside with {{ current_humidity }} percent humidity.
+        Today's forecast calls for {{ condition }} with a high of {{ temp_high }} degrees and a low of {{ temp_low }} degrees.
+        {% if pop | int > 0 %}
+          There is a {{ pop }} percent chance of precipitation today.
+        {% else %}
+          There is no significant chance of rain today.
+        {% endif %}
