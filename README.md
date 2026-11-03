@@ -1,25 +1,29 @@
 <a name="top"></a>
 # Home Assistant Blueprints 🏠
 
-Welcome! This repository features my collection of custom Home Assistant blueprints, designed to simplify and elevate your smart home automations.
+Welcome! This repository features my collection of custom Home Assistant blueprints designed to simplify, synchronize, and elevate your smart home automations.
 
-- Please note: Blueprints with an **Exchange Release** date have been published to the Home Assistant Blueprint Exchange to share with the community. 
+- Please note: Blueprints with an **Exchange Release** date have been published to the Home Assistant Blueprint Exchange to share with the community.
 - Blueprints without a date have not yet been posted on the exchange and may be updated before they are released.
-- Also, some of the blueprints below may be niche and use cases for people may vary. Enjoy. 
+- Also, some of the blueprints below may be niche and use cases for people may vary. Enjoy.
 
 ---
 
 ## 📌 Table of Contents
-- ⚠️[Disclaimer](#disclaimer)
-- ⏱️[Scheduling & Time](#️-scheduling--time)
-- 🔄[Device Synchronization & State Management](#-device-synchronization--state-management)
-- 🔘[Buttons, Triggers & Scene Control](#-buttons-triggers--scene-control)
-- 🔋[Power, Hardware & Notifications](#-power-hardware--notifications)
-- ☀️[Weather & Information](#️-weather--information)
+- ⚠️ [Disclaimer](#disclaimer)
+- ⏱️ [Scheduling & Time](#scheduling--time)
+- 🔄 [Device Synchronization & State Management](#device-synchronization--state-management)
+- 🎨 [Lighting, Scenes & Modes](#lighting-scenes--modes)
+- 🔘 [Buttons, Switches & NFC Controls](#buttons-switches--nfc-controls)
+- 🔔 [Notifications, To-Do & Alerts](#notifications-to-do--alerts)
+- 🔋 [Battery, Power & Hardware Health](#battery-power--hardware-health)
+- 🛡️ [Security, Keypads & Hardware Controls](#security-keypads--hardware-controls)
+- 🌤️ [Weather & Information](#weather--information)
 - ♣️ [About Me](https://about.me/andylund)
 
 ---
 
+<a name="disclaimer"></a>
 <details id="disclaimer">
 <summary><b>⚠️ Disclaimer & Usage Notice (Click to expand)</b></summary>
 
@@ -43,6 +47,7 @@ Always review the automation YAML and test changes safely before deploying them 
 
 ## 🧰 My Home Assistant Blueprint Toolkit
 
+<a name="scheduling--time"></a>
 ### ⏱️ Scheduling & Time
 
 | Blueprint | Description | Current Version | Exchange Release |
@@ -52,60 +57,93 @@ Always review the automation YAML and test changes safely before deploying them 
 | **[Daily Sun-Based Device Scheduler](daily-sun-based-device-scheduler.md)** | Schedule switches, lights, or fans using sunset and day-of-week rules with optional bidirectional timer synchronization and smart remaining-time recovery. | `v1.0` | `2026-10-12` |
 | **[Daily Sun-Based Multi-Device & Multi-Scene Scheduler with Timer](daily-sun-based-multi-device-scheduler-with-scenes.md)** | Schedule multiple switches, lights, fans, and scenes using sunset rules and day-of-week filtering, featuring bidirectional timer synchronization and smart remaining-time recovery. | `v1.0` | `2026-10-13` |
 | **[Daily Time-Based Device Scheduler](daily-time-based-device-scheduler.md)** | Schedule switches, lights, or fans using time and day-of-week rules with optional bidirectional timer synchronization and smart remaining-time recovery. | `v1.0` | `2026-10-10` |
-| **[Scheduled Notifications To Do List](scheduled-task-notifications-manager.md)** | Advanced scheduling engine that generates up to 10 sequential persistent notification cards and/or dashboard To-Do list items bound to calendar days, helper switches, or custom events. *(Renamed from: Scheduled Task Notifications Manager v1.0)* | `v2.1` | `2026-10-29` |
-| **[Scheduled Notifications To Do List (Day of Week)](scheduled-task-notifications-dow.md)** | Weekly companion blueprint generating up to 10 sequential persistent notification cards and/or dashboard To-Do list items bound to specific weekdays (`Monday`–`Sunday`) with smart task recycling and deduplication. | `v1.0` | `2026-10-29` |
 | **[Trigger on a Specific Date and Time](trigger-on-a-specific-date-time.md)** | Fires a one-time automation at a precisely defined calendar date and time for single-occurrence events, reminders, or seasonal actions. | `v1.0` | `2026-10-31` |
 
 [⬆ Back to top](#top)
 
 ---
 
+<a name="device-synchronization--state-management"></a>
 ### 🔄 Device Synchronization & State Management
 
 | Blueprint | Description | Current Version | Exchange Release |
 | :--- | :--- | :---: | :---: |
-| **[Alarmo State Manager (Custom Actions)](alarmo-state-manager.md)** | A clean companion blueprint for Alarmo that triggers user-defined custom actions (lights, TTS, chimes, notifications) whenever Alarmo changes state without replacing core security logic. | `v1.0` | `2026-11-02` |
 | **[Binary Sensor State Sync](binary-sensor-state-sync.md)** | Directly syncs the state of any binary sensor (such as a door or window) to an input boolean, switch, or light using explicit state mapping. | `v1.0` | `2026-10-16` |
 | **[Reset Dropdown Helper on Light Turn Off](reset-select-helper.md)** | Quickly reset any select input helper back to a designated default or unselected state based on triggers or automation events. | `v1.0` | — |
 | **[Sync Device and Timer](device-timer-sync.md)** | Keep lights, switches, or fans synchronized with a Home Assistant timer helper. | `v1.0` | `2026-10-08` |
 | **[Sync Device and Scheduled Off-Time](device-sync-scheduled-time-off.md)** | Sync switches, lights, or fans with a scheduled off-time picker, dynamically computing countdown durations with optional timer helper tracking. | `v1.0` | `2026-10-16` |
-| **[Turn On to Default Scene (Companion Blueprint)](target-turn-on-synchronizer.md)** | Automatically sets a light or switch to a default scene whenever turned on externally, with an optional counter helper reset companion for button cycling. | `v1.0` | `2026-10-25` |
-| **[Two-Way Device Sync](device-sync.md)** | Synchronize the state of any two binary entities (lights, switches, fans, input booleans) mutually in both directions without infinite loops. | `v1.0` | ` 2026-10-25 ` |
+| **[Two-Way Device Sync](device-sync.md)** | Synchronize the state of any two binary entities (lights, switches, fans, input booleans) mutually in both directions without infinite loops. | `v1.0` | `2026-10-25` |
 
 [⬆ Back to top](#top)
 
 ---
 
-### 🔘 Buttons, Triggers & Scene Control
+<a name="lighting-scenes--modes"></a>
+### 🎨 Lighting, Scenes & Modes
 
 | Blueprint | Description | Current Version | Exchange Release |
 | :--- | :--- | :---: | :---: |
-| **[Button On/Off Control with Optional Actions](button-on-off.md)** | Controls any switch, light, or input boolean using separate On/Off event buttons, complete with support for optional secondary actions. | `v1.0` | `2026-10-22` |
 | **[Button Scene Cycling and Off Control](button-scene-cycling-and-off-control.md)** | Cycles sequentially through a list of scenes using an On/Scene button and a counter helper, with complete shutdown and counter reset on Off. | `v1.1` | `2026-10-14` |
 | **[Cycle Through Multiple Scenes (NFC & Switches)](cycle-scenes-by-trigger.md)** | Cycles sequentially through a list of scenes using NFC tags, buttons, or custom triggers with a counter helper to remember your position. | `v1.0` | `2026-11-02` |
-| **[Motion Sensor Enable or Disable](motion-control-enable-disable.md)** | Enable or disable motion sensors via button events or automatically when a specific light turns off. | `v1.0` | `2026-10-12` |
-| **[On/Off or Toggle Control with Scene Options (NFC & Triggers)](on-off-toggle-nfc-trigger-options.md)** | Control lights, switches, fans, and inputs using NFC tags or buttons with explicit On/Off/Toggle logic, plus optional multi-scene presets. | `v1.0` | `2026-10-15` |
-| **[Scene Selector with Light Effect Support (Hue & Govee)](input-select-scene-selector.md)** | Triggers Home Assistant scenes or applies native hardware light effects (such as Govee dynamic scenes or WLED presets) using an input_select helper with auto off/reset support. *(Advanced: Requires input_select helpers & startup automation)* | `v1.0` | ` — ` |
-| **[Spotify NFC Jukebox with Smart Tracker](spotify-nfc-trigger.md)** | Intelligent Spotify jukebox automation for NFC tags featuring smart state management (resumes, pauses, switches/restarts) and an offline/unavailable speaker safety reset. | `v1.0` | `2026-10-24` |
-| **[Switch Event Long-Press Control (with Optional NFC)](long-press-options.md)** | Triggers light and switch actions (Turn Off, Turn On, or Toggle) via long-press event entities and an optional NFC tag scan with custom UI labeling. | `v1.0` | `2026-10-20` |
+| **[Scene Selector with Light Effect Support (Hue & Govee)](input-select-scene-selector.md)** | Triggers Home Assistant scenes or applies native hardware light effects (such as Govee dynamic scenes or WLED presets) using an `input_select` helper with auto off/reset support. *(Advanced: Requires input_select helpers & startup automation)* | `v1.0` | — |
 | **[Timed Light Scene Cycler](light-scene-cycler.md)** | Seamlessly cycles a light/group through custom scenes using an input boolean switch, featuring smooth transitions and auto-off timer. | `v1.0` | `2026-10-17` |
+| **[Turn On to Default Scene (Companion Blueprint)](target-turn-on-synchronizer.md)** | Automatically sets a light or switch to a default scene whenever turned on externally, with an optional counter helper reset companion for button cycling. | `v1.0` | `2026-10-25` |
 | **[Turn On to Time-Based Default Scene](turn-on-scene-based-on-time-period.md)** | Automatically sets a light, switch, or input boolean to a time-dependent scene across up to 4 optional time windows whenever turned on externally. | `v1.0` | `2026-10-30` |
 
 [⬆ Back to top](#top)
 
 ---
 
-### 🔋 Power, Hardware & Notifications
+<a name="buttons-switches--nfc-controls"></a>
+### 🔘 Buttons, Switches & NFC Controls
 
 | Blueprint | Description | Current Version | Exchange Release |
 | :--- | :--- | :---: | :---: |
-| **[Battery-Controlled Charging Switch](battery-charging-control.md)** | Automatically manage charging by turning a smart plug on/off based on battery percentage thresholds. Merged into blueprint `'Safe Battery-Controlled Charging & Failsafe Manager'`. | `v1.0` | `Merged` |
-| **[Battery-Controlled Charging Switch - Time Failsafe Companion](battery-charging-control-companion.md)** | Adds a customizable time-limit layer to the threshold engine, insulating your charger from network dropouts. Merged into blueprint `'Safe Battery-Controlled Charging & Failsafe Manager'`. | `v1.0` | `Merged` |
-| **[Safer Battery-Controlled Charging & Timed Failsafe Manager](battery-charging-control-combined.md)** | All-in-one charging engine uniting percentage thresholds, charge-activated safety timers, NFC nightstand overrides, and network recovery. | `v1.0` | `2026-10-27` |
-| **[Battery Level & Status Monitor (Scheduled & Manual)](low-battery-alert.md)** | Automatically scan and report devices with low battery levels or unknown/unavailable statuses via scheduled checks or manual trigger. | `v1.0` | `2026-10-23` |
-| **[Manual Z-Wave Outlet Restart (Router Reboot)](manual-zwave-reboot.md)** | Safely automates a controlled power-cycle sequence for routers/modems using a Z-Wave plug with dynamic durations and notifications. | `v1.0` | `2026-10-20` |
+| **[Button On/Off Control with Optional Actions](button-on-off.md)** | Controls any switch, light, or input boolean using separate On/Off event buttons, complete with support for optional secondary actions. | `v1.0` | `2026-10-22` |
+| **[Motion Sensor Enable or Disable](motion-control-enable-disable.md)** | Enable or disable motion sensors via button events or automatically when a specific light turns off. | `v1.0` | `2026-10-12` |
+| **[On/Off or Toggle Control with Scene Options (NFC & Triggers)](on-off-toggle-nfc-trigger-options.md)** | Control lights, switches, fans, and inputs using NFC tags or buttons with explicit On/Off/Toggle logic, plus optional multi-scene presets. | `v1.0` | `2026-10-15` |
+| **[Spotify NFC Jukebox with Smart Tracker](spotify-nfc-trigger.md)** | Intelligent Spotify jukebox automation for NFC tags featuring smart state management (resumes, pauses, switches/restarts) and an offline/unavailable speaker safety reset. | `v1.0` | `2026-10-24` |
+| **[Switch Event Long-Press Control (with Optional NFC)](long-press-options.md)** | Triggers light and switch actions (Turn Off, Turn On, or Toggle) via long-press event entities and an optional NFC tag scan with custom UI labeling. | `v1.0` | `2026-10-20` |
+
+[⬆ Back to top](#top)
+
+---
+
+<a name="notifications-to-do--alerts"></a>
+### 🔔 Notifications, To-Do & Alerts
+
+| Blueprint | Description | Current Version | Exchange Release |
+| :--- | :--- | :---: | :---: |
 | **[Offline Device Notifications (Scheduled, NFC, Manual Triggers)](offline-device-check.md)** | Monitors devices and sensors for unavailable/unknown states using whitelist labels, domain filters, and blacklist exclusions. | `v1.0` | `2026-10-19` |
 | **[Persistent Notification via Manual Switch (with Optional NFC)](persistent-notification-manual-nfc.md)** | Triggers persistent notifications via a manual input boolean toggle with automatic reset and optional NFC secondary trigger. | `v1.0` | — |
+| **[Scheduled Notifications To Do List](scheduled-task-notifications-manager.md)** | Advanced scheduling engine that generates up to 10 sequential persistent notification cards and/or dashboard To-Do list items bound to calendar days, helper switches, or custom events. *(Renamed from: Scheduled Task Notifications Manager v1.0)* | `v2.1` | `2026-10-29` |
+| **[Scheduled Notifications To Do List (Day of Week)](scheduled-task-notifications-dow.md)** | Weekly companion blueprint generating up to 10 sequential persistent notification cards and/or dashboard To-Do list items bound to specific weekdays (`Monday`–`Sunday`) with smart task recycling and deduplication. | `v1.0` | `2026-10-29` |
+
+[⬆ Back to top](#top)
+
+---
+
+<a name="battery-power--hardware-health"></a>
+### 🔋 Battery, Power & Hardware Health
+
+| Blueprint | Description | Current Version | Exchange Release |
+| :--- | :--- | :---: | :---: |
+| **[Battery Level & Status Monitor (Scheduled & Manual)](low-battery-alert.md)** | Automatically scan and report devices with low battery levels or unknown/unavailable statuses via scheduled checks or manual trigger. | `v1.0` | `2026-10-23` |
+| **[Battery-Controlled Charging Switch](battery-charging-control.md)** | Automatically manage charging by turning a smart plug on/off based on battery percentage thresholds. Merged into blueprint `'Safer Battery-Controlled Charging & Timed Failsafe Manager'`. | `v1.0` | `Merged` |
+| **[Battery-Controlled Charging Switch - Time Failsafe Companion](battery-charging-control-companion.md)** | Adds a customizable time-limit layer to the threshold engine, insulating your charger from network dropouts. Merged into blueprint `'Safer Battery-Controlled Charging & Timed Failsafe Manager'`. | `v1.0` | `Merged` |
+| **[Safer Battery-Controlled Charging & Timed Failsafe Manager](battery-charging-control-combined.md)** | All-in-one charging engine uniting percentage thresholds, charge-activated safety timers, NFC nightstand overrides, and network recovery. | `v1.0` | `2026-10-27` |
+
+[⬆ Back to top](#top)
+
+---
+
+<a name="security-keypads--hardware-controls"></a>
+### 🛡️ Security, Keypads & Hardware Controls
+
+| Blueprint | Description | Current Version | Exchange Release |
+| :--- | :--- | :---: | :---: |
+| **[Alarmo State Manager (Custom Actions)](alarmo-state-manager.md)** | A clean companion blueprint for Alarmo that triggers user-defined custom actions (lights, TTS, chimes, notifications) whenever Alarmo changes state without replacing core security logic. | `v1.0` | `2026-11-02` |
+| **[Manual Z-Wave Outlet Restart (Router Reboot)](manual-zwave-reboot.md)** | Safely automates a controlled power-cycle sequence for routers/modems using a Z-Wave plug with dynamic durations and notifications. | `v1.0` | `2026-10-20` |
 | **[Ring Keypad V2: Multi-Code Routine Hub (Z-Wave)](ring-keypad-routine.md)** | Map single-digit shortcuts (0–9) and custom multi-digit PIN codes on a Ring Keypad V2 to custom action sequences with audio feedback. | `v1.0` | `2026-10-21` |
 | **[Ring Keypad v2: Z-Wave Multi-Trigger Sound Player](ring-keypad-sounds.md)** | Play built-in chimes, notification sounds, and system tones on a Ring Keypad v2 using flexible triggers and Z-Wave routing. | `v1.0` | `2026-10-16` |
 
@@ -113,7 +151,8 @@ Always review the automation YAML and test changes safely before deploying them 
 
 ---
 
-### ☀️ Weather & Information
+<a name="weather--information"></a>
+### 🌤️ Weather & Information
 
 | Blueprint | Description | Current Version | Exchange Release |
 | :--- | :--- | :---: | :---: |
