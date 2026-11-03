@@ -1,59 +1,99 @@
 blueprint:
-  name: Simple TTS Weather Announcement (multi-trigger)
+  name: TTS Weather Announcement (with Custom Optional Actions)
   description: >-
-    Reads a detailed weather forecast over text-to-speech with a dynamic time-of-day greeting, 
-    current conditions, high/low temperatures, rain chance, humidity, and custom volume control.
+    Reads a detailed daily weather report over text-to-speech with dynamic time-of-day greetings, 
+    current conditions, conditional high/low temperatures, precipitation chance, volume control, 
+    and optional pre/post automation actions.
 
     **Version:** v1.0
   domain: automation
   source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/tts_weather_announcement.yaml
   author: Ufans123
   input:
-    weather_entity:
-      name: Weather Integration Entity
-      description: Select your Home Assistant weather entity (e.g. weather.home, weather.forecast_home).
-      selector:
-        entity:
-          domain: weather
+    core_section:
+      name: Core Configuration
+      description: Main settings for weather data, text-to-speech engine, and target speaker.
+      icon: mdi:tune
+      input:
+        weather_entity:
+          name: Weather Integration Entity
+          description: Select your Home Assistant weather entity (e.g. weather.home, weather.forecast_home).
+          selector:
+            entity:
+              domain: weather
 
-    tts_engine:
-      name: TTS Engine
-      description: The Text-to-Speech engine entity to use (e.g. tts.google_translate_en_com or tts.piper).
-      selector:
-        entity:
-          domain: tts
+        tts_engine:
+          name: TTS Engine
+          description: The Text-to-Speech engine entity to use (e.g. tts.google_translate_en_com or tts.home_assistant_cloud).
+          selector:
+            entity:
+              domain: tts
 
-    target_media_player:
-      name: Target Media Player
-      description: Select the media player to play the announcement on.
-      selector:
-        entity:
-          domain: media_player
+        target_media_player:
+          name: Target Media Player
+          description: Select the media player to play the announcement on.
+          selector:
+            entity:
+              domain: media_player
 
-    announcement_volume:
-      name: Announcement Volume
-      description: Set the volume level for the media player before speaking (0% to 100%).
-      default: 50
-      selector:
-        number:
-          min: 0
-          max: 100
-          step: 5
-          unit_of_measurement: "%"
+        announcement_volume:
+          name: Announcement Volume
+          description: Set the volume level for the media player before speaking (0% to 100%).
+          default: 50
+          selector:
+            number:
+              min: 0
+              max: 100
+              step: 5
+              unit_of_measurement: "%"
 
-    automation_trigger:
+    trigger_section:
       name: Automation Triggers
-      description: Add triggers that cause this announcement to run (e.g. motion sensor, morning alarm, button press).
-      default: []
-      selector:
-        trigger: {}
+      description: Define the events or schedules that trigger this announcement.
+      icon: mdi:bell-ring
+      input:
+        automation_trigger:
+          name: Automation Triggers
+          description: Add triggers that cause this announcement to run (e.g. motion sensor, morning alarm, button press).
+          default: []
+          selector:
+            trigger: {}
+
+    pre_action_section:
+      name: Actions Before Announcement (Optional)
+      description: Custom sequence of actions to run before volume setting and speech (e.g., wake up AV receiver).
+      icon: mdi:playlist-play
+      collapsed: true
+      input:
+        actions_before:
+          name: Actions Before Announcement
+          description: Custom actions to run before the weather report starts.
+          default: []
+          selector:
+            action: {}
+
+    post_action_section:
+      name: Actions After Announcement (Optional)
+      description: Custom sequence of actions to run after the weather announcement finishes.
+      icon: mdi:playlist-check
+      collapsed: true
+      input:
+        actions_after:
+          name: Actions After Announcement
+          description: Custom actions to run after the weather report completes.
+          default: []
+          selector:
+            action: {}
 
 mode: queued
 
 trigger: !input automation_trigger
 
 action:
-  # 1. Map the blueprint input to a local variable, then set the volume
+  # 1. Run optional actions before announcement
+  - sequence: !input actions_before
+
+  # 2. Map volume input to variable and set media player volume
   - variables:
       vol_setting: !input announcement_volume
 
@@ -63,7 +103,7 @@ action:
     data:
       volume_level: "{{ (vol_setting | int) / 100 }}"
 
-  # 2. Fetch daily forecast data into a response variable
+  # 3. Fetch daily forecast data into response variable
   - action: weather.get_forecasts
     target:
       entity_id: !input weather_entity
@@ -71,7 +111,7 @@ action:
       type: daily
     response_variable: forecast_data
 
-  # 3. Process greeting, current weather attributes, and forecast details
+  # 4. Process greeting, current weather attributes, and forecast details
   - variables:
       weather_id: !input weather_entity
       
@@ -91,14 +131,14 @@ action:
       current_temp: "{{ state_attr(weather_id, 'temperature') }}"
       current_humidity: "{{ state_attr(weather_id, 'humidity') }}"
 
-      # Daily forecast details extracted from response variable
+      # Extract forecast attributes cleanly
       today_forecast: "{{ forecast_data[weather_id].forecast[0] }}"
       temp_high: "{{ today_forecast.temperature }}"
       temp_low: "{{ today_forecast.templow }}"
       condition: "{{ today_forecast.condition | replace('_', ' ') }}"
-      pop: "{{ today_forecast.precipitation_probability | default(0) }}"
+      pop: "{{ today_forecast.precipitation_probability if today_forecast.precipitation_probability is not none else 0 }}"
 
-  # 4. Speak the announcement
+  # 5. Speak the announcement with dynamic temperature phrasing
   - action: tts.speak
     target:
       entity_id: !input tts_engine
@@ -107,9 +147,20 @@ action:
       media_player_entity_id: !input target_media_player
       message: >-
         {{ greeting }} Currently, it is {{ current_state }} and {{ current_temp }} degrees outside with {{ current_humidity }} percent humidity.
-        Today's forecast calls for {{ condition }} with a high of {{ temp_high }} degrees and a low of {{ temp_low }} degrees.
+        {% if temp_high is not none and temp_low is not none %}
+          Today's forecast calls for {{ condition }} with a high of {{ temp_high }} degrees and a low of {{ temp_low }} degrees.
+        {% elif temp_high is none and temp_low is not none %}
+          Today's forecast calls for {{ condition }} with an overnight low of {{ temp_low }} degrees.
+        {% elif temp_high is not none and temp_low is none %}
+          Today's forecast calls for {{ condition }} with a high of {{ temp_high }} degrees.
+        {% else %}
+          Today's forecast calls for {{ condition }}.
+        {% endif %}
         {% if pop | int > 0 %}
           There is a {{ pop }} percent chance of precipitation today.
         {% else %}
           There is no significant chance of rain today.
         {% endif %}
+
+  # 6. Run optional actions after announcement
+  - sequence: !input actions_after
