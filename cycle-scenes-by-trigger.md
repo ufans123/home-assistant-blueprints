@@ -2,7 +2,7 @@
 
 [![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fufans123%2Fhome-assistant-blueprints%2Fblob%2Fmain%2Fcycle_scenes_by_trigger.yaml)
 
-[← Back to Main Blueprints Repository](README.md)
+> **Version:** 1.0 | **Initial Release:** 2026-11-02 | [← Back to Main Blueprints Repository](README.md)
 
 This automation blueprint cycles sequentially through a selected list of scenes using a flexible trigger source (such as NFC tags, button presses, or remote events) and a Counter helper to remember your place in the cycle. It is specifically optimized for scanning NFC tags with your phone to seamlessly advance through lighting presets, moods, or device states! By sharing the same counter helper, you can easily sync multiple switches or controllers in the same room.
 
@@ -47,3 +47,9 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/cycle_scenes_by_
 2. Navigate to your Home Assistant Blueprints Dashboard UI.
 3. In the bottom right corner, click on the *'Import blueprint'* button.
 4. Paste in the URL and follow the prompts.
+---
+## Changelog
+
+| Version | Date | Summary of Changes |
+| :--- | :--- | :--- |
+| **v1.0** | 2026-11-02 | Initial release |
