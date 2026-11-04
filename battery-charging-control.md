@@ -9,6 +9,11 @@ Turns a smart switch or plug on when a battery drops below a low threshold, and 
 ## 🕒 Looking for a Time Limit Failsafe?
 For an extra layer of protection, check out the **[Time Failsafe Companion Blueprint](battery-charging-control-companion.md)**. It works alongside this threshold automation to enforce a maximum charge duration, perfectly insulating basic hardware setups from network dropouts or runaway charging sessions.
 
+---
+## Use Cases
+- coming soon
+---
+
 ## How It Works
 
 1. **Low Battery Trigger:** When the battery sensor value falls below your configured **Low Battery Threshold**, the smart switch or light turns `on` to start charging.
@@ -36,3 +41,8 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/battery_charging
 2. Navigate to your Home Assistant Blueprints Dashboard UI
 3. In the bottom right corner click on the *'Import blueprint'* button
 4. Paste in the URL and follow the prompts
+
+---
+## Related Links
+- coming soon
+---
