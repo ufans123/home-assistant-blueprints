@@ -23,6 +23,10 @@ Because this blueprint uses Home Assistant's native labeling system for precise 
 3. **Blacklist Problematic Entities:** Assign an ignore label (e.g., `Ignore Offline`) to devices you turn off or unplug seasonally. Sleepy battery devices (like some water sensors) that frequently drift into `unknown` states to prevent false alerts.
 
 ---
+## Use Cases
+- coming soon
+---
+
 
 ## Features
 
@@ -99,6 +103,10 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/offline_device_c
 4. Paste in the URL and follow the prompts.
 
 ---
+## Related Links
+- coming soon
+---
+
 ## Changelog
 
 | Version | Date | Summary of Changes |
