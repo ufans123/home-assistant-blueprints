@@ -13,6 +13,9 @@ Before setting up this blueprint, make sure you have the following ready:
 - **NFC Tags:** Physical NFC tags (NTAG215 or similar) capable of being scanned by your phone or a dedicated Home Assistant NFC reader.
 
 ---
+## Use Cases
+- coming soon
+---
 
 ## Features
 
@@ -76,6 +79,9 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/spotify_nfc_trig
 3. In the bottom right corner, click on the **Import blueprint** button.
 4. Paste in the URL and follow the prompts.
 
+---
+## Related Links
+- coming soon
 ---
 
 ## Changelog
