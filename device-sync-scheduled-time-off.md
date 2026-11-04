@@ -6,6 +6,11 @@
 
 A clean, flexible Home Assistant blueprint for syncing switches, lights, and fans with a designated daily turn-off time. This blueprint uses a native UI time picker to dynamically calculate countdown durations from **now** until the scheduled target off-time (with automatic overnight rollover support) and features **optional timer synchronization** for UI dashboard tracking.
 
+---
+## Use Cases
+- coming soon
+---
+
 ## Features
 
 - **Native UI Time Picker:** Easily set the target turn-off time directly in the automation interface without needing helper entities.
@@ -61,6 +66,10 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/device_sync_sche
 4. Paste in the URL and follow the prompts.
 
 ---
+## Related Links
+- coming soon
+---
+
 ## Changelog
 
 | Version | Date | Summary of Changes |
