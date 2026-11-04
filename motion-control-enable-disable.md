@@ -7,6 +7,11 @@
 Enables or disables motion sensors via button/event entities or automatically when a monitored light turns off. 
 This can be useful when in a room that you do not want lights turning off based on a motion clear event.
 
+---
+## Use Cases
+- coming soon
+---
+
 **My approach...**  
 How to keep the lights on when busy in the kitchen
 - **turning on** the smart light switch to **disable the motion sensor**
@@ -54,6 +59,10 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/motion_control_e
 4. Paste in the URL and follow the prompts
 
 ---
+## Related Links
+- coming soon
+---
+
 ## Changelog
 
 | Version | Date | Summary of Changes |
