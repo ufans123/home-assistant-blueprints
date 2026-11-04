@@ -13,6 +13,10 @@ A clean, lightweight Home Assistant blueprint designed to fire a one-time automa
 
 ---
 
+## Use Cases
+- coming soon
+---
+
 ## Features
 
 - **Specific Date & Time Targeting:** Define an exact calendar date (`YYYY-MM-DD`) and clock time (`HH:MM:SS`) for your automation to trigger.
@@ -74,6 +78,10 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/trigger_on_a_spe
 4. Paste in the URL and follow the prompts.
 
 ---
+## Related Links
+- coming soon
+---
+
 ## Changelog
 
 | Version | Date | Summary of Changes |
