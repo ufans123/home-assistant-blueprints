@@ -6,6 +6,11 @@
 
 This automation blueprint cycles sequentially through a selected list of scenes using an **On Button** (or scene button) and a **Counter helper** to remember your place in the cycle. Pressing the **Off Button** (or power toggle configured for off) shuts down target devices and resets the counter to `0`, ensuring your cycle always starts fresh on your preferred first scene every time you turn it back on.
 
+---
+## Use Cases
+- coming soon
+---
+
 ### Features
 - **Sequential Scene Cycling:** Step through your favorite scenes in order with every press of the On button.
 - **Counter-Powered Tracking:** Uses a Home Assistant counter helper to maintain state across sessions.
