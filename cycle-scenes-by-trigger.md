@@ -6,6 +6,11 @@
 
 This automation blueprint cycles sequentially through a selected list of scenes using a flexible trigger source (such as NFC tags, button presses, or remote events) and a Counter helper to remember your place in the cycle. It is specifically optimized for scanning NFC tags with your phone to seamlessly advance through lighting presets, moods, or device states! By sharing the same counter helper, you can easily sync multiple switches or controllers in the same room.
 
+---
+## Use Cases
+- coming soon
+---
+
 ### Features
 - **NFC Tag Optimized:** Tap your phone to an NFC tag to instantly advance to the next scene in your sequence.
 - **Sequential Scene Cycling:** Step through your favorite scenes in order with every trigger activation.
@@ -47,7 +52,12 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/cycle_scenes_by_
 2. Navigate to your Home Assistant Blueprints Dashboard UI.
 3. In the bottom right corner, click on the *'Import blueprint'* button.
 4. Paste in the URL and follow the prompts.
+
 ---
+## Related Links
+- coming soon
+---
+
 ## Changelog
 
 | Version | Date | Summary of Changes |
