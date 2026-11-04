@@ -2,7 +2,7 @@
 
 [![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fufans123%2Fhome-assistant-blueprints%2Fblob%2Fmain%2Fpersistent_notification_manual_nfc.yaml)
 
-[← Back to Main Blueprints Repository](README.md)
+> **Version:** 1.0 | **Initial Release:** 2026-11-04 | [← Back to Main Blueprints Repository](README.md)
 
 This automation blueprint provides a clean, robust mechanism to generate persistent notifications in Home Assistant. It is anchored around a required **manual input boolean toggle**, allowing you to trigger notifications reliably from dashboard buttons or automated routines, with an optional **NFC tag scan** as an extra trigger channel. It also automatically resets your switch back to "off" right after use.
 
@@ -79,4 +79,4 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/persistent_notif
 
 | Version | Date | Summary of Changes |
 | :--- | :--- | :--- |
-| **v1.0** | `=` | Initial release |
+| **v1.0** | `2026-11-04` | Initial release |
