@@ -7,6 +7,9 @@
 This Home Assistant automation blueprint resets a specified `input_select` (dropdown helper) back to a designated default option whenever a target light turns off. This is especially useful for managing lighting scenes, effect modes, or color profiles stored in helpers so they automatically revert to a baseline state when the lights are turned off.
 
 ---
+## Use Cases
+- coming soon
+---
 
 ## Features
 
@@ -55,3 +58,14 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/reset_select_hel
 2. Navigate to your Home Assistant Blueprints Dashboard UI
 3. In the bottom right corner click on the *'Import blueprint'* button
 4. Paste in the URL and follow the prompts
+
+---
+## Related Links
+- coming soon
+---
+
+## Changelog
+
+| Version | Date | Summary of Changes |
+| :--- | :--- | :--- |
+| **v1.0** | `-` | Initial release |
