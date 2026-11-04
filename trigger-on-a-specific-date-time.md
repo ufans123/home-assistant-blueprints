@@ -12,7 +12,6 @@ A clean, lightweight Home Assistant blueprint designed to fire a one-time automa
 > - No special integrations or helpers are required! This blueprint uses Home Assistant's native time trigger and template condition.
 
 ---
-
 ## Use Cases
 - coming soon
 ---
