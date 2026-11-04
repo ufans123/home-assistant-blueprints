@@ -13,6 +13,9 @@ A clean, optimized Home Assistant blueprint designed to generate detailed daily 
 > - **Input Boolean Helper (Optional):** If you plan to use a manual trigger switch, create your helper entity first in Home Assistant (`Settings > Devices & Services > Helpers`).
 
 ---
+## Use Cases
+- coming soon
+---
 
 ## Features
 
@@ -82,6 +85,10 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/weather_report_n
 4. Paste in the URL and follow the prompts.
 
 ---
+## Related Links
+- coming soon
+---
+
 ## Changelog
 
 | Version | Date | Summary of Changes |
