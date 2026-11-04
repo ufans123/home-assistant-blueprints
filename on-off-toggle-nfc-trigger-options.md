@@ -6,6 +6,11 @@
 
 This automation blueprint provides a robust, universal controller optimized for **NFC tags** and custom triggers, while working wonderfully with buttons and switches. It gives you explicit control over **On**, **Off**, and **Toggle** actions, with seamless support for optional, multi-scene presets that fire immediately after turning your target devices on.
 
+---
+## Use Cases
+- coming soon
+---
+
 ### Features
 - **NFC-First Optimization:** Designed to make tapping NFC tags around your home feel instantaneous and reliable.
 - **Explicit Action Control:** Choose whether the trigger executes an explicit **Turn On**, **Turn Off**, or smart **Toggle** behavior.
@@ -51,6 +56,10 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/on_off_toggle_nf
 4. Paste in the URL and follow the prompts.
 
 ---
+## Related Links
+- coming soon
+---
+
 ## Changelog
 
 | Version | Date | Summary of Changes |
