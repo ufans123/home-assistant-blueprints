@@ -6,6 +6,10 @@
 
 A robust, "set-and-forget" Home Assistant blueprint for scheduling switches, lights, and fans with built-in day-of-week filtering and **fully optional, bidirectional timer synchronization**. This blueprint includes edge-case handling for manual physical overrides and smart recovery logic after system reboots or mid-schedule turn-ons.
 
+## Use Cases
+- coming soon
+---
+
 ## Features
 
 - **Flexible Time Scheduling:** Easily set daily Turn On and Turn Off times directly in the UI.
@@ -65,6 +69,10 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/daily_time_based
 4. Paste in the URL and follow the prompts
 
 ---
+## Related Links
+- coming soon
+---
+
 ## Changelog
 
 | Version | Date | Summary of Changes |
