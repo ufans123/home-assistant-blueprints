@@ -51,7 +51,12 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/button_on_off.ya
 
 ---
 ## Related Links
-- coming soon
+| Blueprint | Description |
+| :--- | :--- |
+| **[Motion Sensor Enable or Disable](motion-control-enable-disable.md)** | Enable or disable motion sensors via button events or automatically when a specific light turns off. |
+| **[On/Off or Toggle Control with Scene Options (NFC & Triggers)](on-off-toggle-nfc-trigger-options.md)** | Control lights, switches, fans, and inputs using NFC tags or buttons with explicit On/Off/Toggle logic, plus optional multi-scene presets. |
+| **[Spotify NFC Jukebox with Smart Tracker](spotify-nfc-trigger.md)** | Intelligent Spotify jukebox automation for NFC tags featuring smart state management (resumes, pauses, switches/restarts) and an offline/unavailable speaker safety reset. |
+| **[Switch Event Long-Press Control (with Optional NFC)](long-press-options.md)** | Triggers light and switch actions (Turn Off, Turn On, or Toggle) via long-press event entities and an optional NFC tag scan with custom UI labeling. |
 ---
 
 ## Changelog
