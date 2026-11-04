@@ -52,7 +52,7 @@ Always review the automation YAML and test changes safely before deploying them 
 
 | Blueprint | Description | Current Version | Exchange Release |
 | :--- | :--- | :---: | :---: |
-| **[Daily Dashboard-Controlled Device Scheduler](dashboard-controlled-daily-device-scheduler.md)** | Dynamic scheduler for switches, lights, or fans driven by `input_datetime` helpers on your dashboard, featuring day-of-week filtering, an optional enable toggle, and dynamic timer synchronization. | `v1.0` | `2026-10-28` |
+| **[Daily Dashboard-Controlled Device Scheduler](dashboard-controlled-daily-device-scheduler.md)** | Dynamic scheduler for switches, lights, or fans driven by `input_datetime` helpers on your dashboard, featuring day-of-week filtering, an optional enable toggle, and dynamic timer synchronization. * | `v1.0` | `2026-10-28` |
 | **[Daily Sun-Based Multi-Device Scheduler with Sunrise Off & Optional Timer](daily-sunset-sunrise-device-scheduler.md)** | Control multiple switches, lights, or fans using dynamic sunset/sunrise triggers with custom offsets, featuring optional bidirectional timer synchronization and selective multi-device shutoff. | `v1.0` | `2026-10-23` |
 | **[Daily Sun-Based Device Scheduler](daily-sun-based-device-scheduler.md)** | Schedule switches, lights, or fans using sunset and day-of-week rules with optional bidirectional timer synchronization and smart remaining-time recovery. | `v1.0` | `2026-10-12` |
 | **[Daily Sun-Based Multi-Device & Multi-Scene Scheduler with Timer](daily-sun-based-multi-device-scheduler-with-scenes.md)** | Schedule multiple switches, lights, fans, and scenes using sunset rules and day-of-week filtering, featuring bidirectional timer synchronization and smart remaining-time recovery. | `v1.0` | `2026-10-13` |
