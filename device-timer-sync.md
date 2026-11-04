@@ -6,6 +6,11 @@
 
 This Home Assistant blueprint synchronizes a target device (**light**, **switch**, or **fan**) with a **Timer helper**. It links the state of the device and the timer together so they stay in sync automatically.
 
+
+## Use Cases
+- coming soon
+---
+
 ## How It Works
 
 1. **Device Turns ON:** If the associated timer helper is currently `idle`, it automatically starts the timer using your configured default duration.
@@ -43,6 +48,10 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/device_timer_syn
 4. Paste in the URL and follow the prompts
 
 ---
+## Related Links
+- coming soon
+---
+
 ## Changelog
 
 | Version | Date | Summary of Changes |
