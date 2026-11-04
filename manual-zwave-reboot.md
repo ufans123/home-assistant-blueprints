@@ -85,7 +85,11 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/manual_zwave_reb
 
 ---
 ## Related Links
-- coming soon
+| Blueprint | Description |
+| :--- | :--- | 
+| **[Alarmo State Manager (Custom Actions)](alarmo-state-manager.md)** | A clean companion blueprint for Alarmo that triggers user-defined custom actions (lights, TTS, chimes, notifications) whenever Alarmo changes state without replacing core security logic. |  
+| **[Ring Keypad V2: Multi-Code Routine Hub (Z-Wave)](ring-keypad-routine.md)** | Map single-digit shortcuts (0–9) and custom multi-digit PIN codes on a Ring Keypad V2 to custom action sequences with audio feedback. | 
+| **[Ring Keypad v2: Z-Wave Multi-Trigger Sound Player](ring-keypad-sounds.md)** | Play built-in chimes, notification sounds, and system tones on a Ring Keypad v2 using flexible triggers and Z-Wave routing. | 
 ---
 
 ## Changelog
