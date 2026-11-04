@@ -13,6 +13,9 @@ A flexible, reusable Home Assistant blueprint that reads out a detailed daily we
 > - **TTS Engine:** Requires an active Text-to-Speech integration (e.g., `tts.google_translate_en_com`, `tts.home_assistant_cloud`, or others).
 
 ---
+## Use Cases
+- coming soon
+---
 
 ## Features
 
@@ -90,6 +93,9 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/tts_weather_anno
 3. In the bottom right corner, click on the **'Import blueprint'** button.
 4. Paste in the URL and follow the prompts.
 
+---
+## Related Links
+- coming soon
 ---
 
 ## Changelog
