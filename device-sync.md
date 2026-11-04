@@ -6,6 +6,11 @@
 
 This automation blueprint allows you to synchronize the state of **any two binary entities** (such as lights, switches, fans, and input booleans) mutually in both directions. Effortlessly mirror states between paired devices without writing complex YAML or worrying about cascading infinite loops.
 
+---
+## Use Cases
+- coming soon
+---
+
 ### Features
 - **Bi-directional Syncing:** Toggling either device on or off instantly mirrors the exact state to the other device.
 - **Infinite Loop Protection:** Utilizes Home Assistant context tracing (`parent_id != this.context.id`) to block self-triggering automation loops cold.
@@ -53,6 +58,10 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/device_sync.yaml
 4. Paste in the URL and follow the prompts.
 
 ---
+## Related Links
+- coming soon
+---
+
 ## Changelog
 
 | Version | Date | Summary of Changes |
