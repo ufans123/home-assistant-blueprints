@@ -67,7 +67,12 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/device_sync_sche
 
 ---
 ## Related Links
-- coming soon
+| Blueprint | Description |
+| :--- | :--- |
+| **[Binary Sensor State Sync](binary-sensor-state-sync.md)** | Directly syncs the state of any binary sensor (such as a door or window) to an input boolean, switch, or light using explicit state mapping. |
+| **[Reset Dropdown Helper on Light Turn Off](reset-select-helper.md)** | Quickly reset any select input helper back to a designated default or unselected state based on triggers or automation events. |
+| **[Sync Device and Timer](device-timer-sync.md)** | Keep lights, switches, or fans synchronized with a Home Assistant timer helper. |
+| **[Two-Way Device Sync](device-sync.md)** | Synchronize the state of any two binary entities (lights, switches, fans, input booleans) mutually in both directions without infinite loops. |
 ---
 
 ## Changelog
