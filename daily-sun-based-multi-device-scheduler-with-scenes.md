@@ -6,6 +6,10 @@
 
 A robust, "set-and-forget" Home Assistant blueprint for scheduling multiple devices (switches, lights, fans) and activating multiple scenes automatically at **sunset with a custom offset**, turning off at a fixed time. It features built-in day-of-week filtering and **bidirectional timer synchronization** that seamlessly bridges scene activations and manual overrides with live countdown tracking.
 
+## Use Cases
+- coming soon
+---
+
 ## Features
 
 - **Sunset-Based Scheduling:** Automatically turns devices on or applies scenes relative to sunset with positive or negative offsets (e.g., `-00:30:00` for 30 minutes before sunset).
@@ -70,6 +74,10 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/daily_sun_based_
 4. Paste in the URL and follow the prompts
 
 ---
+## Related Links
+- coming soon
+---
+
 ## Changelog
 
 | Version | Date | Summary of Changes |
