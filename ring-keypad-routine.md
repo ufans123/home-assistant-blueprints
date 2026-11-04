@@ -66,7 +66,11 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/ring_keypad_rout
 
 ---
 ## Related Links
-- coming soon
+| Blueprint | Description |
+| :--- | :--- | 
+| **[Alarmo State Manager (Custom Actions)](alarmo-state-manager.md)** | A clean companion blueprint for Alarmo that triggers user-defined custom actions (lights, TTS, chimes, notifications) whenever Alarmo changes state without replacing core security logic. | 
+| **[Manual Z-Wave Outlet Restart (Router Reboot)](manual-zwave-reboot.md)** | Safely automates a controlled power-cycle sequence for routers/modems using a Z-Wave plug with dynamic durations and notifications. | 
+| **[Ring Keypad v2: Z-Wave Multi-Trigger Sound Player](ring-keypad-sounds.md)** | Play built-in chimes, notification sounds, and system tones on a Ring Keypad v2 using flexible triggers and Z-Wave routing. | 
 ---
 
 ## Changelog
