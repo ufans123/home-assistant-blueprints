@@ -6,6 +6,11 @@
 
 This automation blueprint allows you to use your **Ring Keypad v2** as a multi-trigger audio notification device in Home Assistant. Effortlessly play built-in chimes, notification sounds, and system tones on demand using flexible trigger sources (such as door sensors, motion detectors, light switches, or time schedules) without writing raw YAML or setting up separate scripts.
 
+---
+## Use Cases
+- coming soon
+---
+
 ### Features
 - **Multi-Trigger Support:** Combine multiple event, state, or sensor triggers into a single unified audio automation.
 - **Built-in Sound Selection:** Easily choose from standard notification chimes (e.g., Doorbell Chime, Windchime) and system tones (e.g., Soft Error Beep) via a clean dropdown menu.
@@ -60,6 +65,10 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/ring_keypad_soun
 4. Paste in the URL and follow the prompts.
 
 ---
+## Related Links
+- coming soon
+---
+
 ## Changelog
 
 | Version | Date | Summary of Changes |
