@@ -6,6 +6,11 @@
 
 This automation blueprint scans all entities with `device_class: battery` across your Home Assistant instance. It supports dual scheduling modes (once daily or recurring hourly intervals), delivers flexible notification options (mobile app push, persistent UI cards, or both), and includes manual check capabilities with optional dashboard links.
 
+---
+## Use Cases
+- coming soon
+---
+
 ### Features
 - **Automatic Device Scanning:** Dynamically scans all entities configured with `device_class: battery` across Home Assistant.
 - **Low & Offline Detection:** Flags battery levels below your configurable percentage threshold as well as sensors reporting `unknown` or `unavailable`.
@@ -77,6 +82,10 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/low_battery_aler
 4. Paste in the URL and follow the prompts
 
 ---
+## Related Links
+- coming soon
+---
+
 ## Changelog
 
 | Version | Date | Summary of Changes |
