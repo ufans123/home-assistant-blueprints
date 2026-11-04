@@ -11,6 +11,9 @@ A clean, robust, snapshot-free Home Assistant blueprint designed to cycle a ligh
 > ⚠️ **Prerequisite Note:** This automation is designed around an **Input Boolean (`input_boolean.*`)** helper switch. You must create this helper entity first in Home Assistant (`Settings > Devices & Services > Helpers`) before setting up this automation, as it serves as the master switch to start, hold, and stop your scene cycle.
 
 ---
+## Use Cases
+- coming soon
+---
 
 ## Features
 
@@ -76,6 +79,10 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/light_scene_cycl
 4. Paste in the URL and follow the prompts.
 
 ---
+## Related Links
+- coming soon
+---
+
 ## Changelog
 
 | Version | Date | Summary of Changes |
