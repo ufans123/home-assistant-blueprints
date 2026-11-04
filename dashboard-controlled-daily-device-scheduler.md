@@ -8,6 +8,9 @@ A dynamic Home Assistant companion blueprint based on the **[Daily Time-Based De
 
 While the original blueprint uses hardcoded times set directly within the automation UI, this companion version shifts time management to dashboard-based `input_datetime` helpers. This allows you to adjust scheduled "Turn On" and "Turn Off" times on the fly directly from your dashboard—without ever editing the automation configuration—while retaining full day-of-week filtering, an optional master enable toggle, and smart bidirectional timer synchronization.
 
+## Use Cases
+- coming soon
+---
 ## Features
 
 - **Dynamic Dashboard Control:** Adjust "Turn On" and "Turn Off" times directly from a Lovelace card using `input_datetime` helpers in real-time.
@@ -98,7 +101,10 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/dashboard_contro
 4. Paste in the URL and follow the prompts.
 
 ---
+## Related Links
+- coming soon
 
+---
 ## Changelog
 
 | Version | Date | Summary of Changes |
