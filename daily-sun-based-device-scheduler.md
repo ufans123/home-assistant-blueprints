@@ -6,6 +6,10 @@
 
 A robust, "set-and-forget" Home Assistant blueprint for scheduling switches, lights, and fans to turn on automatically at **sunset with a custom offset** and off at a fixed time, featuring built-in day-of-week filtering and **fully optional, bidirectional timer synchronization**. This blueprint includes edge-case handling for manual physical overrides and smart recovery logic after system reboots or mid-schedule turn-ons.
 
+## Use Cases
+- coming soon
+---
+
 ## Features
 
 - **Sunset-Based Scheduling:** Automatically turns devices on relative to sunset with positive or negative offsets (e.g., `-00:30:00` for 30 minutes before sunset).
@@ -67,6 +71,10 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/daily_sun_based_
 4. Paste in the URL and follow the prompts
 
 ---
+## Related Links
+- coming soon
+---
+
 ## Changelog
 
 | Version | Date | Summary of Changes |
