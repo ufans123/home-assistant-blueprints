@@ -60,9 +60,19 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/button_scene_cyc
 ### 🔗 Related Blueprint
 
 * 🔄 **Companion Blueprint:** [Turn On to Default Scene](https://github.com/ufans123/home-assistant-blueprints/blob/main/target-turn-on-synchronizer.md)
-
 > **Note:** This blueprint shares an optional counter helper to keep scene cycles in sync across physical buttons and external triggers (apps, voice commands, or wall switches).
+
 ---
+## Related Links
+| Blueprint | Description |
+| :--- | :--- |
+| **[Cycle Through Multiple Scenes (NFC & Switches)](cycle-scenes-by-trigger.md)** | Cycles sequentially through a list of scenes using NFC tags, buttons, or custom triggers with a counter helper to remember your position. |
+| **[Scene Selector with Light Effect Support (Hue & Govee)](input-select-scene-selector.md)** | Triggers Home Assistant scenes or applies native hardware light effects (such as Govee dynamic scenes or WLED presets) using an `input_select` helper with auto off/reset support. *(Advanced: Requires input_select helpers & startup automation)* |
+| **[Timed Light Scene Cycler](light-scene-cycler.md)** | Seamlessly cycles a light/group through custom scenes using an input boolean switch, featuring smooth transitions and auto-off timer. |
+| **[Turn On to Default Scene (Companion Blueprint)](target-turn-on-synchronizer.md)** | Automatically sets a light or switch to a default scene whenever turned on externally, with an optional counter helper reset companion for button cycling. |
+| **[Turn On to Time-Based Default Scene](turn-on-scene-based-on-time-period.md)** | Automatically sets a light, switch, or input boolean to a time-dependent scene across up to 4 optional time windows whenever turned on externally. |
+---
+
 ## Changelog
 
 | Version | Date | Summary of Changes |
