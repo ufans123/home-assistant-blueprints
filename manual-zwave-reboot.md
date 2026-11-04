@@ -14,6 +14,9 @@ A robust, safe Home Assistant blueprint designed to automate a controlled power-
 > - **Trigger Helper:** Create a toggle helper (`input_boolean.*`) or dedicated switch in Home Assistant (`Settings > Devices & Services > Helpers`) to act as the restart trigger button.
 
 ---
+## Use Cases
+- coming soon
+---
 
 ## Features
 
@@ -81,6 +84,10 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/manual_zwave_reb
 4. Paste in the URL and follow the prompts.
 
 ---
+## Related Links
+- coming soon
+---
+
 ## Changelog
 
 | Version | Date | Summary of Changes |
