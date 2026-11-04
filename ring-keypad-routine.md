@@ -6,6 +6,11 @@
 
 This automation blueprint allows you to turn your **Ring Keypad V2** into a fully customizable routine hub in Home Assistant, operating completely independently of Alarmo. Map single-digit keys (`0`–`9`) and one custom multi-digit PIN code to separate Home Assistant action sequences. Pressing a shortcut followed by the **Checkmark** button executes your custom actions with optional global audio feedback chimes.
 
+---
+## Use Cases
+- coming soon
+---
+
 ### Features
 - **Multi-Code Routine Hub:** Map up to 10 single-digit shortcuts plus a custom multi-digit PIN to independent Home Assistant actions (scripts, scenes, automations, or device controls).
 - **Checkmark Triggering:** Securely evaluates user input on submission via the Entry Control Command Class (CC 111).
@@ -60,6 +65,10 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/ring_keypad_rout
 4. Paste in the URL and follow the prompts.
 
 ---
+## Related Links
+- coming soon
+---
+
 ## Changelog
 
 | Version | Date | Summary of Changes |
