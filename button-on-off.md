@@ -6,6 +6,11 @@
 
 This automation blueprint maps an **On Button** and an **Off Button** (designed for event-based smart switches and remotes) to control any switch, light, or input boolean. It also includes support for **optional secondary actions** for each button press.
 
+---
+## Use Cases
+- coming soon
+---
+
 ### Features
 * **Dual Button Mapping:** Separate controls for turning a device **On** and **Off**.
 * **Optional Actions:** Run extra actions, scenes, or scripts alongside the standard On or Off states without needing separate automations.
@@ -45,6 +50,10 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/button_on_off.ya
 4. Paste in the URL and follow the prompts
 
 ---
+## Related Links
+- coming soon
+---
+
 ## Changelog
 
 | Version | Date | Summary of Changes |
