@@ -86,7 +86,9 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/weather_report_n
 
 ---
 ## Related Links
-- coming soon
+| Blueprint | Description | 
+| :--- | :--- | 
+| **[TTS Weather Announcement (with Custom Optional Actions)](tts-weather-announcement.md)** | Reads a detailed daily weather report over text-to-speech with dynamic greetings, conditional high/low temperature phrasing, volume control, multi-trigger support, and optional pre/post automation actions. |
 ---
 
 ## Changelog
