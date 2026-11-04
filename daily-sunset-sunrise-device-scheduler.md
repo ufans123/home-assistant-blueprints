@@ -6,6 +6,10 @@
 
 This automation blueprint provides a dynamic, robust scheduler that automatically turns multiple target devices **on** at sunset and **off** at sunrise, complete with custom `HH:MM:SS` offset support. It includes optional bidirectional synchronization with a Home Assistant **timer helper**, allowing for visual dashboard countdowns and smart multi-device selective shutoff.
 
+## Use Cases
+- coming soon
+---
+
 ### Features
 - **Dynamic Sun-Based Scheduling:** Automatically triggers turn-on at sunset and turn-off at sunrise, using real-time solar tracking.
 - **Customizable Offsets:** Fine-tune turn-on and turn-off times with custom `HH:MM:SS` positive or negative offsets (e.g., turn on 30 minutes before sunset).
@@ -53,6 +57,10 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/daily_sunset_sun
 4. Paste in the URL and follow the prompts.
 
 ---
+## Related Links
+- coming soon
+---
+
 ## Changelog
 
 | Version | Date | Summary of Changes |
