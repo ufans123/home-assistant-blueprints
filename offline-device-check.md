@@ -104,7 +104,11 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/offline_device_c
 
 ---
 ## Related Links
-- coming soon
+| Blueprint | Description | 
+| :--- | :--- | 
+| **[Persistent Notification via Manual Switch (with Optional NFC)](persistent-notification-manual-nfc.md)** | Triggers persistent notifications via a manual input boolean toggle with automatic reset and optional NFC secondary trigger. |
+| **[Scheduled Notifications To Do List](scheduled-task-notifications-manager.md)** | Advanced scheduling engine that generates up to 10 sequential persistent notification cards and/or dashboard To-Do list items bound to calendar days, helper switches, or custom events. *(Renamed from: Scheduled Task Notifications Manager v1.0)* |
+| **[Scheduled Notifications To Do List (Day of Week)](scheduled-task-notifications-dow.md)** | Weekly companion blueprint generating up to 10 sequential persistent notification cards and/or dashboard To-Do list items bound to specific weekdays (`Monday`–`Sunday`) with smart task recycling and deduplication. |
 ---
 
 ## Changelog
