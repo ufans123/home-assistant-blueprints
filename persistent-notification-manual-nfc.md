@@ -72,7 +72,11 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/persistent_notif
 
 ---
 ## Related Links
-- coming soon
+| Blueprint | Description | 
+| :--- | :--- | 
+| **[Offline Device Notifications (Scheduled, NFC, Manual Triggers)](offline-device-check.md)** | Monitors devices and sensors for unavailable/unknown states using whitelist labels, domain filters, and blacklist exclusions. |
+| **[Scheduled Notifications To Do List](scheduled-task-notifications-manager.md)** | Advanced scheduling engine that generates up to 10 sequential persistent notification cards and/or dashboard To-Do list items bound to calendar days, helper switches, or custom events. *(Renamed from: Scheduled Task Notifications Manager v1.0)* |
+| **[Scheduled Notifications To Do List (Day of Week)](scheduled-task-notifications-dow.md)** | Weekly companion blueprint generating up to 10 sequential persistent notification cards and/or dashboard To-Do list items bound to specific weekdays (`Monday`–`Sunday`) with smart task recycling and deduplication. |
 ---
 
 ## Changelog
