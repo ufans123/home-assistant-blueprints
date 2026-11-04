@@ -10,6 +10,11 @@ The system is explicitly designed so that **the device reporting an active `char
 
 > **Disclaimer:** If a phone or tablet is already powered completely off or disconnected from Wi-Fi, it cannot scan an NFC tag or report its `charging` status to Home Assistant (meaning the safety timer will not auto-start). Using a nightstand NFC tag or manual trigger switch allows you to proactively turn on the plug and launch the safety timer before placing your device on the charger, guaranteeing a controlled charging session even if the battery hasn't met the low threshold yet or the device drops offline overnight.
 
+---
+## Use Cases
+- coming soon
+---
+
 ## Features
 
 - **All-in-One Architecture:** Combines percentage boundary controls, time-based safety limits, and manual overrides into a single, streamlined automation.
@@ -74,7 +79,12 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/battery_charging
 2. Navigate to your Home Assistant Blueprints Dashboard UI (Settings > Automations & Scenes > Blueprints).
 3. In the bottom right corner, click on the Import blueprint button.
 4. Paste in the URL and follow the prompts.
+
 ---
+## Related Links
+- coming soon
+---
+
 ## Changelog
 
 | Version | Date | Summary of Changes |
