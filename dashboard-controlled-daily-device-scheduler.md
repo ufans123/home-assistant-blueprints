@@ -11,6 +11,7 @@ While the original blueprint uses hardcoded times set directly within the automa
 ## Use Cases
 - coming soon
 ---
+
 ## Features
 
 - **Dynamic Dashboard Control:** Adjust "Turn On" and "Turn Off" times directly from a Lovelace card using `input_datetime` helpers in real-time.
@@ -103,8 +104,8 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/dashboard_contro
 ---
 ## Related Links
 - coming soon
-
 ---
+
 ## Changelog
 
 | Version | Date | Summary of Changes |
