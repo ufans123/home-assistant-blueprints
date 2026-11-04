@@ -8,6 +8,11 @@ This is a companion blueprint designed to work alongside the primary [Battery-Co
 
 By focusing on the `charging` and `discharging` states, this automation completely insulates your smart setup from network dropouts (`unavailable` or `unknown` blips) and accommodates brief device usage without resetting your tracking window.
 
+---
+## Use Cases
+- coming soon
+---
+
 ## Features
 
 - **Multi-Domain Compatibility:** Works seamlessly with smart plugs registered as either `switch` or `light` entities (such as Philips Hue or generic smart relays).
@@ -63,3 +68,8 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/battery_charging
 2. Navigate to your Home Assistant Blueprints Dashboard UI
 3. In the bottom right corner click on the *'Import blueprint'* button
 4. Paste in the URL and follow the prompts
+
+---
+## Related Links
+- coming soon
+---
