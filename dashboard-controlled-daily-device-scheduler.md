@@ -9,7 +9,9 @@ A dynamic Home Assistant companion blueprint based on the **[Daily Time-Based De
 While the original blueprint uses hardcoded times set directly within the automation UI, this companion version shifts time management to dashboard-based `input_datetime` helpers. This allows you to adjust scheduled "Turn On" and "Turn Off" times on the fly directly from your dashboard—without ever editing the automation configuration—while retaining full day-of-week filtering, an optional master enable toggle, and smart bidirectional timer synchronization.
 
 ## Use Cases
-- coming soon
+1. Living Room Motion Sensors - I use this to toggle our living room motion sensors on and off automatically. During the day, we already have other automations handling the main lights, so having the motion sensors active just gets in the way. Turning them on only at night lets them handle nightlights without messing with our normal daytime lighting.
+
+2. Smart Garden - My smart herb garden has its own built-in light timer, but you can't actually set the time—it just starts counting down from whenever you plug it in. Plugging a smart outlet into it fixes that by letting me set an exact schedule. Plus, putting a toggle on my dashboard makes it super easy to shut off the whole schedule when we don't have anything planted.
 ---
 
 ## Features
