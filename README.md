@@ -157,5 +157,6 @@ Always review the automation YAML and test changes safely before deploying them 
 | Blueprint | Description | Current Version | Exchange Release |
 | :--- | :--- | :---: | :---: |
 | **[Configurable Daily Weather Report](weather-report-notification.md)** | Generates clean weather notifications with regional headings, smart unit conversion (°C/°F), timestamps, quick links, and multiple triggers. | `v1.0` | `2026-10-18` |
+| **[TTS Weather Announcement (with Custom Optional Actions)](tts-weather-announcement.md)** | Reads a detailed daily weather report over text-to-speech with dynamic greetings, conditional high/low temperature phrasing, volume control, multi-trigger support, and optional pre/post automation actions. | `v1.0` | `2026-11-03` |
 
 [⬆ Back to top](#top)
