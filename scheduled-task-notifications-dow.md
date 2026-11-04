@@ -8,6 +8,11 @@
 
 An advanced, highly flexible weekly scheduling blueprint engine that generates up to 10 sequential persistent notification cards and/or synchronizes recurring weekly tasks with a persistent dashboard To-Do list, bound to a specific day of the week, an input helper switch, or custom system events.
 
+---
+## Use Cases
+- coming soon
+---
+
 ## Key Architectural Features
 
 This blueprint expands on the core application model of the original day-of-the-month blueprint with weekly scheduling and smart task state recycling:
@@ -73,6 +78,10 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/scheduled_task_n
 [Scheduled Notifications To Do List (Day of the Month)](https://github.com/ufans123/home-assistant-blueprints/blob/main/scheduled-task-notifications-manager.md)
 
 ---
+## Related Links
+- coming soon
+---
+
 ## Changelog
 
 | Version | Date | Summary of Changes |
