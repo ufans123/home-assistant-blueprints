@@ -81,7 +81,12 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/spotify_nfc_trig
 
 ---
 ## Related Links
-- coming soon
+| Blueprint | Description |
+| :--- | :--- |
+| **[Button On/Off Control with Optional Actions](button-on-off.md)** | Controls any switch, light, or input boolean using separate On/Off event buttons, complete with support for optional secondary actions. | 
+| **[Motion Sensor Enable or Disable](motion-control-enable-disable.md)** | Enable or disable motion sensors via button events or automatically when a specific light turns off. |
+| **[On/Off or Toggle Control with Scene Options (NFC & Triggers)](on-off-toggle-nfc-trigger-options.md)** | Control lights, switches, fans, and inputs using NFC tags or buttons with explicit On/Off/Toggle logic, plus optional multi-scene presets. |
+| **[Switch Event Long-Press Control (with Optional NFC)](long-press-options.md)** | Triggers light and switch actions (Turn Off, Turn On, or Toggle) via long-press event entities and an optional NFC tag scan with custom UI labeling. |
 ---
 
 ## Changelog
