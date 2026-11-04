@@ -8,6 +8,11 @@ This blueprint automatically sets a light, switch, or input boolean to a specifi
 
 It allows you to define up to 4 distinct time periods throughout the day. By decoupling scene selection from motion sensors or wall switches, your motion automations stay clean and minimal while this blueprint seamlessly bridges the gap to enforce the correct lighting ambiance for any time of day.
 
+---
+## Use Cases
+- coming soon
+---
+
 ## Features
 
 - **Time-Dependent Scene Selection:** Configure up to 4 separate time windows (e.g., Morning, Afternoon, Evening, Night) with dedicated scenes.
@@ -64,6 +69,9 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/turn_on_scene_ba
 3. In the bottom right corner, click on the **Import blueprint** button.
 4. Paste in the URL and follow the prompts.
 
+---
+## Related Links
+- coming soon
 ---
 
 ## Changelog
