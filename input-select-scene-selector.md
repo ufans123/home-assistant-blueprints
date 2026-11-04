@@ -20,6 +20,11 @@ This automation blueprint allows you to trigger **Home Assistant scenes** or exe
 > 
 > *If you are looking for a simple, out-of-the-box automation, this might feel heavy on manual configuration. However, if you love clean, dynamic dashboards and automated helper syncing, the end result is exceptionally powerful!*
 
+---
+## Use Cases
+- coming soon
+---
+
 ### Features
 - **Dual Support (Scenes & Hardware Effects):** Seamlessly handles both standard Home Assistant scenes (like Philips Hue) and native light hardware effects (like Govee or WLED).
 - **Dynamic Matching:** Evaluates if a dropdown selection matches an entry in the target light's `effect_list` attribute, falling back safely to standard HA scene execution.
@@ -124,6 +129,9 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/input_select_sce
 3. In the bottom right corner, click on the **'Import blueprint'** button.
 4. Paste in the URL and follow the prompts.
 
+---
+## Related Links
+- coming soon
 ---
 
 ## Changelog
