@@ -95,7 +95,9 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/tts_weather_anno
 
 ---
 ## Related Links
-- coming soon
+| Blueprint | Description | 
+| :--- | :--- | 
+| **[Configurable Daily Weather Report](weather-report-notification.md)** | Generates clean weather notifications with regional headings, smart unit conversion (°C/°F), timestamps, quick links, and multiple triggers. |
 ---
 
 ## Changelog
