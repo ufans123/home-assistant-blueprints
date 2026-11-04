@@ -8,6 +8,11 @@ This blueprint automatically activates a preferred default scene whenever a ligh
 
 Additionally, it features an optional counter synchronization mechanism: when paired as a companion to the **"Button Scene Cycling and Off Control"** blueprint, it automatically resets the cycle counter back to zero whenever the device turns on externally, ensuring your button-cycling sequence always stays synchronized from the start.
 
+---
+## Use Cases
+- coming soon
+---
+
 ## Features
 
 - **External Activation Synchronization:** Detects when a monitored device switches from `off` to `on` via physical switches, voice, or apps, and immediately forces your chosen default scene.
@@ -67,6 +72,10 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/target_turn_on_s
 * 🔘 **Primary Blueprint:** [Button Scene Cycling and Off Control](https://github.com/ufans123/home-assistant-blueprints/blob/main/button-scene-cycling-and-off-control.md)
 
 > **Note:** This blueprint shares an optional counter helper to keep scene cycles in sync across physical buttons and external triggers (apps, voice commands, or wall switches).
+
+---
+## Related Links
+- coming soon
 ---
 
 ## Changelog
