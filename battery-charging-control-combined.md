@@ -82,7 +82,11 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/battery_charging
 
 ---
 ## Related Links
-- coming soon
+| Blueprint | Description | 
+| :--- | :--- | 
+| **[Battery Level & Status Monitor (Scheduled & Manual)](low-battery-alert.md)** | Automatically scan and report devices with low battery levels or unknown/unavailable statuses via scheduled checks or manual trigger. | 
+| **[Battery-Controlled Charging Switch](battery-charging-control.md)** | Automatically manage charging by turning a smart plug on/off based on battery percentage thresholds. Merged into blueprint `'Safer Battery-Controlled Charging & Timed Failsafe Manager'`. |
+| **[Battery-Controlled Charging Switch - Time Failsafe Companion](battery-charging-control-companion.md)** | Adds a customizable time-limit layer to the threshold engine, insulating your charger from network dropouts. Merged into blueprint `'Safer Battery-Controlled Charging & Timed Failsafe Manager'`. |
 ---
 
 ## Changelog
