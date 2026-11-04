@@ -12,6 +12,9 @@ A clean companion blueprint for Alarmo that does not replace Alarmo's core secur
 > - **Alarmo Integration:** You must have the [Alarmo custom integration](https://github.com/nielsfaber/alarmo) installed and configured in Home Assistant (`alarm_control_panel.alarmo` or similar panel entity).
 
 ---
+## Use Cases
+- coming soon
+---
 
 ## Features
 
@@ -74,6 +77,10 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/alarmo_state_man
 3. In the bottom right corner, click on the 'Import blueprint' button.
 4. Paste in the URL and follow the prompts.
 
+---
+## Related Links
+- coming soon
+---
 
 ## Changelog
 
