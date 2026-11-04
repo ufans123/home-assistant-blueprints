@@ -6,6 +6,11 @@
 
 A clean, bulletproof Home Assistant blueprint for directly syncing the state of any binary sensor (such as a door, window, or motion sensor) to an input boolean, switch, or light. This blueprint uses explicit state mapping to eliminate toggle out-of-sync issues, making it ideal for climate automations (like pausing your AC when a door opens).
 
+---
+## Use Cases
+- coming soon
+---
+
 ## Features
 
 - **Direct State Mirroring:** Automatically tracks and mirrors `on` and `off` states precisely without relying on toggling logic.
@@ -59,6 +64,10 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/binary_sensor_st
 4. Paste in the URL and follow the prompts.
 
 ---
+## Related Links
+- coming soon
+---
+
 ## Changelog
 
 | Version | Date | Summary of Changes |
