@@ -75,7 +75,13 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/target_turn_on_s
 
 ---
 ## Related Links
-- coming soon
+| Blueprint | Description |
+| :--- | :--- |
+| **[Button Scene Cycling and Off Control](button-scene-cycling-and-off-control.md)** | Cycles sequentially through a list of scenes using an On/Scene button and a counter helper, with complete shutdown and counter reset on Off. |
+| **[Cycle Through Multiple Scenes (NFC & Switches)](cycle-scenes-by-trigger.md)** | Cycles sequentially through a list of scenes using NFC tags, buttons, or custom triggers with a counter helper to remember your position. |
+| **[Scene Selector with Light Effect Support (Hue & Govee)](input-select-scene-selector.md)** | Triggers Home Assistant scenes or applies native hardware light effects (such as Govee dynamic scenes or WLED presets) using an `input_select` helper with auto off/reset support. *(Advanced: Requires input_select helpers & startup automation)* |
+| **[Timed Light Scene Cycler](light-scene-cycler.md)** | Seamlessly cycles a light/group through custom scenes using an input boolean switch, featuring smooth transitions and auto-off timer. |
+| **[Turn On to Time-Based Default Scene](turn-on-scene-based-on-time-period.md)** | Automatically sets a light, switch, or input boolean to a time-dependent scene across up to 4 optional time windows whenever turned on externally. |
 ---
 
 ## Changelog
