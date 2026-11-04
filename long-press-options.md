@@ -7,6 +7,9 @@
 A clean, flexible Home Assistant blueprint designed to trigger light and switch actions (**Turn Off**, **Turn On**, or **Toggle**) via button **long-presses** and an **optional NFC tag scan** with custom labeling.
 
 ---
+## Use Cases
+- coming soon
+---
 
 ## Features
 
@@ -71,6 +74,10 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/long_press_optio
 4. Paste in the URL and follow the prompts.
 
 ---
+## Related Links
+- coming soon
+---
+
 ## Changelog
 
 | Version | Date | Summary of Changes |
