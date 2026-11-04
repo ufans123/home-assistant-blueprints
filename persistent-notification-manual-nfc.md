@@ -11,6 +11,11 @@ Before setting up this automation from the blueprint, you will need:
 * **Input Boolean Helper:** An active input boolean (toggle) helper created in Home Assistant (*Settings > Devices & Services > Helpers > Create Helper > Toggle*). This is required as the primary manual trigger and auto-reset anchor.
 * **NFC Tag ID (Optional):** If you plan to use an NFC tag scan as an additional trigger, make sure you have your unique tag ID ready.
 
+---
+## Use Cases
+- coming soon
+---
+
 ### Features
 **Manual-First Anchor:** Built around a required `input_boolean` helper, eliminating UI validation errors and ensuring clean dashboard control.
 
@@ -64,3 +69,14 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/persistent_notif
 2. Navigate to your Home Assistant Blueprints Dashboard UI.
 3. In the bottom right corner click on the 'Import blueprint' button.
 4. Paste in the URL and follow the prompts.
+
+---
+## Related Links
+- coming soon
+---
+
+## Changelog
+
+| Version | Date | Summary of Changes |
+| :--- | :--- | :--- |
+| **v1.0** | `=` | Initial release |
