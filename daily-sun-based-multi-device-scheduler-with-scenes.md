@@ -7,7 +7,10 @@
 A robust, "set-and-forget" Home Assistant blueprint for scheduling multiple devices (switches, lights, fans) and activating multiple scenes automatically at **sunset with a custom offset**, turning off at a fixed time. It features built-in day-of-week filtering and **bidirectional timer synchronization** that seamlessly bridges scene activations and manual overrides with live countdown tracking.
 
 ## Use Cases
-- coming soon
+
+### Evening Mood Lighting & Scene Scheduling with Timer
+We use this to automate our evening living room atmosphere at sunset. The blueprint turns on our cupboard lights and activates a dimmed living room scene, while keeping a timer helper synchronized to shut everything off automatically at 11:30 PM. The countdown timer shows on our dashboard so we always know when lights will turn off, and manually toggling the lights during the evening keeps the timer perfectly in sync.
+
 ---
 
 ## Features
