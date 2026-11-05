@@ -1,40 +1,36 @@
 blueprint:
   name: Daily Time-Based Device Scheduler with Optional Timer
-  description: Turns a device on/off based on times and days, with fully optional
-    bidirectional timer synchronization.
-
-    **Version:** v1.1
+  description: Turns multiple devices on/off based on times and days, with fully optional bidirectional timer synchronization.
+    
+    **Version:** v1.2
   domain: automation
   source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/daily_time_based_device_scheduler.yaml
   author: Ufans123
   input:
     target_device:
-      name: Device to Control
-      description: The switch, light, or fan entity to be controlled by this schedule.
+      name: Devices to Control
+      description: The switches, lights, or fan entities to be controlled by this schedule.
       selector:
         entity:
           domain:
           - switch
           - light
           - fan
-          multiple: false
+          multiple: true
           reorder: false
     on_time:
       name: Turn On Time
-      description: Enter a fixed time (e.g., 08:00:00) or select an input_datetime
-        helper to determine when the device turns on.
+      description: Enter a fixed time (e.g., 08:00:00) or select an input_datetime helper to determine when the devices turn on.
       selector:
         time: {}
     off_time:
       name: Turn Off Time
-      description: Enter a fixed time (e.g., 20:00:00) or select an input_datetime
-        helper to determine when the device turns off.
+      description: Enter a fixed time (e.g., 20:00:00) or select an input_datetime helper to determine when the devices turn off.
       selector:
         time: {}
     timer_entity:
       name: Timer Helper (Optional)
-      description: Optional timer helper (timer.*) to track countdowns. Leave blank
-        to disable timer features.
+      description: Optional timer helper (timer.*) to track countdowns. Leave blank to disable timer features.
       selector:
         entity:
           domain:
@@ -91,8 +87,7 @@ blueprint:
             boolean: {}
           default: true
 alias: 'Daily Schedule: Device Control with Optional Timer & Days'
-description: Turns a device on/off based on specified times and selected days, with
-  optional bidirectional timer sync.
+description: Turns multiple devices on/off based on specified times and selected days, with optional bidirectional timer sync.
 trigger:
 - trigger: time
   at: !input on_time
@@ -131,10 +126,7 @@ action:
     d_fri: !input day_fri
     d_sat: !input day_sat
     d_sun: !input day_sun
-    today_enabled: "{% set day = now().strftime('%a') | lower %} {{ (day == 'mon'
-      and d_mon) or (day == 'tue' and d_tue) or (day == 'wed' and d_wed) or
-      (day == 'thu' and d_thu) or (day == 'fri' and d_fri) or (day == 'sat'
-      and d_sat) or (day == 'sun' and d_sun) }}"
+    today_enabled: "{% set day = now().strftime('%a') | lower %} {{ (day == 'mon' and d_mon) or (day == 'tue' and d_tue) or (day == 'wed' and d_wed) or (day == 'thu' and d_thu) or (day == 'fri' and d_fri) or (day == 'sat' and d_sat) or (day == 'sun' and d_sun) }}"
 - choose:
   - conditions:
     - condition: trigger
@@ -228,7 +220,7 @@ action:
     - condition: trigger
       id: ha_rebooted
     - condition: template
-      value_template: '{{ states(target_dev) == "on" }}'
+      value_template: '{{ states(target_dev) == "on" or (target_dev is iterable and target_dev is not string and states.switch | selectattr("entity_id", "in", target_dev) | selectattr("state", "eq", "on") | list | length > 0) }}'
     - condition: template
       value_template: '{{ timer_ent is not none and timer_ent | string | length > 0 and states(timer_ent) == "idle" }}'
     sequence:
