@@ -19,8 +19,10 @@ Welcome! This repository features my collection of custom Home Assistant bluepri
 - 🔋 [Battery, Power & Hardware Health](#battery-power--hardware-health)
 - 🛡️ [Security, Keypads & Hardware Controls](#security-keypads--hardware-controls)
 - 🌤️ [Weather & Information](#weather--information)
-- ♣️ [About Me](https://about.me/andylund)
 
+## Links
+- 🔗 [Blueprint Exchange Links](https://github.com/ufans123/home-assistant-blueprints/blob/main/blueprint-exchange-links.md)
+- 🙋🏻‍♂️ [About Me](https://about.me/andylund)
 ---
 
 <a name="disclaimer"></a>
