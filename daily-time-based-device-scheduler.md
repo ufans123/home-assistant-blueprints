@@ -2,9 +2,9 @@
 
 [![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fufans123%2Fhome-assistant-blueprints%2Fblob%2Fmain%2Fdaily_time_based_device_scheduler.yaml)
 
-> **Version:** 1.1 | **Last Updated:** 2026-10-28 | [← Back to Main Blueprints Repository](README.md)
+> **Version:** 1.2 | **Last Updated:** 2026-11-05 | [← Back to Main Blueprints Repository](README.md)
 
-A robust, "set-and-forget" Home Assistant blueprint for scheduling switches, lights, and fans with built-in day-of-week filtering and **fully optional, bidirectional timer synchronization**. This blueprint includes edge-case handling for manual physical overrides and smart recovery logic after system reboots or mid-schedule turn-ons.
+A robust, "set-and-forget" Home Assistant blueprint for scheduling multiple switches, lights, and fans with built-in day-of-week filtering and **fully optional, bidirectional timer synchronization**. This blueprint includes edge-case handling for manual physical overrides and smart recovery logic after system reboots or mid-schedule turn-ons.
 
 ## Use Cases
 - coming soon
@@ -13,16 +13,17 @@ A robust, "set-and-forget" Home Assistant blueprint for scheduling switches, lig
 ## Features
 
 - **Flexible Time Scheduling:** Easily set daily Turn On and Turn Off times directly in the UI.
+- **Multi-Device Support:** Select multiple switches, lights, or fans to control simultaneously under a single schedule.
 - **Day-of-Week Filtering:** Toggle individual days of the week (`Mon`–`Sun`) on or off. 
-- **Optional Bidirectional Timer Sync:** Link a timer helper (`timer.*`) for live dashboard tracking. The blueprint keeps the timer and device in sync automatically:
+- **Optional Bidirectional Timer Sync:** Link a timer helper (`timer.*`) for live dashboard tracking. The blueprint keeps the timer and devices in sync automatically:
 
   | Event | Action Taken |
   | :--- | :--- |
   | **Schedule Starts** | Starts the timer with the calculated duration between On and Off times. |
-  | **Device Turned On Manually / Mid-Schedule** | Detects physical or external turn-on events and starts the timer countdown using the **smart remaining time** left until the scheduled off-time. |
-  | **Timer Ends or Cancelled** | Automatically turns off the controlled device. |
-  | **Device Turned Off** | Automatically cancels the running timer helper. |
-  | **Home Assistant Restarts** | Evaluates whether the device is on after a reboot, syncing the timer to the exact remaining time left in the schedule rather than restarting the full duration. |
+  | **Devices Turned On Manually / Mid-Schedule** | Detects physical or external turn-on events and starts the timer countdown using the **smart remaining time** left until the scheduled off-time. |
+  | **Timer Ends or Cancelled** | Automatically turns off all controlled devices. |
+  | **Devices Turned Off** | Automatically cancels the running timer helper. |
+  | **Home Assistant Restarts** | Evaluates whether any controlled device is on after a reboot, syncing the timer to the exact remaining time left in the schedule rather than restarting the full duration. |
 
 ---
 
@@ -30,9 +31,9 @@ A robust, "set-and-forget" Home Assistant blueprint for scheduling switches, lig
 
 | Input | Description | Required? | Default |
 | :--- | :--- | :--- | :--- |
-| **Device to Control** | The switch, light, or fan entity to automate. | **Yes** | N/A |
-| **Turn On Time** | Time of day to turn the device on. | **Yes** | N/A |
-| **Turn Off Time** | Time of day to turn the device off. | **Yes** | N/A |
+| **Devices to Control** | One or more switch, light, or fan entities to automate. | **Yes** | N/A |
+| **Turn On Time** | Time of day to turn the devices on. | **Yes** | N/A |
+| **Turn Off Time** | Time of day to turn the devices off. | **Yes** | N/A |
 | **Timer Helper (Optional)** | A timer helper (`timer.*`) to track countdowns and enable sync. | No | *Blank (Disabled)* |
 | **Monday – Sunday** | Individual day toggles to restrict scheduled execution. | No | `true` (All enabled) |
 
@@ -40,7 +41,7 @@ A robust, "set-and-forget" Home Assistant blueprint for scheduling switches, lig
 
 ## 💡 Important Notes & Pro-Tips
 
-- **Manual Override & Smart Recovery:** If the device is flipped on manually or after a system restart midway through an active schedule, the automation automatically calculates and syncs to the *remaining time* left until the off-time rather than restarting the full total duration.
+- **Manual Override & Smart Recovery:** If any device is flipped on manually or after a system restart midway through an active schedule, the automation automatically calculates and syncs to the *remaining time* left until the off-time rather than restarting the full total duration.
 - **Disabling the Schedule:** If you uncheck all day-of-week toggles, the scheduled on/off automation actions will never execute, acting identically to pausing or disabling the automation.
 - **Timer Restarts & Power Loss Safety:** If you use an optional timer helper, make sure to enable the **"Restore"** option in its helper settings (`Settings > Devices & Services > Helpers`). This allows the timer to survive Home Assistant system restarts and accurately finish the countdown.
 
@@ -83,5 +84,6 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/daily_time_based
 
 | Version | Date | Summary of Changes |
 | :--- | :--- | :--- |
+| **v1.2** | 2026-11-05 | Added support for selecting multiple target devices |
 | **v1.1** | 2026-10-28 | Minor UI Improvements for Clarity |
 | **v1.0** | 2026-10-10 | Initial release |
