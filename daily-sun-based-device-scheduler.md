@@ -7,7 +7,10 @@
 A robust, "set-and-forget" Home Assistant blueprint for scheduling switches, lights, and fans to turn on automatically at **sunset with a custom offset** and off at a fixed time, featuring built-in day-of-week filtering and **fully optional, bidirectional timer synchronization**. This blueprint includes edge-case handling for manual physical overrides and smart recovery logic after system reboots or mid-schedule turn-ons.
 
 ## Use Cases
-- coming soon
+
+### Evening Patio Lighting with Fixed Off-Time & Countdown Timer
+We use this to turn on our patio lights automatically at sunset—using a slight offset so they turn on right at twilight—and shut them off at a set time later in the evening, like 11:00 PM. Linking an optional timer helper gives us a live countdown card on our dashboard so we can see when the lights will turn off. If we manually switch off the patio lights earlier in the night, the timer cancels automatically instead of running in the background.
+
 ---
 
 ## Features
