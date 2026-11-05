@@ -13,7 +13,11 @@ A clean, lightweight Home Assistant blueprint designed to fire a one-time automa
 
 ---
 ## Use Cases
-- coming soon
+
+- **Enabling/Disabling Seasonal Automations:** Automatically enable a disabled holiday lighting or seasonal heating automation at a specific future date and time (e.g., turn on your Christmas lights automation on Dec 1st at 00:00, or re-enable summer cooling routines on May 1st).
+- **One-Time Event & Reminder Announcements:** Trigger custom mobile notifications, smart speaker announcements, or light cues for single-occurrence events like a scheduled contractor visit, flight departure reminder, or birthday surprise.
+- **Vacation & Away Mode Preparation:** Automatically activate "Vacation Mode" input booleans or adjust climate control setpoints when you are scheduled to leave for a trip.
+
 ---
 
 ## Features
