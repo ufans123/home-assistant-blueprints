@@ -59,7 +59,7 @@ Always review the automation YAML and test changes safely before deploying them 
 | **[Daily Sun-Based Device Scheduler](daily-sun-based-device-scheduler.md)** | Schedule switches, lights, or fans using sunset and day-of-week rules with optional bidirectional timer synchronization and smart remaining-time recovery. * | `v1.0` | `2026-10-12` |
 | **[Daily Sun-Based Multi-Device & Multi-Scene Scheduler with Timer](daily-sun-based-multi-device-scheduler-with-scenes.md)** | Schedule multiple switches, lights, fans, and scenes using sunset rules and day-of-week filtering, featuring bidirectional timer synchronization and smart remaining-time recovery. * | `v1.0` | `2026-10-13` |
 | **[Daily Time-Based Device Scheduler with Optional Timer](daily-time-based-device-scheduler.md)** | Schedule switches, lights, or fans using time and day-of-week rules with optional bidirectional timer synchronization and smart remaining-time recovery. * | `v1.2` | `2026-11-05` |
-| **[Trigger on a Specific Date and Time](trigger-on-a-specific-date-time.md)** | Fires a one-time automation at a precisely defined calendar date and time for single-occurrence events, reminders, or seasonal actions. | `v1.0` | `2026-10-31` |
+| **[Trigger on a Specific Date and Time](trigger-on-a-specific-date-time.md)** | Fires a one-time automation at a precisely defined calendar date and time for single-occurrence events, reminders, or seasonal actions. * | `v1.0` | `2026-10-31` |
 
 [⬆ Back to top](#top)
 
