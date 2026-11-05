@@ -1,6 +1,6 @@
 ## Blueprint Exchange Links
 
- [← ufans123](/)
+[← Back to Main Blueprints Repository](README.md)
 
 ### ⏱️ Scheduling & Time
 - [Daily Dashboard-Controlled Device Scheduler](https://community.home-assistant.io/t/daily-dashboard-controlled-device-scheduler/1030768)
