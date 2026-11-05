@@ -1,5 +1,7 @@
 ## Blueprint Exchange Links
 
+ [← Back to Main Blueprints Repository](README.md)
+
 - [Alarmo State Manager (Custom Actions)](https://community.home-assistant.io/t/alarmo-state-manager-custom-actions/1032030)
 - [Battery Level & Status Monitor (Scheduled & Manual)](https://community.home-assistant.io/t/battery-level-status-monitor-scheduled-manual/1030086)
 - [Binary Sensor State Sync](https://community.home-assistant.io/t/binary-sensor-state-sync/1029209)
