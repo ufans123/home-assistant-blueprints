@@ -14,7 +14,7 @@
 - [Daily Sun-Based Multi-Device & Multi-Scene Scheduler with Timer](https://community.home-assistant.io/t/daily-sun-based-multi-device-multi-scene-scheduler-with-timer/1028784)
 - [Daily Sun-Based Multi-Device Scheduler with Sunrise Off & Optional Timer](https://community.home-assistant.io/t/daily-sun-based-multi-device-scheduler-with-sunrise-off-optional-timer/1030114)
 - [Daily Time-Based Device Scheduler with Optional Timer](https://community.home-assistant.io/t/daily-time-based-device-scheduler-with-optional-timer/1028269)
-- [https://community.home-assistant.io/t/trigger-on-a-specific-date-and-time/1031556](https://community.home-assistant.io/t/trigger-on-a-specific-date-and-time/1031556)
+- [Trigger on a Specific Date and Time](https://community.home-assistant.io/t/trigger-on-a-specific-date-and-time/1031556)
 - [Manual Z-Wave Outlet Restart (Router Reboot)](https://community.home-assistant.io/t/manual-z-wave-outlet-restart-router-reboot/1029681)
 - [Motion Sensor Enable or Disable](https://community.home-assistant.io/t/motion-sensor-enable-or-disable/1028597)
 - [Offline Device Notifications (Scheduled, NFC, Manual Triggers)](https://community.home-assistant.io/t/offline-device-notifications-scheduled-nfc-manual-triggers/1029532)
