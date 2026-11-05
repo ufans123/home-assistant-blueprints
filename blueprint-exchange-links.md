@@ -1,6 +1,6 @@
 ## Blueprint Exchange Links
 
- [← Back to Main Blueprints Repository](README.md)
+ [← ufans123](/)
 
 - [Alarmo State Manager (Custom Actions)](https://community.home-assistant.io/t/alarmo-state-manager-custom-actions/1032030)
 - [Battery Level & Status Monitor (Scheduled & Manual)](https://community.home-assistant.io/t/battery-level-status-monitor-scheduled-manual/1030086)
