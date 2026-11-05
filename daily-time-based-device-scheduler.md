@@ -7,7 +7,11 @@
 A robust, "set-and-forget" Home Assistant blueprint for scheduling multiple switches, lights, and fans with built-in day-of-week filtering and **fully optional, bidirectional timer synchronization**. This blueprint includes edge-case handling for manual physical overrides and smart recovery logic after system reboots or mid-schedule turn-ons.
 
 ## Use Cases
-- coming soon
+
+- **Automated Landscape & Holiday Lighting:** Schedule outdoor porch lights, garden lights, or holiday displays to turn on automatically at 18:00 and off at 23:00 every day. Syncing with a timer gives family members a real-time countdown on dashboard wall tablets showing when the lights will turn off.
+- **Overnight Fan & White Noise Control:** Turn on bedroom fans or white noise air purifiers at 22:00 and turn them off at 06:30 only on weekdays (`Mon`–`Fri`). If you wake up and turn the fan on manually in the middle of the night, smart recovery instantly calculates the remaining time until 06:30 and synced timers keep it on schedule without manual intervention.
+- **Living Room Entertainment & Accent Scene:** Synchronize ambient floor lamps, TV LED backlight strips, and plug-in accent lights across the living room to kick off every evening on weekends (`Fri`–`Sun`). Turning off one switch or cancelling the timer turns off all grouped accent lights together.
+
 ---
 
 ## Features
