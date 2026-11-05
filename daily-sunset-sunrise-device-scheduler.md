@@ -7,7 +7,13 @@
 This automation blueprint provides a dynamic, robust scheduler that automatically turns multiple target devices **on** at sunset and **off** at sunrise, complete with custom `HH:MM:SS` offset support. It includes optional bidirectional synchronization with a Home Assistant **timer helper**, allowing for visual dashboard countdowns and smart multi-device selective shutoff.
 
 ## Use Cases
-- coming soon
+
+### 1. Outdoor Pathways & Security (Sunset Lighting + Motion Detection)
+Use this to turn on porch and outdoor pathway lighting at sunset—using a slight negative offset so things light up right as twilight hits. It also enables outdoor motion sensors overnight to trigger security lights and cameras. At sunrise, the pathway lights turn off and the motion sensors disarm until the next sunset so daytime activity doesn't trigger false alerts.
+
+### 2. Activating Nightlights by Enabling Motion Sensors Not Used in the Daytime 
+Activate indoor motion sensors overnight for late-night hallway and bathroom trips. During the day, having these motion sensors active is unnecessary because other daytime automations handle the main lights. This blueprint turns the motion sensors on at sunset so they can trigger low-level nightlights, then automatically shuts them off at sunrise.
+
 ---
 
 ### Features
