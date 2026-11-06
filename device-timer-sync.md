@@ -8,7 +8,11 @@ This Home Assistant blueprint synchronizes a target device (**light**, **switch*
 
 
 ## Use Cases
-- coming soon
+
+- **Zone-Specific Light & Appliance Auto-Off:** Assign dedicated timer helpers to individual areas across your house (e.g., dining room, entrance, kitchen, or laundry room lights). Turning on the light in any zone starts its corresponding timer countdown, automatically shutting off the light after your configured duration to save energy.
+- **Outdoor Plugs & Water Features:** Control outdoor patio plugs for garden fountains or seasonal lighting. Turning on the plug starts a synced 1-hour timer helper so the fountain runs for a set period and shuts off automatically without manual intervention.
+- **Bathroom & Utility Fan Safety:** Link bathroom exhaust fans or laundry room ventilation switches to a 20-minute timer helper, giving you live countdown tracking on dashboard cards and ensuring heavy-duty fans never run indefinitely.
+
 ---
 
 ## How It Works
