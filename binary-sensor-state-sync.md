@@ -6,9 +6,12 @@
 
 A clean, bulletproof Home Assistant blueprint for directly syncing the state of any binary sensor (such as a door, window, or motion sensor) to an input boolean, switch, or light. This blueprint uses explicit state mapping to eliminate toggle out-of-sync issues, making it ideal for climate automations (like pausing your AC when a door opens).
 
----
 ## Use Cases
-- coming soon
+
+- **Door-Controlled Room Lighting:** Automatically turn on closet, pantry, or laundry room lights when the door opens, and turn them off as soon as the door closes (e.g., syncing a door contact sensor directly to your laundry light switch).
+- **HVAC & Climate Protection:** Mirror patio door or window contact sensors to an `input_boolean` helper (e.g., `input_boolean.patio_door_open`). Use this helper as a trigger condition to automatically pause heating or air conditioning while doors are left open.
+- **Visual Status Indicators:** Sync security sensor states (like a gate sensor or garage door contact sensor) to a dashboard LED status light or an accent strip to show open/closed status visually around the house.
+
 ---
 
 ## Features
