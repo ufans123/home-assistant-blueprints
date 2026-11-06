@@ -7,8 +7,13 @@
 A clean, flexible Home Assistant blueprint for syncing switches, lights, and fans with a designated daily turn-off time. This blueprint uses a native UI time picker to dynamically calculate countdown durations from **now** until the scheduled target off-time (with automatic overnight rollover support) and features **optional timer synchronization** for UI dashboard tracking.
 
 ---
+
 ## Use Cases
-- coming soon
+
+- **Holiday & Festive Lighting Schedules:** Turn on Christmas tree lights or holiday displays manually or via motion whenever you like, knowing they will automatically calculate the exact remaining runtime and turn off right at your target cutoff time (e.g., 23:00:00).
+- **Overnight Bedroom Fans & White Noise:** Turn on a bedroom fan or air purifier when going to sleep, dynamically syncing a countdown timer that shuts the device down automatically at your morning wake-up time (e.g., 06:30:00)—even across midnight.
+- **Evening Living Room Accent Lights:** Keep evening accent or TV backlight switches active until a set bedtime. Turning on the lights anytime during the evening automatically calculates the exact remaining hours/minutes until your target off-time and updates dashboard timer countdowns.
+
 ---
 
 ## Features
