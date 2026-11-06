@@ -7,8 +7,12 @@
 This automation blueprint allows you to synchronize the state of **any two binary entities** (such as lights, switches, fans, and input booleans) mutually in both directions. Effortlessly mirror states between paired devices without writing complex YAML or worrying about cascading infinite loops.
 
 ---
+
 ## Use Cases
-- coming soon
+
+- **Virtual Multi-Location Light Sync:** Keep two smart lights or smart plugs in sync across different locations (such as a floor lamp plugged into a smart outlet and an overhead smart light). Turning either device on or off—via voice assistant, physical button, or dashboard tile—instantly mirrors its exact state to the other.
+- **Synchronized Accent & Holiday Outlets:** Sync a primary smart plug (like a Christmas tree plug) with a secondary outdoor or accent plug (`switch.misc_plug_wemo`). Turning either outlet on or off manually or via dashboard button immediately toggles both outlets in tandem without infinite loops.
+
 ---
 
 ### Features
