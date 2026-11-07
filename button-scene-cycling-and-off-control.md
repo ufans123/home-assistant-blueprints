@@ -7,8 +7,12 @@
 This automation blueprint cycles sequentially through a selected list of scenes using up to 3 optional **On Buttons** (or scene buttons) and a **Counter helper** to remember your place in the cycle. Pressing any of the up to 3 optional **Off Buttons** shuts down target devices and resets the counter to `0`, ensuring your cycle always starts fresh on your preferred first scene every time you turn it back on.
 
 ---
+
 ## Use Cases
-- coming soon
+
+- **Multi-Switch Bedroom Scene Cycling:** Assign multiple wall switches or bedside remotes (e.g., primary door buttons and bedside buttons) to cycle sequentially through bedroom mood scenes—such as an "Arctic Aurora" dynamic effect, a soft dimmed night mode, and full brightness—while pressing any Off button shuts off the bedroom lights and resets the cycle back to your favorite startup scene.
+- **Living Room Entertainment Lighting Rotation:** Cycle living room accent lights and smart plugs through an evening sequence of ambiance scenes using a multi-button smart remote by the couch or entry, with a dedicated shutdown button to clear the room lighting and reset the counter simultaneously.
+
 ---
 
 ### Features
