@@ -13,8 +13,13 @@ Before setting up this blueprint, make sure you have the following ready:
 - **NFC Tags:** Physical NFC tags (NTAG215 or similar) capable of being scanned by your phone or a dedicated Home Assistant NFC reader.
 
 ---
+
 ## Use Cases
-- coming soon
+
+- **Physical NFC Album & Playlist Cards:** Tap physical NFC cards or coasters (printed with custom album art or playlist labels) to instantly kick off playback of specific Spotify playlists or Daily Mixes on a target speaker or speaker group (`media_player.all_speakers_3`).
+- **Smart Multi-Playlist Zone Jukebox:** Pair an `input_text` tracking helper across multiple NFC tags in a room (such as a stack of music cards on a coffee table). Tapping the same tag toggles play/pause, while scanning a different card instantly cuts over to the new playlist and updates the zone tracker.
+- **Fail-Safe Music Control:** Maintain reliable playback state management even if a speaker powers down or drops off Wi-Fi. The blueprint automatically detects offline states and clears stale tracking data so your next NFC tap starts fresh without session locking.
+
 ---
 
 ## Features
