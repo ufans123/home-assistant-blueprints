@@ -90,7 +90,7 @@ Always review the automation YAML and test changes safely before deploying them 
 | **[Scene Selector with Light Effect Support (Hue & Govee)](input-select-scene-selector.md)** | Triggers Home Assistant scenes or applies native hardware light effects (such as Govee dynamic scenes or WLED presets) using an `input_select` helper with auto off/reset support. *(Advanced: Requires input_select helpers & startup automation)* | `v1.0` | — |
 | **[Timed Light Scene Cycler](light-scene-cycler.md)** | Seamlessly cycles a light/group through custom scenes using an input boolean switch, featuring smooth transitions and auto-off timer. * | `v1.0` | `2026-10-17` |
 | **[Turn On to Default Scene (Companion Blueprint)](target-turn-on-synchronizer.md)** | Automatically sets a light or switch to a default scene whenever turned on externally, with an optional counter helper reset companion for button cycling. * | `v1.0` | `2026-10-25` |
-| **[Turn On to Time-Based Default Scene](turn-on-scene-based-on-time-period.md)** | Automatically sets a light, switch, or input boolean to a time-dependent scene across up to 4 optional time windows whenever turned on externally. | `v1.0` | `2026-10-30` |
+| **[Turn On to Time-Based Default Scene](turn-on-scene-based-on-time-period.md)** | Automatically sets a light, switch, or input boolean to a time-dependent scene across up to 4 optional time windows whenever turned on externally. * | `v1.0` | `2026-10-30` |
 
 [⬆ Back to top](#top)
 
