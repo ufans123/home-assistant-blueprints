@@ -4,7 +4,7 @@ blueprint:
     Cycles sequentially through scenes with an On/Scene button, and turns off target devices 
     and resets the counter with an Off button. Supports up to 3 optional On and Off buttons.
 
-    **Version:** v1.1
+    **Version:** v1.2
   domain: automation
   source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/button_scene_cycling_and_off_control.yaml
   author: Ufans123
