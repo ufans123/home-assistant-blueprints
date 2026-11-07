@@ -2,9 +2,9 @@
 
 [![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fufans123%2Fhome-assistant-blueprints%2Fblob%2Fmain%2Fbutton_scene_cycling_and_off_control.yaml)
 
-> **Version:** 1.1 | **Last Updated:** 2026-10-19 | [← Back to Main Blueprints Repository](README.md)
+> **Version:** 1.2 | **Last Updated:** 2026-11-06 | [← Back to Main Blueprints Repository](README.md)
 
-This automation blueprint cycles sequentially through a selected list of scenes using an **On Button** (or scene button) and a **Counter helper** to remember your place in the cycle. Pressing the **Off Button** (or power toggle configured for off) shuts down target devices and resets the counter to `0`, ensuring your cycle always starts fresh on your preferred first scene every time you turn it back on.
+This automation blueprint cycles sequentially through a selected list of scenes using up to 3 optional **On Buttons** (or scene buttons) and a **Counter helper** to remember your place in the cycle. Pressing any of the up to 3 optional **Off Buttons** shuts down target devices and resets the counter to `0`, ensuring your cycle always starts fresh on your preferred first scene every time you turn it back on.
 
 ---
 ## Use Cases
@@ -12,22 +12,25 @@ This automation blueprint cycles sequentially through a selected list of scenes 
 ---
 
 ### Features
-- **Sequential Scene Cycling:** Step through your favorite scenes in order with every press of the On button.
+- **Sequential Scene Cycling:** Step through your favorite scenes in order with every press of any assigned On button.
+- **Multi-Switch Support:** Configure up to 3 optional On buttons and 3 optional Off buttons to control the same scene rotation from multiple wall switches or remotes.
 - **Counter-Powered Tracking:** Uses a Home Assistant counter helper to maintain state across sessions.
-- **Automatic Reset on Off:** Shuts down multiple devices and resets the counter to `0` when the Off button is used.
+- **Automatic Reset on Off:** Shuts down multiple devices and resets the counter to `0` when any Off button is used.
 - **UI Reordering Support:** Easily sort and reorder your scene sequence directly from the automation configuration UI.
-- **Modern Event Triggers:** Uses event-based triggers (such as `initial_press`) optimized for modern button hardware.
+- **Modern Event Triggers:** Uses event-based triggers (such as `initial_press` and `multi_press_1`) optimized for modern button hardware.
 - **Hardware Compatibility Note:** Works seamlessly across different remote generations (older separate On/Off buttons or newer Philips Hue remotes configured with dedicated scene and power-off buttons).
 
 ### Input Configuration Reference
 
-| Input | Type | Description |
-| :--- | :--- | :--- |
-| **On Button** | Event Entity | The event entity used to cycle through your scenes. |
-| **Off Button** | Event Entity | The event entity used to turn off target devices and reset the counter. |
-| **Scenes to Cycle** | Scene Entities (Multiple & Reorderable) | Select and reorder the scenes you want to cycle through in sequence. |
-| **Target Devices for Off Button** | Target Entity | The switches, lights, or input booleans to turn off when the off button is pressed. |
-| **Counter Helper** | Counter Entity | The counter helper used to remember your place in the active scene cycle. |
+| Input Section | Input Name | Type | Description |
+| :--- | :--- | :--- | :--- |
+| **On / Scene Buttons** | On Button (Primary) | Event Entity | The primary event entity used to cycle through your scenes. |
+| | On Button 2 & 3 (Optional) | Event Entity | Additional optional event entities for cycling through scenes. |
+| **Off / Shutdown Buttons** | Off Button (Primary) | Event Entity | The primary event entity used to turn off target devices and reset the counter. |
+| | Off Button 2 & 3 (Optional) | Event Entity | Additional optional event entities for turning off target devices. |
+| **Scene Selection** | Scenes to Cycle | Scene Entities (Multiple & Reorderable) | Select and reorder the scenes you want to cycle through in sequence. |
+| **Targets & Helpers** | Target Devices for Off Button | Target Entity | The switches, lights, or input booleans to turn off when the off button is pressed. |
+| | Counter Helper | Counter Entity | The counter helper used to remember your place in the active scene cycle. |
 
 ### Pro Tips
 - **Counter Step Size:** When creating your counter helper (`counter.*`), leave the step size at `1` so the cycle advances by exactly one scene per button press. You can leave the minimum and maximum values at their defaults (or set a max if you want a hard limit, though modulo math handles infinite loops automatically).
@@ -59,7 +62,7 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/button_scene_cyc
 ---
 ### 🔗 Related Blueprint
 
-* 🔄 **Companion Blueprint:** [Turn On to Default Scene](https://github.com/ufans123/home-assistant-blueprints/blob/main/target-turn-on-synchronizer.md)
+- 🔄 **Companion Blueprint:** [Turn On to Default Scene](https://github.com/ufans123/home-assistant-blueprints/blob/main/target-turn-on-synchronizer.md)
 > **Note:** This blueprint shares an optional counter helper to keep scene cycles in sync across physical buttons and external triggers (apps, voice commands, or wall switches).
 
 ---
@@ -77,5 +80,6 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/button_scene_cyc
 
 | Version | Date | Summary of Changes |
 | :--- | :--- | :--- |
-| **v1.1** | 2026-10-19 | Support for IKEA BILRESA dual button Matter remote requested ( multi_press_1 added to on/off triggers) |
+| **v1.2** | 2026-11-06 | Added support for up to 3 optional On buttons and 3 optional Off buttons with clean UI section groupings |
+| **v1.1** | 2026-10-19 | Support for IKEA BILRESA dual button Matter remote requested (multi_press_1 added to on/off triggers) |
 | **v1.0** | 2026-10-14 | Initial release |
