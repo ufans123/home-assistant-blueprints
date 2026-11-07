@@ -9,8 +9,13 @@ This blueprint automatically sets a light, switch, or input boolean to a specifi
 It allows you to define up to 4 distinct time periods throughout the day. By decoupling scene selection from motion sensors or wall switches, your motion automations stay clean and minimal while this blueprint seamlessly bridges the gap to enforce the correct lighting ambiance for any time of day.
 
 ---
+
 ## Use Cases
-- coming soon
+
+- **Time-Dependent Initial Turn-On Ambiance:** Ensure lights always turn on to the ideal scene for the current time of day—such as activating a bright preset when turned on during the day (11:00 to 23:00) versus a low-brightness nightlight scene when turned on late at night (23:00 to 11:00). *(Note: Changes apply only upon turning the light on; it will not dynamically swap scenes mid-use as time passes).*
+- **Circadian-Style Presets Across 4 Time Windows:** Configure up to 4 time slots (Morning, Afternoon, Evening, Night) so that whenever a device is switched on—via wall switch, app, or voice—it checks the clock and applies the corresponding scene (cool white in the morning, warm amber in the evening, dim red past midnight).
+- **Decoupled Motion Automation Companion:** Pair with simple motion sensor automations or physical wall switches. Let the motion sensor or wall toggle handle the basic `on`/`off` command, while this blueprint intercepts the turn-on event to force the correct ambiance for that specific time window.
+
 ---
 
 ## Features
