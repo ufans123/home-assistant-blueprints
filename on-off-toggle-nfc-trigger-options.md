@@ -7,8 +7,13 @@
 This automation blueprint provides a robust, universal controller optimized for **NFC tags** and custom triggers, while working wonderfully with buttons and switches. It gives you explicit control over **On**, **Off**, and **Toggle** actions, with seamless support for optional, multi-scene presets that fire immediately after turning your target devices on.
 
 ---
+
 ## Use Cases
-- coming soon
+
+- **Tap-to-Toggle Outdoor & Appliance Outlets:** Scan an NFC sticker (e.g., a tag placed on a patio door or desk) to intelligently toggle a smart plug on or off (`switch.geeni_patio_plugs_socket_2`) without needing to launch the Home Assistant app.
+- **Cross-Device Power Sync Triggers:** Monitor standard entity state changes—such as powering on an office phone charger—to automatically trigger a target device elsewhere in the home (like turning on a bedroom charging plug `light.pixel_8_plug`).
+- **NFC Room Ambiance Activation:** Tap an NFC tag near a entryway or bedside table to power up room lights and instantly apply multi-scene presets (such as a relaxing evening or reading scene) in a single action.
+
 ---
 
 ### Features
