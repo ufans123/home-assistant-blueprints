@@ -7,8 +7,12 @@
 This automation blueprint maps an **On Button** and an **Off Button** (designed for event-based smart switches and remotes) to control any switch, light, or input boolean. It also includes support for **optional secondary actions** for each button press.
 
 ---
+
 ## Use Cases
-- coming soon
+
+- **Dedicated Physical On/Off Wall Remote:** Map distinct physical button events on a smart remote or wall switch (such as Button 1 for On and Button 4 for Off) to directly toggle smart plugs, outdoor accent lights, or appliance switches (`switch.geeni_patio_plugs_socket_1`).
+- **Target Toggle with Synchronized Companion Actions:** Control a main light or fixture while using the optional On/Off actions to run extra commands simultaneously—such as triggering a companion notification, running a side script, or adjusting an auxiliary light whenever the primary device is turned on or off.
+
 ---
 
 ### Features
