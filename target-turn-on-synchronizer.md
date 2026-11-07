@@ -9,8 +9,12 @@ This blueprint automatically activates a preferred default scene whenever a ligh
 Additionally, it features an optional counter synchronization mechanism: when paired as a companion to the **"Button Scene Cycling and Off Control"** blueprint, it automatically resets the cycle counter back to zero whenever the device turns on externally, ensuring your button-cycling sequence always stays synchronized from the start.
 
 ---
+
 ## Use Cases
-- coming soon
+
+- **Consistent Default Preset on External Activation:** Ensure your lights always turn on to a preferred baseline scene (such as "Dining Room Bright") whenever turned on via voice assistant, mobile dashboard tile, or physical power state—preventing lights from turning on to a random leftover color or dim level from previous use.
+- **Companion Scene Cycle Synchronization:** Pair with the **Button Scene Cycling and Off Control** blueprint by sharing a counter helper entity. Turning the lights on externally automatically forces your default scene and resets the counter to `0`, ensuring that your next button press starts predictably from scene #1 instead of picking up mid-cycle.
+
 ---
 
 ## Features
