@@ -101,7 +101,7 @@ Always review the automation YAML and test changes safely before deploying them 
 
 | Blueprint | Description | Current Version | Exchange Release |
 | :--- | :--- | :---: | :---: |
-| **[Button On/Off Control with Optional Actions](button-on-off.md)** | Controls any switch, light, or input boolean using separate On/Off event buttons, complete with support for optional secondary actions. | `v1.0` | `2026-10-22` |
+| **[Button On/Off Control with Optional Actions](button-on-off.md)** | Controls any switch, light, or input boolean using separate On/Off event buttons, complete with support for optional secondary actions. * | `v1.0` | `2026-10-22` |
 | **[Motion Sensor Enable or Disable](motion-control-enable-disable.md)** | Enable or disable motion sensors via button events or automatically when a specific light turns off. | `v1.0` | `2026-10-12` |
 | **[On/Off or Toggle Control with Scene Options (NFC & Triggers)](on-off-toggle-nfc-trigger-options.md)** | Control lights, switches, fans, and inputs using NFC tags or buttons with explicit On/Off/Toggle logic, plus optional multi-scene presets. | `v1.0` | `2026-10-15` |
 | **[Spotify NFC Jukebox with Smart Tracker](spotify-nfc-trigger.md)** | Intelligent Spotify jukebox automation for NFC tags featuring smart state management (resumes, pauses, switches/restarts) and an offline/unavailable speaker safety reset. | `v1.0` | `2026-10-24` |
