@@ -7,8 +7,12 @@
 This automation blueprint cycles sequentially through a selected list of scenes using a flexible trigger source (such as NFC tags, button presses, or remote events) and a Counter helper to remember your place in the cycle. It is specifically optimized for scanning NFC tags with your phone to seamlessly advance through lighting presets, moods, or device states! By sharing the same counter helper, you can easily sync multiple switches or controllers in the same room.
 
 ---
+
 ## Use Cases
-- coming soon
+
+- **Desk or Bedside NFC Tag Cycling:** Stick an NFC tag on your nightstand or desk. Tapping your smartphone on the tag sequentially advances your room's lighting through presets like "Bright Work," "Dimmed Relax," and "Arctic Aurora" without opening an app.
+- **Single-Button Remote & Switch Scene Rotation:** Map any generic smart button, Zigbee switch, or custom trigger event to step through a curated list of room scenes in order, using a shared counter helper to remember your position across controllers.
+
 ---
 
 ### Features
