@@ -84,6 +84,6 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/button_scene_cyc
 
 | Version | Date | Summary of Changes |
 | :--- | :--- | :--- |
-| **v1.2** | 2026-11-06 | Added support for up to 3 optional On buttons and 3 optional Off buttons with clean UI section groupings |
+| **v1.2** | 2026-11-06 | Added support for up to 3 total On buttons and 3 total Off buttons (1 primary + 2 optional each) with clean UI section groupings |
 | **v1.1** | 2026-10-19 | Support for IKEA BILRESA dual button Matter remote requested (multi_press_1 added to on/off triggers) |
 | **v1.0** | 2026-10-14 | Initial release |
