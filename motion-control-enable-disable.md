@@ -8,8 +8,13 @@ Enables or disables motion sensors via button/event entities or automatically wh
 This can be useful when in a room that you do not want lights turning off based on a motion clear event.
 
 ---
+
 ## Use Cases
-- coming soon
+
+- **Prevent Motion Timeout While Stationary (Kitchen & Living Room):** Pressing the wall switch "On" button temporarily disables motion sensors while cooking, chopping, or reading quietly. This keeps room lights from suddenly shutting off on a motion clear event while you are still in the room.
+- **Manual Mode Toggle with Auto-Reset Safety:** Pressing the wall switch "Off" button immediately turns off lights and re-enables motion sensors. If lights are left on manually or via a long-duration timer (e.g., a 1-hour fail-safe automation), turning the monitored light off automatically restores motion detection for the next entry.
+- **Multi-Sensor Zone Control:** Simultaneously disable or enable multiple motion sensors across adjacent zones (such as entrance and laundry sensors) using a single switch press or monitored room light state.
+
 ---
 
 **My approach...**  
