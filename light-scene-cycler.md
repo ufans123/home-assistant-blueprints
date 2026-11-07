@@ -11,8 +11,13 @@ A clean, robust, snapshot-free Home Assistant blueprint designed to cycle a ligh
 > ⚠️ **Prerequisite Note:** This automation is designed around an **Input Boolean (`input_boolean.*`)** helper switch. You must create this helper entity first in Home Assistant (`Settings > Devices & Services > Helpers`) before setting up this automation, as it serves as the master switch to start, hold, and stop your scene cycle.
 
 ---
+
 ## Use Cases
-- coming soon
+
+- **Continuous Ambient & Cozy Lighting Loops:** Toggle an `input_boolean` helper to start a continuous, smooth transition cycle across dynamic scenes (such as cycling your monitor or fireplace LED strip through warm embers, deep purple, and emerald ambient modes with customized hold and fade times).
+- **Party & Event Accent Lighting:** Turn on a master helper switch to loop room accent lighting through vibrant color scenes during gatherings, with a built-in auto-off timer ensuring lights automatically return to normal or turn off after a set duration.
+- **Relaxation & Sunset Routines:** Set up a relaxing evening loop that slowly transitions through warm lighting presets, automatically shutting down smoothly to a dedicated off scene when toggled off or when the auto-off timer completes.
+
 ---
 
 ## Features
