@@ -7,8 +7,12 @@
 A clean, flexible Home Assistant blueprint designed to trigger light and switch actions (**Turn Off**, **Turn On**, or **Toggle**) via button **long-presses** and an **optional NFC tag scan** with custom labeling.
 
 ---
+
 ## Use Cases
-- coming soon
+
+- **Bedside & Room Master Shutdown:** Map long-press event entities across multiple physical wall switches or remotes (such as long-pressing button 4 on your bedside remotes) to turn off all bedroom lights and lamps simultaneously.
+- **Dual-Trigger Convenience (Switch + NFC):** Assign both a physical long-press button and an optional bedside or entryway NFC tag to execute the exact same power action—giving you full control whether holding down a wall switch button or tapping your smartphone on a physical tag.
+- **Flexible Area Power Toggles:** Easily configure dedicated long-press triggers across generic event switches to explicitly turn on, turn off, or toggle targeted light and switch groups without needing to build custom automation scripts.
 ---
 
 ## Features
