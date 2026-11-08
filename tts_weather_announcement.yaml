@@ -2,10 +2,10 @@ blueprint:
   name: TTS Weather Announcement (with Custom Optional Actions)
   description: >-
     Reads a detailed daily weather report over text-to-speech with dynamic time-of-day greetings, 
-    current conditions, conditional high/low temperatures, precipitation chance, volume control, 
-    and optional pre/post automation actions.
+    current conditions, conditional high/low temperatures, severe weather checks, precipitation chance, 
+    volume control, and optional pre/post automation actions.
 
-    **Version:** v1.0
+    **Version:** v1.1
   domain: automation
   source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/tts_weather_announcement.yaml
   author: Ufans123
@@ -138,7 +138,7 @@ action:
       condition: "{{ today_forecast.condition | replace('_', ' ') }}"
       pop: "{{ today_forecast.precipitation_probability if today_forecast.precipitation_probability is not none else 0 }}"
 
-  # 5. Speak the announcement with dynamic temperature phrasing
+  # 5. Speak the announcement with dynamic temperature and condition phrasing
   - action: tts.speak
     target:
       entity_id: !input tts_engine
@@ -147,14 +147,17 @@ action:
       media_player_entity_id: !input target_media_player
       message: >-
         {{ greeting }} Currently, it is {{ current_state }} and {{ current_temp }} degrees outside with {{ current_humidity }} percent humidity.
-        {% if temp_high is not none and temp_low is not none %}
-          Today's forecast calls for {{ condition }} with a high of {{ temp_high }} degrees and a low of {{ temp_low }} degrees.
-        {% elif temp_high is none and temp_low is not none %}
-          Today's forecast calls for {{ condition }} with an overnight low of {{ temp_low }} degrees.
-        {% elif temp_high is not none and temp_low is none %}
-          Today's forecast calls for {{ condition }} with a high of {{ temp_high }} degrees.
+        {% if condition == 'exceptional' %}
+          Attention: Exceptional weather conditions are reported for today.
         {% else %}
           Today's forecast calls for {{ condition }}.
+        {% endif %}
+        {% if temp_high is not none and temp_low is not none %}
+          Expect a high of {{ temp_high }} degrees and a low of {{ temp_low }} degrees.
+        {% elif temp_high is none and temp_low is not none %}
+          Expect an overnight low of {{ temp_low }} degrees.
+        {% elif temp_high is not none and temp_low is none %}
+          Expect a high of {{ temp_high }} degrees.
         {% endif %}
         {% if pop | int > 0 %}
           There is a {{ pop }} percent chance of precipitation today.
