@@ -12,8 +12,14 @@ Before setting up this automation from the blueprint, you will need:
 * **NFC Tag ID (Optional):** If you plan to use an NFC tag scan as an additional trigger, make sure you have your unique tag ID ready.
 
 ---
+
 ## Use Cases
-- coming soon
+
+- **Quick-Access Passcodes & PINs:** Tap an NFC sticker near a home safe, workshop key cabinet, or alarm panel to temporarily post a persistent UI notification containing gate codes, safe combinations, or guest Wi-Fi credentials without saving sensitive numbers in plain sight on a dashboard.
+- **Physical Wall Tag Reminders:** Place an NFC tag near the garage door or front entrance. Tap it on your way out to display an instant persistent notification card on shared family tablets with garage entry codes or trash collection reminders.
+- **Single-Click Dashboard Info Cards:** Assign an `input_boolean` helper switch to a dashboard button card. Click it anytime to immediately trigger an informational notification card (like HVAC filter sizes or paint color codes) that auto-resets the button back to `off`.
+- **Clean Notification Management:** Utilize unique Notification IDs to update existing notification cards in place rather than cluttering the Home Assistant UI with stacked, duplicate cards every time you trigger the switch or tap the tag.
+
 ---
 
 ### Features
