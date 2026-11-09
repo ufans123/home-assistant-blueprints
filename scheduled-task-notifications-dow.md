@@ -9,8 +9,14 @@
 An advanced, highly flexible weekly scheduling blueprint engine that generates up to 10 sequential persistent notification cards and/or synchronizes recurring weekly tasks with a persistent dashboard To-Do list, bound to a specific day of the week, an input helper switch, or custom system events.
 
 ---
+
 ## Use Cases
-- coming soon
+
+- **Weekly Household Trash & Recycling Reminders:** Schedule recurring weekly chores (e.g., pulling trash/recycling bins to the curb every Wednesday evening or collecting indoor bins every Sunday night) to execute automatically on a chosen weekday.
+- **Weekend Home Maintenance Routines:** Automatically populate a list of weekend projects or yard care tasks every Saturday morning at 8:00 AM on a shared dashboard To-Do list for the family to complete.
+- **Smart Recyclable Weekly Checklists:** Automatically reactivate (`needs_action`) completed chores on your target `todo` list each week without creating duplicate entries or cluttering the list with repeated tasks.
+- **On-Demand Weekly Task Generation:** Map an `input_boolean` helper switch to your dashboard. Click it anytime to immediately trigger and populate your weekly notification cards or To-Do list entries off-schedule while auto-resetting the switch back to `off`.
+
 ---
 
 ## Key Architectural Features
