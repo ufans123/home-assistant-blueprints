@@ -2,9 +2,9 @@
 
 [![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fufans123%2Fhome-assistant-blueprints%2Fblob%2Fmain%2Ftts_weather_announcement.yaml)
 
-> **Version:** 1.0 | **Initial Release:** 2026-11-03 | [← Back to Main Blueprints Repository](README.md)
+> **Version:** 1.1 | **Updated:** 2026-11-08 | [← Back to Main Blueprints Repository](README.md)
 
-A flexible, reusable Home Assistant blueprint that reads out a detailed daily weather report over text-to-speech with dynamic time-of-day greetings, real-time conditions, conditional high/low temperatures, precipitation chances, integrated volume control, and optional pre/post automation action hooks.
+A flexible, reusable Home Assistant blueprint that reads out a detailed daily weather report over text-to-speech with dynamic time-of-day greetings, real-time conditions, conditional high/low temperatures, exceptional weather checks, precipitation chances, integrated volume control, and optional pre/post automation action hooks.
 
 ---
 
@@ -20,6 +20,7 @@ A flexible, reusable Home Assistant blueprint that reads out a detailed daily we
 ## Features
 
 - **Dynamic Greetings:** Automatically evaluates system time to greet you with *Good morning*, *Good afternoon*, or *Good evening*.
+- **Exceptional Weather Handling:** Safely checks for extreme conditions (`exceptional`) and formats spoken warnings naturally instead of reading raw code strings.
 - **Robust Temperature Phrasing:** Dynamically adjusts spoken phrasing based on attribute availability. If daytime high or nighttime low forecast data is missing (common in evening updates), it skips the missing attribute gracefully instead of pronouncing code values like *"None"*.
 - **Integrated Volume Control:** Includes an adjustable UI slider (0% to 100%) that sets your target speaker's volume level prior to speech playback.
 - **Sectioned UI Layout:** Inputs are grouped into clear, collapsible visual sections (**Core Configuration**, **Automation Triggers**, **Actions Before**, and **Actions After**) for effortless configuration.
@@ -33,7 +34,7 @@ A flexible, reusable Home Assistant blueprint that reads out a detailed daily we
   | **Pre-Announcement Actions** | Runs optional user-defined sequence (e.g., waking AV receivers, flashing lights) before volume adjustment. |
   | **Volume Adjustment** | Sets the target media player volume level using percentage-to-decimal scaling. |
   | **Data Retrieval** | Calls `weather.get_forecasts` to pull daily forecast data into execution variables. |
-  | **Template Rendering** | Formulates a localized announcement string with conditional handling for missing high/low attributes. |
+  | **Template Rendering** | Formulates a localized announcement string with conditional handling for missing high/low attributes and exceptional weather alerts. |
   | **Speech Playback** | Triggers `tts.speak` with local caching enabled (`cache: true`) to minimize latency. |
   | **Post-Announcement Actions** | Runs optional user-defined sequence (e.g., turning off lights, resuming media) after speech completes. |
 
@@ -86,22 +87,3 @@ Click the badge below to import this blueprint directly into your Home Assistant
 
 ### Method 3: Manual Installation using the Blueprints Dashboard (Easier)
 1. Copy the following URL:
-```
-https://github.com/ufans123/home-assistant-blueprints/blob/main/tts_weather_announcement.yaml
-```
-2. Navigate to your Home Assistant Blueprints Dashboard UI (**Settings > Automations & Scenes > Blueprints**).
-3. In the bottom right corner, click on the **'Import blueprint'** button.
-4. Paste in the URL and follow the prompts.
-
----
-## Related Links
-| Blueprint | Description | 
-| :--- | :--- | 
-| **[Configurable Daily Weather Report](weather-report-notification.md)** | Generates clean weather notifications with regional headings, smart unit conversion (°C/°F), timestamps, quick links, and multiple triggers. |
----
-
-## Changelog
-
-| Version | Date | Summary of Changes |
-| :--- | :--- | :--- |
-| **v1.0** | 2026-11-03 | Initial release |
