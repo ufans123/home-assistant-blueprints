@@ -1,6 +1,9 @@
 blueprint:
   name: Configurable Daily Weather Report
-  description: Generates clean, mobile-optimized weather notifications with custom region headings, multiple triggers (Schedule, NFC, Helper), unit conversion (°C/°F), timestamps, and quick links.
+  description: >-
+    Generates clean, mobile-optimized weather notifications with custom region headings, multiple triggers (Schedule, NFC, Helper), unit conversion (°C/°F), exceptional weather checks, timestamps, and quick links.
+  
+    **Version:** v1.1
   domain: automation
   source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/weather_report_notification.yaml
   input:
@@ -118,11 +121,11 @@ action:
       type: daily
     response_variable: forecast_data
 
-  # Parse variables (with smart C/F unit detection)
+  # Parse variables (with smart C/F unit detection and exceptional weather check)
   - variables:
       region_name: >-
         {{ custom_location_name if custom_location_name != "" else state_attr(weather_entity, 'friendly_name') | default('Local Area', true) }}
-      current_cond: "{{ states(weather_entity) | title }}"
+      current_cond: "{{ states(weather_entity) | replace('_', ' ') | title }}"
       
       # Detect entity's native temperature unit (°C or °F)
       entity_unit: "{{ state_attr(weather_entity, 'temperature_unit') | default('°C', true) }}"
@@ -161,17 +164,24 @@ action:
           {{ raw_low | default('N/A', true) }}
         {% endif %}
         
-      forecast_cond: "{{ today.get('condition', 'N/A') | replace('-', ' ') | title }}"
+      forecast_cond: "{{ today.get('condition', 'N/A') | replace('-', ' ') | replace('_', ' ') | title }}"
       precipitation_prob: "{{ today.get('precipitation_probability', 0) }}"
       report_timestamp: "{{ now().strftime('%Y-%m-%d %H:%M') }}"
+
+      # Check for exceptional severe weather status
+      is_exceptional: "{{ current_cond == 'Exceptional' or forecast_cond == 'Exceptional' }}"
 
   # Create persistent notification
   - action: persistent_notification.create
     data:
       notification_id: daily_weather_report
-      title: "☀️ Daily Weather Report"
+      title: "{{ '⚠️ Severe Weather Alert' if is_exceptional else '☀️ Daily Weather Report' }}"
       message: >-
         ### 📍 Location: <b>{{ region_name }}</b><br><br>
+
+        {% if is_exceptional %}
+          ⚠️ **EXCEPTIONAL WEATHER ALERT:** Exceptional severe weather conditions reported for your region.<br><br>
+        {% endif %}
 
         **Current Conditions:**<br> • Status: {{ current_cond }}<br> •
         Temperature: {{ current_temp }}{{ unit }}<br> • Humidity: {{ humidity
