@@ -2,7 +2,7 @@
 
 [![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fufans123%2Fhome-assistant-blueprints%2Fblob%2Fmain%2Fweather_report_notification.yaml)
 
-> **Version:** 1.0 | **Initial Release:** 2026-10-18 | [← Back to Main Blueprints Repository](README.md)
+> **Version:** 1.1 | **Last updated:** 2026-11-08 | [← Back to Main Blueprints Repository](README.md)
 
 A clean, optimized Home Assistant blueprint designed to generate detailed daily weather notifications with custom region headings, dynamic unit conversion, timestamps, and quick links **controlled via flexible triggers (Schedule, NFC, or Helper Switch)**.
 
@@ -95,4 +95,5 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/weather_report_n
 
 | Version | Date | Summary of Changes |
 | :--- | :--- | :--- |
+| **v1.1** | 2026-11-08 | Added severe weather alert handling for `exceptional` condition state in both current conditions and daily forecast, with dynamic card titles and callout warnings. |
 | **v1.0** | 2026-10-18 | Initial release |
