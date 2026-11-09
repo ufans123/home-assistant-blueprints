@@ -13,8 +13,13 @@ A clean, optimized Home Assistant blueprint designed to generate detailed daily 
 > - **Input Boolean Helper (Optional):** If you plan to use a manual trigger switch, create your helper entity first in Home Assistant (`Settings > Devices & Services > Helpers`).
 
 ---
+
 ## Use Cases
-- coming soon
+
+- **Automated Morning Briefing Push:** Schedule a daily notification (e.g., at 07:00 AM) to receive a clean, formatted weather summary for your region (such as "Courtenay, BC") complete with current conditions, daily high/low temperatures, and severe weather alert callouts right as you wake up.
+- **On-Demand NFC & Dashboard Triggering:** Scan an NFC sticker on your nightstand or click a momentary `input_boolean` helper switch on your Home Assistant dashboard (`input_boolean.weather_report`) to generate an instant, updated weather report whenever you need it.
+- **One-Tap Quick Link Navigation:** Access deeper metrics quickly via embedded notification links—opening your local Home Assistant climate dashboard or jumping straight to external Environment Canada regional forecasts via coordinate lookups.
+
 ---
 
 ## Features
