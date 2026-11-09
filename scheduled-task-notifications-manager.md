@@ -9,8 +9,13 @@
 An advanced, highly flexible scheduling blueprint engine that generates up to 10 sequential persistent notification cards and/or pushes tasks to a persistent dashboard To-Do list, bound to an optional day of the month, an input helper switch, or custom system events.
 
 ---
+
 ## Use Cases
-- coming soon
+
+- **Monthly Home Maintenance Checklist:** Schedule routine maintenance tasks (e.g., HVAC filter changes, cleaning dishwasher filters, checking smoke detectors, or adding water to dry floor drains) to execute automatically on the 1st of every month at 9:00 AM.
+- **Bill Payment & Financial Deadlines:** Automatically push monthly payment reminders or financial review checklists to your dashboard To-Do list on specific calendar days (e.g., mortgage on the 1st, utility checks on the 15th) to ensure deadlines are never missed.
+- **On-Demand Manual Chore Generation:** Map an `input_boolean` helper to a dashboard button. Click it anytime to immediately generate the entire monthly task list—automatically populating UI notification cards or your dashboard To-Do list—while auto-resetting the trigger switch.
+
 ---
 
 ## Key Architectural Features
