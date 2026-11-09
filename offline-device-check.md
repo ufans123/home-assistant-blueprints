@@ -23,8 +23,15 @@ Because this blueprint uses Home Assistant's native labeling system for precise 
 3. **Blacklist Problematic Entities:** Assign an ignore label (e.g., `Ignore Offline`) to devices you turn off or unplug seasonally. Sleepy battery devices (like some water sensors) that frequently drift into `unknown` states to prevent false alerts.
 
 ---
+
 ## Use Cases
-- coming soon
+
+- **Smart Plug & Infrastructure Health Monitoring:** Automatically audit critical Always-On smart plugs driving refrigerators, freezers, routers, or sump pumps. Receive immediate push alerts if a plug drops offline or loses Wi-Fi/Z-Wave connection.
+- **Seasonally Unplugged Device Exclusions:** Easily ignore outdoor holiday lighting plugs or seasonal fans during off-months by tagging them with an ignore label (e.g., `Ignore Offline`), eliminating false alarms without removing devices from Home Assistant.
+- **On-Demand Dashboard Audits:** Map an `input_boolean` switch helper to your Home Assistant dashboard. Click it anytime to trigger an instant check—getting positive confirmation (*"All 24 monitored devices are online"*) before leaving on vacation.
+- **Physical NFC Wall Tap Scans:** Stick an NFC tag by your exit door or main control panel. Tap your phone on the way out to run an on-demand system status check and confirm all essential sensors and switches are online.
+- **Silent Persistent UI Alerting:** Keep a clean, clutter-free Home Assistant dashboard by sending offline warnings strictly to a persistent UI notification card that auto-updates in place and cleanly disappears once all devices reconnect.
+
 ---
 
 
