@@ -13,8 +13,13 @@ A flexible, reusable Home Assistant blueprint that reads out a detailed daily we
 > - **TTS Engine:** Requires an active Text-to-Speech integration (e.g., `tts.google_translate_en_com`, `tts.home_assistant_cloud`, or others).
 
 ---
+
 ## Use Cases
-- coming soon
+
+- **Hands-Free Morning Audio Briefing:** Read out a natural spoken weather report—including current conditions, expected highs/lows, precipitation chances, and severe weather warnings—over smart speakers (such as `media_player.office_display_3`) triggered by morning alarms, schedules, or initial room motion.
+- **Dynamic Time-of-Day Voice Reports:** Trigger an spoken announcement at any point in the day using dynamic greetings (*Good morning*, *Good afternoon*, or *Good evening*) that automatically skip missing forecast attributes (like daytime highs during evening reads) without pronouncing awkward code defaults.
+- **Orchestrated Pre/Post Speech Routines:** Use the optional action hooks to prep your room before speech playback—such as turning on an AV receiver, unmuting speakers, or setting scene lights before the report, and returning media or lighting states back to normal after the announcement finishes.
+
 ---
 
 ## Features
