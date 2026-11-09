@@ -87,3 +87,22 @@ Click the badge below to import this blueprint directly into your Home Assistant
 
 ### Method 3: Manual Installation using the Blueprints Dashboard (Easier)
 1. Copy the following URL:
+```
+https://github.com/ufans123/home-assistant-blueprints/blob/main/tts_weather_announcement.yaml
+```
+2. Navigate to your Home Assistant Blueprints Dashboard UI (**Settings > Automations & Scenes > Blueprints**).
+3. In the bottom right corner, click on the **'Import blueprint'** button.
+4. Paste in the URL and follow the prompts.
+
+---
+## Related Links
+| Blueprint | Description | 
+| :--- | :--- | 
+| **[Configurable Daily Weather Report](weather-report-notification.md)** | Generates clean weather notifications with regional headings, smart unit conversion (°C/°F), timestamps, quick links, and multiple triggers. |
+---
+
+## Changelog
+| Version | Date | Summary of Changes |
+| :--- | :--- | :--- |
+| **v1.1** | 2026-11-08 | Added explicit condition check for `exceptional` weather state to announce severe weather warnings cleanly. |
+| **v1.0** | 2026-11-03 | Initial release |
