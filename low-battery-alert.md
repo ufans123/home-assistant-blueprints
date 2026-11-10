@@ -7,8 +7,13 @@
 This automation blueprint scans all entities with `device_class: battery` across your Home Assistant instance. It supports dual scheduling modes (once daily or recurring hourly intervals), delivers flexible notification options (mobile app push, persistent UI cards, or both), and includes manual check capabilities with optional dashboard links.
 
 ---
+
 ## Use Cases
-- coming soon
+
+- **Automated Whole-Home Battery Audits:** Set up a scheduled daily (e.g., 07:00 AM) or interval check across all sensors with `device_class: battery` in Home Assistant to flag depleted devices (below 20%) or sensors that have dropped offline (`unavailable`/`unknown`).
+- **On-Demand Manual Inspection with Instant Feedback:** Link an `input_boolean` helper switch (`input_boolean.low_battery_alert`) to run an instant battery audit whenever tapped from your dashboard. If all devices are healthy, it sends an "All Clear" confirmation notification before resetting the switch back to `off`.
+- **Dual Dashboard & Mobile Alert Delivery:** Route low-battery warnings via mobile push notifications (`notify.pixel_8_pro`) for immediate awareness on your phone, while creating persistent UI cards in Home Assistant that include direct navigation links to your maintenance dashboard for easy device replacing.
+
 ---
 
 ### Features
