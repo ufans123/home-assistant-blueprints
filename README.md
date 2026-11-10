@@ -133,7 +133,7 @@ Always review the automation YAML and test changes safely before deploying them 
 | **[Battery Level & Status Monitor (Scheduled & Manual)](low-battery-alert.md)** | Automatically scan and report devices with low battery levels or unknown/unavailable statuses via scheduled checks or manual trigger. * | `v1.0` | `2026-10-23` |
 | **[Battery-Controlled Charging Switch](battery-charging-control.md)** | Automatically manage charging by turning a smart plug on/off based on battery percentage thresholds. Merged into blueprint `'Safer Battery-Controlled Charging & Timed Failsafe Manager'`. | `v1.0` | `Merged` |
 | **[Battery-Controlled Charging Switch - Time Failsafe Companion](battery-charging-control-companion.md)** | Adds a customizable time-limit layer to the threshold engine, insulating your charger from network dropouts. Merged into blueprint `'Safer Battery-Controlled Charging & Timed Failsafe Manager'`. | `v1.0` | `Merged` |
-| **[Safer Battery-Controlled Charging & Timed Failsafe Manager](battery-charging-control-combined.md)** | All-in-one charging engine uniting percentage thresholds, charge-activated safety timers, NFC nightstand overrides, and network recovery. | `v1.0` | `2026-10-27` |
+| **[Safer Battery-Controlled Charging & Timed Failsafe Manager](battery-charging-control-combined.md)** | All-in-one charging engine uniting percentage thresholds, charge-activated safety timers, NFC nightstand overrides, and network recovery. * | `v1.0` | `2026-10-27` |
 
 [⬆ Back to top](#top)
 
