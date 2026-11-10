@@ -11,8 +11,13 @@ The system is explicitly designed so that **the device reporting an active `char
 > **Disclaimer:** If a phone or tablet is already powered completely off or disconnected from Wi-Fi, it cannot scan an NFC tag or report its `charging` status to Home Assistant (meaning the safety timer will not auto-start). Using a nightstand NFC tag or manual trigger switch allows you to proactively turn on the plug and launch the safety timer before placing your device on the charger, guaranteeing a controlled charging session even if the battery hasn't met the low threshold yet or the device drops offline overnight.
 
 ---
+
 ## Use Cases
-- coming soon
+
+- **Automated Threshold Charging with Timed Failsafe:** Manage device battery health by turning on a smart plug (`light.tablet_plug`) when battery percentage drops below your low threshold and turning it off when it hits your high target—backed by a hard time-limit countdown (e.g., 4 hours) that cuts power even if state updates stall or drop offline.
+- **Nightstand NFC & Dashboard Bedtime Docking:** Tap a bedside/desk NFC tag or click an auto-resetting `input_boolean` helper switch to turn on your charger and start the failsafe timer before docking your device, ensuring a controlled charging session overnight even if the device drops Wi-Fi or hasn't reached its low threshold yet.
+- **Unplugging Grace Period:** Brief device use (such as picking up a tablet to check a message or change a song) won't immediately abort your session; the configurable grace window (e.g., 10 minutes) keeps your charging session active when plugged back in.
+
 ---
 
 ## Features
