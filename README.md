@@ -146,7 +146,7 @@ Always review the automation YAML and test changes safely before deploying them 
 | :--- | :--- | :---: | :---: |
 | **[Alarmo State Manager (Custom Actions)](alarmo-state-manager.md)** | A clean companion blueprint for Alarmo that triggers user-defined custom actions (lights, TTS, chimes, notifications) whenever Alarmo changes state without replacing core security logic. * | `v1.0` | `2026-11-02` |
 | **[Manual Z-Wave Outlet Restart (Router Reboot)](manual-zwave-reboot.md)** | Safely automates a controlled power-cycle sequence for routers/modems using a Z-Wave plug with dynamic durations and notifications. * | `v1.0` | `2026-10-20` |
-| **[Ring Keypad V2: Multi-Code Routine Hub (Z-Wave)](ring-keypad-routine.md)** | Map single-digit shortcuts (0–9) and custom multi-digit PIN codes on a Ring Keypad V2 to custom action sequences with audio feedback. | `v1.0` | `2026-10-21` |
+| **[Ring Keypad V2: Multi-Code Routine Hub (Z-Wave)](ring-keypad-routine.md)** | Map single-digit shortcuts (0–9) and custom multi-digit PIN codes on a Ring Keypad V2 to custom action sequences with audio feedback. * | `v1.0` | `2026-10-21` |
 | **[Ring Keypad v2: Z-Wave Multi-Trigger Sound Player](ring-keypad-sounds.md)** | Play built-in chimes, notification sounds, and system tones on a Ring Keypad v2 using flexible triggers and Z-Wave routing. | `v1.0` | `2026-10-16` |
 
 [⬆ Back to top](#top)
