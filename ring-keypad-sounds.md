@@ -7,8 +7,13 @@
 This automation blueprint allows you to use your **Ring Keypad v2** as a multi-trigger audio notification device in Home Assistant. Effortlessly play built-in chimes, notification sounds, and system tones on demand using flexible trigger sources (such as door sensors, motion detectors, light switches, or time schedules) without writing raw YAML or setting up separate scripts.
 
 ---
+
 ## Use Cases
-- coming soon
+
+- **Entry & Perimeter Door Chimes:** Play pleasant notification sounds (such as the *Ring Doorbell Chime* or *Windchime*) on your wall-mounted keypad whenever front, balcony, or patio contact sensors detect an opened door.
+- **Audible Event & Device State Feedback:** Broadcast instant sound effects on demand when specific smart devices state-change—such as playing a chime on the keypad when an office lamp turns on.
+- **Custom System Alerts & Warnings:** Route various automation triggers (such as motion detection, open-window warnings, or schedule alarms) to distinct system tones like the *Soft Error Beep* at custom volume levels (up to 100%) to serve as discreet auditory prompts throughout your home.
+
 ---
 
 ### Features
