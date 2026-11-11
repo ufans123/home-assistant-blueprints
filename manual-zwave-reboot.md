@@ -14,8 +14,13 @@ A robust, safe Home Assistant blueprint designed to automate a controlled power-
 > - **Trigger Helper:** Create a toggle helper (`input_boolean.*`) or dedicated switch in Home Assistant (`Settings > Devices & Services > Helpers`) to act as the restart trigger button.
 
 ---
+
 ## Use Cases
-- coming soon
+
+- **Manual Router & Modem Power-Cycling:** Trigger a controlled power-cycle sequence via a dashboard helper switch (`input_boolean.reboot_router`) to safely cut power to your networking equipment (`switch.router_plug`), wait out a short shutdown window, and restore power.
+- **Automated Mobile Status Updates:** Send push notifications to your mobile device right when a reboot starts—complete with dynamic cycle duration estimates—and follow up with a completion notice once stabilization concludes.
+- **Safe Single-Execution Maintenance:** Prevent overlapping reboot commands and ensure proper hardware stabilization using a built-in cooldown period before resetting the trigger switch back to `off`.
+
 ---
 
 ## Features
