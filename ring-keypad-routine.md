@@ -7,8 +7,13 @@
 This automation blueprint allows you to turn your **Ring Keypad V2** into a fully customizable routine hub in Home Assistant, operating completely independently of Alarmo. Map single-digit keys (`0`–`9`) and one custom multi-digit PIN code to separate Home Assistant action sequences. Pressing a shortcut followed by the **Checkmark** button executes your custom actions with optional global audio feedback chimes.
 
 ---
+
 ## Use Cases
-- coming soon
+
+- **One-Touch Wall-Mounted Scene Shortcuts:** Map single-digit keys (`0`–`9`) followed by the checkmark button to trigger custom Home Assistant action sequences—such as pressing `0` + `Checkmark` to activate living room dimmed scenes and switch on cabinet lighting.
+- **Secure PIN-Protected Automations:** Assign a custom multi-digit PIN code (e.g., `1234` + `Checkmark`) to execute higher-security routines—such as opening garage doors, disarming specific zones, or running guest welcome scripts—independent of your main alarm system.
+- **Audible Execution Confirmation:** Receive clear Z-Wave audio feedback (such as double beeps or soft keytone clicks) directly from the keypad speaker whenever a valid shortcut or PIN code routine is successfully executed.
+ 
 ---
 
 ### Features
