@@ -12,8 +12,13 @@ A clean companion blueprint for Alarmo that does not replace Alarmo's core secur
 > - **Alarmo Integration:** You must have the [Alarmo custom integration](https://github.com/nielsfaber/alarmo) installed and configured in Home Assistant (`alarm_control_panel.alarmo` or similar panel entity).
 
 ---
+
 ## Use Cases
-- coming soon
+
+- **Intrusion Warning & Alarm Sentry Sequences:** When Alarmo enters a `triggered` state, dynamically evaluate which doors or windows caused the breach, flash alarm lights in repeating color patterns, broadcast text-to-speech warnings (*"This property is protected..."*) over home speakers (`media_player.alarm_speakers`), and push urgent notifications with open-sensor details to mobile phones (`notify.our_phones`).
+- **Mode-Specific Arming Routines (`armed_away`):** Automatically lock deadbolts (`lock.front_door`), trigger security lighting scenes, and toggle perimeter plugs or privacy mode switches when the system is fully armed.
+- **Automated Disarm & Welcome Home Cues:** Upon disarming the system, instantly silence sirens, shut off alarm audio players, restore privacy switches, and conditionally adjust lighting scenes based on room occupancy or sunset schedules.
+
 ---
 
 ## Features
