@@ -100,5 +100,5 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/weather_report_n
 
 | Version | Date | Summary of Changes |
 | :--- | :--- | :--- |
-| **v1.1** | 2026-11-08 | Added severe weather alert handling for `exceptional` condition state in both current conditions and daily forecast, with dynamic card titles and callout warnings. |
+| **v1.1** | 2026-11-08 | Added severe weather alert handling for `exceptional` condition state in both current conditions and daily forecast, with dynamic card titles and callout warnings. (not confirmed) |
 | **v1.0** | 2026-10-18 | Initial release |
