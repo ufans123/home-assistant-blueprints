@@ -109,5 +109,5 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/tts_weather_anno
 ## Changelog
 | Version | Date | Summary of Changes |
 | :--- | :--- | :--- |
-| **v1.1** | 2026-11-08 | Added explicit condition check for `exceptional` weather state to announce severe weather warnings cleanly. |
+| **v1.1** | 2026-11-08 | Added explicit condition check for `exceptional` weather state to announce severe weather warnings cleanly. (not confirmed) |
 | **v1.0** | 2026-11-03 | Initial release |
