@@ -12,6 +12,7 @@
 
 ### 🔄 Device Synchronization & State Management
 - [Binary Sensor State Sync](https://community.home-assistant.io/t/binary-sensor-state-sync/1029209)
+- [Humidity-Triggered Fan with Timer & Low Cutoff](https://community.home-assistant.io/t/humidity-triggered-fan-with-timer-low-cutoff/1034684)
 - [Sync Device and Scheduled Off-Time](https://community.home-assistant.io/t/sync-device-and-scheduled-off-time/1029200)
 - [Sync Device and Timer](https://community.home-assistant.io/t/sync-device-and-timer/1027985)
 - [Two-Way Device Sync](https://community.home-assistant.io/t/two-way-device-sync/1030270)
