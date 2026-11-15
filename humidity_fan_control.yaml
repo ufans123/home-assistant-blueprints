@@ -1,0 +1,197 @@
+blueprint:
+  name: Humidity-Triggered Fan with Timer & Low Cutoff
+  description: >-
+    Automatically control devices based on humidity or manual switch activation, with an optional timer, low-humidity cutoff, and full two-way sync.
+  
+    **Version:** v1.0
+  domain: automation
+  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/humidity_fan_control.yaml
+  author: Ufans123
+  input:
+    sensor_section:
+      name: Sensors & Target Devices
+      description: Choose your humidity sensor and devices to control.
+      icon: mdi:water-percent
+      input:
+        humidity_sensor:
+          name: Humidity Sensor
+          description: The sensor that monitors room humidity.
+          selector:
+            entity:
+              domain: sensor
+              device_class: humidity
+        target_device:
+          name: Primary Target Device
+          description: The main fan, light, or switch to control.
+          selector:
+            entity:
+              domain:
+                - light
+                - switch
+                - fan
+        target_device_2:
+          name: Secondary Target Device (Optional)
+          description: An optional second fan, light, or switch to turn on/off together. Leave blank if not used.
+          default: []
+          selector:
+            entity:
+              domain:
+                - light
+                - switch
+                - fan
+
+    threshold_section:
+      name: Humidity Thresholds
+      description: Configure when the automation turns the devices on or off.
+      icon: mdi:tune
+      input:
+        humidity_threshold:
+          name: High Humidity Threshold (%)
+          description: The humidity level that triggers the devices ON.
+          default: 55
+          selector:
+            number:
+              min: 1.0
+              max: 100.0
+              unit_of_measurement: "%"
+              mode: slider
+        humidity_low_threshold:
+          name: Low Humidity Threshold (%)
+          description: Turn off devices when humidity drops below this level. Set to 0 to disable.
+          default: 0
+          selector:
+            number:
+              min: 0.0
+              max: 100.0
+              unit_of_measurement: "%"
+              mode: slider
+
+    timer_section:
+      name: Timer Settings (Optional)
+      description: Configure an optional auto-shutoff timer helper and duration.
+      icon: mdi:timer-outline
+      input:
+        timer_entity:
+          name: Timer Helper (Optional)
+          description: Optional Timer helper to auto-shutoff the devices. Leave blank if not using a timer.
+          default: []
+          selector:
+            entity:
+              domain: timer
+        timer_duration:
+          name: Timer Duration
+          description: How long the timer should run when triggered.
+          default:
+            minutes: 15
+          selector:
+            duration: {}
+
+variables:
+  timer_input: !input timer_entity
+  has_timer: "{{ timer_input | length > 0 }}"
+  low_thresh: !input humidity_low_threshold
+  enable_low: "{{ low_thresh | float(0) > 0 }}"
+  dev1: !input target_device
+  dev2: !input target_device_2
+  target_entities: >
+    {% if dev2 is string and dev2 | length > 0 %}
+      {{ [dev1, dev2] }}
+    {% else %}
+      {{ [dev1] }}
+    {% endif %}
+
+trigger:
+  - platform: numeric_state
+    entity_id: !input humidity_sensor
+    above: !input humidity_threshold
+    id: humidity_high
+  - platform: numeric_state
+    entity_id: !input humidity_sensor
+    below: !input humidity_low_threshold
+    id: humidity_low
+  - platform: state
+    entity_id: !input target_device
+    from: "off"
+    to: "on"
+    id: device_turned_on
+  - platform: state
+    entity_id: !input target_device
+    from: "on"
+    to: "off"
+    id: device_turned_off
+  - platform: state
+    entity_id: !input target_device_2
+    from: "on"
+    to: "off"
+    id: device_turned_off
+
+condition: []
+
+action:
+  - choose:
+      - conditions:
+          - condition: trigger
+            id: 
+              - humidity_high
+              - device_turned_on
+        sequence:
+          - action: homeassistant.turn_on
+            target:
+              entity_id: "{{ target_entities }}"
+          - if:
+              - condition: template
+                value_template: "{{ has_timer }}"
+            then:
+              - action: timer.start
+                target:
+                  entity_id: !input timer_entity
+                data:
+                  duration: !input timer_duration
+              - wait_for_trigger:
+                  - platform: event
+                    event_type: timer.finished
+                    event_data:
+                      entity_id: !input timer_entity
+                  - platform: event
+                    event_type: timer.cancelled
+                    event_data:
+                      entity_id: !input timer_entity
+              - action: homeassistant.turn_off
+                target:
+                  entity_id: "{{ target_entities }}"
+
+      - conditions:
+          - condition: trigger
+            id: humidity_low
+          - condition: template
+            value_template: "{{ enable_low }}"
+        sequence:
+          - action: homeassistant.turn_off
+            target:
+              entity_id: "{{ target_entities }}"
+          - if:
+              - condition: template
+                value_template: "{{ has_timer }}"
+            then:
+              - action: timer.cancel
+                target:
+                  entity_id: !input timer_entity
+
+      - conditions:
+          - condition: trigger
+            id: device_turned_off
+          - condition: template
+            value_template: "{{ has_timer }}"
+        sequence:
+          - action: homeassistant.turn_off
+            target:
+              entity_id: "{{ target_entities }}"
+          - if:
+              - condition: template
+                value_template: "{{ has_timer }}"
+            then:
+              - action: timer.cancel
+                target:
+                  entity_id: !input timer_entity
+
+mode: restart
