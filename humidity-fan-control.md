@@ -2,7 +2,7 @@
 
 [![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fufans123%2Fhome-assistant-blueprints%2Fblob%2Fmain%2Fhumidity_fan_control.yaml)
 
-> **Version:** 1.0 | **Initial Release:** 2026-11-15 | [← Back to Main Blueprints Repository](README.md)
+> **Version:** 1.1 | **Last updated:** 2026-11-15 | [← Back to Main Blueprints Repository](README.md)
 
 An advanced, flexible Home Assistant blueprint for bathroom or laundry room climate control. It automatically activates a primary device (and an optional secondary device) based on high humidity or manual switch triggers, manages an optional auto-shutoff timer with full two-way synchronization, and supports an optional low-humidity cutoff to prevent excessive runtimes.
 
@@ -103,4 +103,5 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/humidity_fan_con
 
 | Version | Date | Summary of Changes |
 | :--- | :--- | :--- |
+| **v1.1** | 2026-11-15 | Added a cooldown period for the low threshold before turning devices off. |
 | **v1.0** | 2026-11-15 | Initial release. |
