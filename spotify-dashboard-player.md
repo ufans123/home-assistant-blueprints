@@ -116,3 +116,18 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/spotify_dashboar
 2. Navigate to your Home Assistant Blueprints Dashboard UI (**Settings** > **Automations & Scenes** > **Blueprints**).
 3. In the bottom right corner, click on the **Import blueprint** button.
 4. Paste in the URL and follow the prompts.
+
+---
+## Related Links
+| Blueprint | Description | 
+| :--- | :--- | 
+
+---
+
+## Changelog
+
+| Version | Date | Summary of Changes |
+| :--- | :--- | :--- |
+| **v1.0** | 2026-10-18 | Initial release |
+
+
