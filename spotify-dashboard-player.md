@@ -4,7 +4,7 @@
 
 > **Version:** 1.0 | **Initial Release:** 2026-11-18 | [← Back to Main Blueprints Repository](README.md)
 
-A clean, flexible Spotify automation blueprint for Home Assistant driven by an `input_select` helper. Link any number of playlists, albums, or artists to dropdown options using a simple key-value Media Map—allowing you to launch and switch music from dashboard dropdowns, quick-action buttons, voice assistants, or automations without creating separate automations for every playlist.
+A clean, flexible Spotify automation blueprint for Home Assistant driven by an `input_select` helper. Link any number of playlists, albums, or artists to dropdown options using a simple key-value Media Map—allowing you to launch and switch music from dashboard dropdowns, quick-action buttons, without creating separate automations for every playlist.
 
 ## Prerequisites
 
@@ -16,7 +16,7 @@ Before setting up this blueprint, make sure you have the following ready:
 
 ## Use Cases
 
-- **Dashboard Music Jukebox & Mood Selector:** Add your `input_select` helper to a dashboard as a standard dropdown menu or a row of quick-tap buttons (using Mushroom Chips, Horizontal Stack buttons, or custom cards like `custom:lcards-select-menu`) for instant one-tap playlist switching.
+- **Dashboard Music Jukebox & Mood Selector:** Add your `input_select` helper to a dashboard as a standard dropdown menu or a row of quick-tap buttons (using stile, or custom cards like `custom:bubble-card` or my favorite `custom:lcards-select-menu`) for instant one-tap playlist switching.
 - **Single-Automation Library Management:** Manage dozens of playlists, albums, and artists inside a single automation. Adding new music only requires adding an option to your helper and pasting its Spotify link into the Media Map.
 - **Hands-Free Routines & Voice Control:** Trigger playback from morning routines, bedtime schedules, NFC tags, or voice commands simply by calling `input_select.select_option` on your helper.
 - **Make Dashboards for Each Speaker Group:** Depending on your setup you may have a dashboard for each room.
@@ -90,3 +90,27 @@ Before setting up this blueprint, make sure you have the following ready:
           entity_id: input_select.spotify_mood
         data:
           option: Daft Punk
+  ```
+- **Active Spotify Connect Sessions:** If playback ever routes to multiple speakers unexpectedly, check whether your target media player is part of an active speaker group or holding onto a prior Spotify Connect session.
+
+## Installation
+
+### Method 1: Click to Import (Easiest)
+Click the badge below to import this blueprint directly into your Home Assistant instance:
+
+[![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fufans123%2Fhome-assistant-blueprints%2Fblob%2Fmain%2Fspotify_dashboard_player.yaml)
+
+### Method 2: Manual Installation
+1. Download or clone the raw YAML file from this repository: [`spotify_dashboard_player.yaml`](https://github.com/ufans123/home-assistant-blueprints/blob/main/spotify_dashboard_player.yaml)
+2. In your Home Assistant configuration directory, navigate to your blueprints folder (e.g., `config/blueprints/automation/ufans123/`).
+3. Paste the code into a file named `spotify_dashboard_player.yaml`.
+4. Reload your automations or restart Home Assistant.
+
+### Method 3: Manual Installation using the Blueprints Dashboard (Easier)
+1. Copy the following URL:
+```
+https://github.com/ufans123/home-assistant-blueprints/blob/main/spotify_dashboard_player.yaml
+```
+2. Navigate to your Home Assistant Blueprints Dashboard UI (**Settings** > **Automations & Scenes** > **Blueprints**).
+3. In the bottom right corner, click on the **Import blueprint** button.
+4. Paste in the URL and follow the prompts.
