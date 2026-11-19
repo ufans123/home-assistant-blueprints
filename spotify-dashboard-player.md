@@ -121,7 +121,7 @@ https://github.com/ufans123/home-assistant-blueprints/blob/main/spotify_dashboar
 ## Related Links
 | Blueprint | Description | 
 | :--- | :--- | 
-
+|[Spotify NFC Jukebox with Smart Tracker](https://github.com/ufans123/home-assistant-blueprints/blob/main/spotify-nfc-trigger.md)|Intelligent Spotify jukebox automation for NFC tags featuring smart state management (resumes, pauses, switches/restarts) and an offline/unavailable speaker safety reset.|
 ---
 
 ## Changelog
