@@ -20,6 +20,8 @@ Before setting up this blueprint, make sure you have the following ready:
 - **Single-Automation Library Management:** Manage dozens of playlists, albums, and artists inside a single automation. Adding new music only requires adding an option to your helper and pasting its Spotify link into the Media Map.
 - **Hands-Free Routines & Voice Control:** Trigger playback from morning routines, bedtime schedules, NFC tags, or voice commands simply by calling `input_select.select_option` on your helper.
 - **Make Dashboards for Each Speaker Group:** Depending on your setup you may have a dashboard for each room.
+- **Build Your Dashboard Remotes:** Add media player cards and whatever methods you like to trigger the ``input_select`` options. These make perfect remotes for phones or tablets.
+- **Pair with Lighting Automations** For mood and enjoyment while chilling, add lighting automations to your dashboard.
 
 ---
 
