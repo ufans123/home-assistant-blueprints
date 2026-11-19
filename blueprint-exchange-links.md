@@ -29,6 +29,7 @@
 - [Motion Sensor Enable or Disable](https://community.home-assistant.io/t/motion-sensor-enable-or-disable/1028597)
 - [On/Off or Toggle Control with Scene Options (NFC & Triggers)](https://community.home-assistant.io/t/on-off-or-toggle-control-with-scene-options-nfc-triggers/1029071)
 - [Spotify NFC Jukebox with Smart Tracker](https://community.home-assistant.io/t/spotify-nfc-jukebox-with-smart-tracker/1030255)
+- [Spotify: Play Playlist, Album, or Artist](https://community.home-assistant.io/t/spotify-play-playlist-album-or-artist/1035375)
 - [Switch Event Long-Press Control (with Optional NFC)](https://community.home-assistant.io/t/switch-event-long-press-control-with-optional-nfc/1029628)
 
 ### 🔔 Notifications, To-Do & Alerts
