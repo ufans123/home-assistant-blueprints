@@ -1,0 +1,115 @@
+blueprint:
+  name: "Spotify: Play Playlist, Album, or Artist"
+  description: >-
+    Dynamically plays Spotify playlists, albums, or artists when an input_select
+    helper changes state.
+
+
+    ## Requirements
+
+    * An `input_select` helper pre-populated with your desired mood, playlist, or artist names.
+
+    * A media player entity capable of playing Spotify links/URIs (e.g., Spotify integration, Spotcast, Music Assistant, or Cast devices).
+
+    * Matching keys between your `input_select` options and the Media Map below (case-sensitive).
+
+    **Version:** v1.0
+
+  domain: automation
+  source_url: https://github.com/ufans123/home-assistant-blueprints/blob/main/spotify_dashboard_player.yaml
+  author: Ufans123
+  input:
+    entities_section:
+      name: Entities & Target Device
+      icon: mdi:speaker-wireless
+      description: Select the trigger helper and the speaker where audio will play.
+      collapsed: false
+      input:
+        input_select_entity:
+          name: Input Select Helper
+          description: >-
+            Required. Choose the `input_select` helper that triggers playback when its selected option changes.
+          selector:
+            entity:
+              domain: input_select
+        media_player_entity:
+          name: Media Player
+          description: >-
+            Required. Choose the target media player or speaker to play the Spotify content on.
+          selector:
+            entity:
+              domain: media_player
+
+    media_mapping_section:
+      name: Spotify Media Mapping
+      icon: mdi:spotify
+      description: >-
+        Link each option from your `input_select` helper to a Spotify URL or URI. 
+        The left side must match your `input_select` option name exactly.
+      collapsed: false
+      input:
+        media_map:
+          name: Media Map
+          description: >-
+            Add or edit key-value pairs (`Option Name: Spotify Link`). Use the default entries below as a formatting guide.
+          default:
+            Chill: https://open.spotify.com/playlist/37i9dQZF1EIhFVhv7b5fKN
+            Workout: https://open.spotify.com/playlist/2lk6445GUpENJLdDyJFMHJ
+            Daft Punk: https://open.spotify.com/playlist/2jTy5QwqWJ1ZUv2XeJPYbn
+          selector:
+            object:
+
+    playback_options_section:
+      name: Optional Playback Settings
+      icon: mdi:volume-medium
+      description: Optional defaults applied only when starting playback from an idle or off state.
+      collapsed: true
+      input:
+        initial_volume:
+          name: Initial Starting Volume
+          description: >-
+            Optional. Sets a baseline volume only when the speaker is currently off or idle. 
+            If you switch playlists while music is already playing, your current volume is preserved. Set to 0 to disable.
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 1
+              step: 0.05
+              mode: slider
+
+triggers:
+  - trigger: state
+    entity_id: !input input_select_entity
+
+conditions: []
+
+actions:
+  - variables:
+      selected_option: '{{ trigger.to_state.state }}'
+      media_map: !input media_map
+      media_uri: '{{ media_map.get(selected_option) }}'
+      target_player: !input media_player_entity
+      start_vol: !input initial_volume
+  - condition: template
+    value_template: '{{ media_uri is not none }}'
+  - if:
+      - condition: template
+        value_template: >-
+          {{ start_vol | float(0) > 0 and states(target_player) in ['off', 'idle', 'standby'] }}
+    then:
+      - action: media_player.volume_set
+        target:
+          entity_id: '{{ target_player }}'
+        data:
+          volume_level: '{{ start_vol }}'
+  - target:
+      entity_id: !input media_player_entity
+    data:
+      media:
+        media_content_id: '{{ media_uri }}'
+        media_content_type: '{{ media_uri.split('':'')[1] }}'
+        metadata: {}
+    action: media_player.play_media
+
+mode: restart
